@@ -8,6 +8,7 @@ class SubMod5(Module):
 		Module.__init__(self, frame, 'submod5')
 		
 		self.init = 1
+		self.correct = 0
 		self.stage = 0
 		self.selectedButton = 1
 
@@ -61,13 +62,12 @@ class SubMod5(Module):
 		self.input = 0
 
 	def correctAns(self):
-		if self.init ==0:
-			self.stage += 1
-			self.init = 1
-			self.selectedButton = 1
-			print ("stage1reach")
-		else:
-			pass
+		
+		self.stage += 1
+		
+		
+		print ("stage1reach")
+		
 
 	def incorrectAns(self):
 		self.changeStateStrike()
@@ -371,7 +371,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns0()
 
-						if self.stage == 1:
+						elif self.stage == 1:
 							if self.symbolGen == 1:
 								self.checkAns1()		
 							elif self.symbolGen == 2:
@@ -385,7 +385,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns1()
 
-						if self.stage == 2:
+						elif self.stage == 2:
 							if self.symbolGen == 1:
 								self.checkAns2()		
 							elif self.symbolGen == 2:
@@ -399,7 +399,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns2()
 
-						if self.stage == 3:
+						elif self.stage == 3:
 							if self.symbolGen == 1:
 								self.checkAns3()		
 							elif self.symbolGen == 2:
@@ -413,7 +413,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns3()
 
-						if self.stage == 4:
+						elif self.stage == 4:
 							self.changeStateComplete()
 
 			#ADDED THIS SO INPUT WOULDN'T STAY, NEED TO FIX!

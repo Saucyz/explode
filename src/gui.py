@@ -121,7 +121,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		window = QtWidgets.QWidget()
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
-		self.grid.addWidget(self.label, 0, 0, 10, 10)
+		self.grid.addWidget(self.label, 0, 0, 100, 100)
 		#self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		self.game = Game(self, totalTime)
