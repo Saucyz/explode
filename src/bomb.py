@@ -6,7 +6,7 @@ from submod0 import SubMod0
 from submod1 import SubMod1
 from submod2 import SubMod2
 from submod3 import SubMod3
-#from submod5 import SubMod5
+from submod5 import SubMod5
 import threading
 
 numModules = 4
@@ -56,7 +56,7 @@ class Bomb:
 		if(level == 0):
 			return SubMod0(self.frame)
 		elif level ==1:
-			return SubMod1(self.frame)
+			return SubMod5(self.frame)
 		elif level ==2:
 			return SubMod2(self.frame)
 		elif level ==3:

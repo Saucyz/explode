@@ -170,7 +170,7 @@ class SubMod5(Module):
 				pass
 			else:
 				if self.init == 1:
-
+					self.init=0
 
 					self.symbolGen = randint(1,6)
 					self.posGen = randint(1,4)
@@ -301,56 +301,60 @@ class SubMod5(Module):
 							self.button2.setText('#')
 							self.button3.setText('?')
 				else:
-					if selectedButton == 1:
+					if self.selectedButton == 1:
 						if self.input == 'RIGHT':
-							self.selectedButton == 2
+							self.selectedButton = 2
 						if self.input == 'DOWN':
-							self.selectedButton == 3
+							self.selectedButton = 3
 						else:
 							pass
-					elif selectedButton == 2:
+					elif self.selectedButton == 2:
 						if self.input == 'LEFT':
-							self.selectedButton == 1
+							self.selectedButton = 1
 						if self.input == 'DOWN':
-							self.selectedButton == 4
+							self.selectedButton = 4
 						else:
 							pass
-					elif selectedButton == 3:
+					elif self.selectedButton == 3:
 						if self.input == 'RIGHT':
-							self.selectedButton == 4
+							self.selectedButton = 4
 						if self.input == 'UP':
-							self.selectedButton == 1
+							self.selectedButton = 1
 						else:
 							pass
-					elif selectedButton == 4:
+					elif self.selectedButton == 4:
 						if self.input == 'LEFT':
-							self.selectedButton == 3
+							self.selectedButton = 3
 						if self.input == 'UP':
-							self.selectedButton == 2
+							self.selectedButton = 2
 						else:
 							pass
 
+					
 					if self.selectedButton == 1:
-						if self.selectedButton == 1:
-							self.select1.setText(">")
-							self.select1.show()
-							self.select2.hide()
-							self.select3.hide()
-						elif self.selectedButton == 2:
-							self.select2.setText("<")
-							self.select2.show()
-							self.select1.hide()
-							self.select3.hide()
-						elif self.selectedButton == 3:
-							self.select3.show()
-							self.select3.setText(">")
-							self.select2.hide()
-							self.select1.hide()
-						elif self.selectedButton == 4:
-							self.select2.setText("<")
-							self.select2.show()
-							self.select1.hide()
-							self.select3.hide()
+						self.select1.setText(">")
+						self.select1.show()
+						self.select2.hide()
+						self.select3.hide()
+						self.select4.hide()
+					elif self.selectedButton == 2:
+						self.select2.setText("<")
+						self.select2.show()
+						self.select1.hide()
+						self.select3.hide()
+						self.select4.hide()
+					elif self.selectedButton == 3:
+						self.select4.hide()
+						self.select3.setText(">")
+						self.select3.show()
+						self.select2.hide()
+						self.select1.hide()
+					elif self.selectedButton == 4:
+						self.select4.setText("<")
+						self.select4.show()
+						self.select1.hide()
+						self.select2.hide()
+						self.select3.hide()
 
 					if self.input == 'BUTTONA':
 						if self.stage == 0:

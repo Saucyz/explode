@@ -146,6 +146,7 @@ class SubMod3(Module):
 					
 				
 						if self.displayStage0 == 1:
+							print("pic1")
 							reader = QtGui.QImageReader("memoryDisp1.png")
 							image = reader.read()
 							qpixmap = QtGui.QPixmap()
@@ -153,6 +154,7 @@ class SubMod3(Module):
 							self.displayNum.setPixmap(qpixmap)
 						
 						elif self.displayStage0 == 2:
+							print("pic2")
 							reader = QtGui.QImageReader("memoryDisp2.png")
 							image = reader.read()
 							qpixmap = QtGui.QPixmap()
@@ -160,6 +162,7 @@ class SubMod3(Module):
 							self.displayNum.setPixmap(qpixmap)
 							
 						elif self.displayStage0 == 3:
+							print("pic3")
 							reader = QtGui.QImageReader("memoryDisp3.png")
 							image = reader.read()
 							qpixmap = QtGui.QPixmap()

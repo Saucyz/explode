@@ -135,13 +135,13 @@ class MainGUI(QtWidgets.QMainWindow):
 		
 		modNum = 1
 		for mod in self.game.bomb.moduleList:
-			if modNum == 1
+			if modNum == 1:
 				self.grid.addWidget(mod,1, 1)
-			elif modNum == 2
+			elif modNum == 2:
 				self.grid.addWidget(mod,1, 2)
-			elif modNum == 3
+			elif modNum == 3:
 				self.grid.addWidget(mod,2, 1)	
-			elif modNum == 4
+			elif modNum == 4:
 				self.grid.addWidget(mod,2, 2)		
 			modNum += 1
 			#mod.hide()

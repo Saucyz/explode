@@ -20,7 +20,7 @@ class SubMod1(Module):
 				pass
 			else:
 				#Win if enter 1, strike otherwise.
-				if(self.input == '1'):
+				if(self.input == 'BUTTONA'):
 					self.changeStateComplete() 
 				#Other inputs cause strike
 				else:
