@@ -10,6 +10,7 @@ class SubMod5(Module):
 		self.init = 1
 		self.stage = 0
 		self.selectedButton = 1
+
 		self.label = QtWidgets.QLabel()
 		self.outline1 = QtWidgets.QLabel()
 		self.outline2 = QtWidgets.QLabel()
@@ -174,127 +175,127 @@ class SubMod5(Module):
 					self.symbolGen = randint(1,6)
 					self.posGen = randint(1,4)
 					if self.symbolGen == 1:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText('[')
 							self.button2.setText('<')
 							self.button3.setText('3')
 							self.button4.setText(']')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText('[')
 							self.button3.setText('<')
 							self.button4.setText('3')
 							self.button1.setText(']')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText('[')
 							self.button4.setText('<')
 							self.button1.setText('3')
 							self.button2.setText(']')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText('[')
 							self.button1.setText('<')
 							self.button2.setText('3')
 							self.button3.setText(']')
 					elif self.symbolGen == 2:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText('$')
 							self.button2.setText('@')
 							self.button3.setText('#')
 							self.button4.setText('!')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText('$')
 							self.button3.setText('@')
 							self.button4.setText('#')
 							self.button1.setText('!')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText('$')
 							self.button4.setText('@')
 							self.button1.setText('#')
 							self.button2.setText('!')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText('$')
 							self.button1.setText('@')
 							self.button2.setText('#')
 							self.button3.setText('!')
 					elif self.symbolGen == 3:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText('^')
 							self.button2.setText('&')
 							self.button3.setText('%')
 							self.button4.setText('*')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText('^')
 							self.button3.setText('&')
 							self.button4.setText('%')
 							self.button1.setText('*')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText('^')
 							self.button4.setText('&')
 							self.button1.setText('%')
 							self.button2.setText('*')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText('^')
 							self.button1.setText('&')
 							self.button2.setText('%')
 							self.button3.setText('*')
 					elif self.symbolGen == 4:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText('<')
 							self.button2.setText('~')
 							self.button3.setText('>')
 							self.button4.setText(',')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText('<')
 							self.button3.setText('~')
 							self.button4.setText('>')
 							self.button1.setText(',')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText('<')
 							self.button4.setText('~')
 							self.button1.setText('>')
 							self.button2.setText(',')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText('<')
 							self.button1.setText('~')
 							self.button2.setText('>')
 							self.button3.setText(',')
 					elif self.symbolGen == 5:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText(':')
 							self.button2.setText('&')
 							self.button3.setText('=')
 							self.button4.setText('{')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText(':')
 							self.button3.setText('&')
 							self.button4.setText('=')
 							self.button1.setText('{')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText(':')
 							self.button4.setText('&')
 							self.button1.setText('=')
 							self.button2.setText('{')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText(':')
 							self.button1.setText('&')
 							self.button2.setText('=')
 							self.button3.setText('{')
 					elif self.symbolGen == 6:
-						if posGen == 1:
+						if self.posGen == 1:
 							self.button1.setText('/')
 							self.button2.setText('+')
 							self.button3.setText('#')
 							self.button4.setText('?')
-						if posGen == 2:
+						if self.posGen == 2:
 							self.button2.setText('/')
 							self.button3.setText('+')
 							self.button4.setText('#')
 							self.button1.setText('?')
-						if posGen == 3:
+						if self.posGen == 3:
 							self.button3.setText('/')
 							self.button4.setText('+')
 							self.button1.setText('#')
 							self.button2.setText('?')
-						if posGen == 4:
+						if self.posGen == 4:
 							self.button4.setText('/')
 							self.button1.setText('+')
 							self.button2.setText('#')
