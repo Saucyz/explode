@@ -163,18 +163,18 @@ class MainGUI(QtWidgets.QMainWindow):
 	def timerDone(self):
 		self.input = self.game.wiiInput()
 		if self.moduleSelect == 1:
-			if self.input == 'BUTTONB':
-				self.game.bomb.changeActiveModule(4)
+			if self.input == 'MINUS':
+				self.game.bomb.changeActiveModule(0)
 				self.moduleSelect = 0
 		elif self.moduleSelect == 0:
 			if self.input == 'RIGHT':
-				self.game.bomb.changeActiveModule(2)
+				self.game.bomb.changeActiveModule(3)
 				self.moduleSelect = 1
 			elif self.input == 'UP':
-				self.game.bomb.changeActiveModule(1)
+				self.game.bomb.changeActiveModule(2)
 				self.moduleSelect = 1
 			elif self.input == 'LEFT':
-				self.game.bomb.changeActiveModule(0)
+				self.game.bomb.changeActiveModule(1)
 				self.moduleSelect = 1
 			elif self.input == 'DOWN':
 				self.game.bomb.changeActiveModule(3)
@@ -297,7 +297,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		#Ignore controller inputs for types SubMod1 since this uses text field
 		if not isinstance(self.game.bomb.getActiveModule(), bomb.SubMod1):
 			#Wii input! Otherwise using keyboard
-			self.game.wiiInput()
+			#self.game.wiiInput()
 			#self.inputHandler(self.keyinput)
 			pass
 			
@@ -305,7 +305,9 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		#reading DE2 module state
 		#y = self.srl.serialRead()
-		self.temp.setText(y)
+		#self.temp.setText(y)
+		#need to get rid of this line below for serial to work again
+		y = "T"#kill this for serial
 		if(y == "T"):
 			self.DE2win = True
 		if(y == "S"):
@@ -414,46 +416,57 @@ class Game:
 		if (buttons & cwiid.BTN_LEFT):
 			print ('Left pressed')
 			self.inputHandler('LEFT')
+			return 'LEFT'
 
 		if(buttons & cwiid.BTN_RIGHT):
 			print ('Right pressed')
 			self.inputHandler('RIGHT')
+			return 'RIGHT'
 
 		if (buttons & cwiid.BTN_UP):
 			print ('Up pressed')        
 			self.inputHandler('UP')
+			return 'UP'
 
 		if (buttons & cwiid.BTN_DOWN):
 			print ('Down pressed')      
 			self.inputHandler('DOWN')
+			return 'DOWN'
 
 		if (buttons & cwiid.BTN_1):
 			print ('Button 1 pressed')
-			self.inputHandler('BUTTON1')         
+			self.inputHandler('BUTTON1')      
+			return 'BUTTON1'   
 
 		if (buttons & cwiid.BTN_2):
 			print ('Button 2 pressed')
-			self.inputHandler('BUTTON2')         
+			self.inputHandler('BUTTON2')       
+			return 'BUTTON2'  
 
 		if (buttons & cwiid.BTN_A):
 			print ('Button A pressed')
 			self.inputHandler('BUTTONA')
+			return 'BUTTONA'
 
 		if (buttons & cwiid.BTN_B):
 			print ('Button B pressed')
-			self.inputHandler('BUTTONB')       
+			self.inputHandler('BUTTONB')   
+			return 'BUTTONB'   
 
 		if (buttons & cwiid.BTN_HOME):
 			print ('Home Button pressed')
-			self.inputHandler('HOME')      
+			self.inputHandler('HOME')   
+			return 'HOME'   
 
 		if (buttons & cwiid.BTN_MINUS):
 			print ('Minus Button pressed')
-			self.inputHandler('MINUS')  
+			#self.inputHandler('MINUS')  
+			return 'MINUS'
 
 		if (buttons & cwiid.BTN_PLUS):
 			print( 'Plus Button pressed')
 			self.inputHandler('PLUS')
+			return 'PLUS'
 
 		#time.sleep(button_delay)
 

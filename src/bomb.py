@@ -2,13 +2,14 @@
 
 import time
 import module
+from submod0 import SubMod0
 from submod1 import SubMod1
 from submod2 import SubMod2
 from submod3 import SubMod3
 #from submod5 import SubMod5
 import threading
 
-numModules = 3
+numModules = 4
 
 COMPLETE = 'COMPLETE'#0
 INCOMPLETE = 'INCOMPLETE'#1
@@ -53,13 +54,13 @@ class Bomb:
 	def modGen(self,level):
 		name = ['first', 'second', 'third']
 		if(level == 0):
-			return SubMod1(self.frame)
+			return SubMod0(self.frame)
 		elif level ==1:
-			return SubMod2(self.frame)
+			return SubMod1(self.frame)
 		elif level ==2:
+			return SubMod2(self.frame)
+		elif level ==3:
 			return SubMod3(self.frame)
-		#elif level ==3:
-		#	return SubMod5(self.frame)
 
 	def populate(self):
 		for x in range(numModules):
