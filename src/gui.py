@@ -169,62 +169,7 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def timerDone(self):
 		self.input = self.game.wiiInput()
-		if self.input == 'SWINGLEFT':
-			self.faceSelect -= 1
-			if self.faceSelect < 0:
-				self.faceSelect = 3
-		elif self.input == 'SWINGRIGHT':
-			self.faceSelect += 1
-			if self.faceSelect > 3:
-				self.faceSelect = 0
-
-		if self.faceSelect == 1:
-			self.game.bomb.moduleList[1].show()
-			self.game.bomb.moduleList[2].show()
-			self.game.bomb.moduleList[3].show()
-			self.game.bomb.moduleList[4].show()
-
-			reader = QtGui.QImageReader("bombBackground.png")
-			image = reader.read()
-			qpixmap = QtGui.QPixmap()
-			qpixmap.convertFromImage(image)
-			self.label = QtWidgets.QLabel("Main")
-			self.label.setPixmap(qpixmap)
-
-
-			self.strikesLabel.hide()
-			self.timeLabel.hide()
-			self.stateLabel.hide()
-		if self.faceSelect == 0 or self.faceSelect == 2:
-			self.game.bomb.moduleList[1].hide()
-			self.game.bomb.moduleList[2].hide()
-			self.game.bomb.moduleList[3].hide()
-			self.game.bomb.moduleList[4].hide()
-			reader = QtGui.QImageReader("bombSlide.png")
-			image = reader.read()
-			qpixmap = QtGui.QPixmap()
-			qpixmap.convertFromImage(image)
-			self.label = QtWidgets.QLabel("Main")
-			self.label.setPixmap(qpixmap)
-			self.strikesLabel.show()
-			self.timeLabel.show()
-			self.stateLabel.show()
-		if self.faceSelect == 3:
-			self.game.bomb.moduleList[1].hide()
-			self.game.bomb.moduleList[2].hide()
-			self.game.bomb.moduleList[3].hide()
-			self.game.bomb.moduleList[4].hide()
-
-			reader = QtGui.QImageReader("bombBackground.png")
-			image = reader.read()
-			qpixmap = QtGui.QPixmap()
-			qpixmap.convertFromImage(image)
-			self.label = QtWidgets.QLabel("Main")
-			self.label.setPixmap(qpixmap)
-
-			self.strikesLabel.hide()
-			self.timeLabel.hide()
-			self.stateLabel.hide()
+		
 
 		if self.moduleSelect == 1:
 			if self.input == 'MINUS':
@@ -243,6 +188,63 @@ class MainGUI(QtWidgets.QMainWindow):
 			elif self.input == 'DOWN':
 				self.game.bomb.changeActiveModule(3)
 				self.moduleSelect = 1
+
+			elif self.game.wiiSwing() == 'SWINGLEFT':
+				self.faceSelect -= 1
+				elif self.faceSelect < 0:
+					self.faceSelect = 3
+			elif self.game.wiiSwing() == 'SWINGRIGHT':
+				self.faceSelect += 1
+				if self.faceSelect > 3:
+					self.faceSelect = 0
+
+			if self.faceSelect == 1:
+				self.game.bomb.moduleList[1].show()
+				self.game.bomb.moduleList[2].show()
+				self.game.bomb.moduleList[3].show()
+				self.game.bomb.moduleList[0].hide()
+
+				reader = QtGui.QImageReader("bombBackground.png")
+				image = reader.read()
+				qpixmap = QtGui.QPixmap()
+				qpixmap.convertFromImage(image)
+				self.label = QtWidgets.QLabel("Main")
+				self.label.setPixmap(qpixmap)
+
+
+				self.strikesLabel.hide()
+				self.timeLabel.hide()
+				self.stateLabel.hide()
+			if self.faceSelect == 0 or self.faceSelect == 2:
+				self.game.bomb.moduleList[1].hide()
+				self.game.bomb.moduleList[2].hide()
+				self.game.bomb.moduleList[3].hide()
+				#self.game.bomb.moduleList[4].hide()
+				reader = QtGui.QImageReader("bombSlide.png")
+				image = reader.read()
+				qpixmap = QtGui.QPixmap()
+				qpixmap.convertFromImage(image)
+				self.label = QtWidgets.QLabel("Main")
+				self.label.setPixmap(qpixmap)
+				self.strikesLabel.show()
+				self.timeLabel.show()
+				self.stateLabel.show()
+			if self.faceSelect == 3:
+				self.game.bomb.moduleList[1].hide()
+				self.game.bomb.moduleList[2].hide()
+				self.game.bomb.moduleList[3].hide()
+				#self.game.bomb.moduleList[4].hide()
+
+				reader = QtGui.QImageReader("bombBackground.png")
+				image = reader.read()
+				qpixmap = QtGui.QPixmap()
+				qpixmap.convertFromImage(image)
+				self.label = QtWidgets.QLabel("Main")
+				self.label.setPixmap(qpixmap)
+
+				self.strikesLabel.hide()
+				self.timeLabel.hide()
+				self.stateLabel.hide()
 		self.checkGameState(self.verbose)
 		
 		if self.verbose:
@@ -453,9 +455,44 @@ class Game:
 
 		#set Wiimote to report button presses and accelerometer state 
 		self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
-		time.sleep(1)
 		#turn on led to show connected 
 		self.wii.led = 1
+		time.sleep(1)
+		self.wii.led = 0
+
+
+	def wiiSwing(self):
+		ind = 50
+		left = 0
+		right = 0
+		neutral = 0
+		if (self.wii.state['acc'][0] < 100 or self.wii.state['acc'][0] > 160):
+			while (ind > 0):
+				while(ind > 20):
+					if(self.wii.state['acc'][0] < 100):
+						right += 1
+					else:
+						left += 1#neutral +=1
+					ind-=1
+
+				if(right > (left + 2)):
+					while (neutral < 1000):
+						j = self.wii.state['acc'][0]
+						if( j > 100 and j < 160):
+							neutral +=1
+				elif(left > (right+2)): 
+					while (neutral < 1000):
+						j = self.wii.state['acc'][0]
+						if( j > 100 and j < 160):
+							neutral +=1
+				ind -= 1
+#time.sleep(0.01)
+		if(right > left):  
+			print("Swing Right!")
+			return "SWINGRIGHT"
+		elif(left > right):
+			print("Swing Left!")
+			return "SWINGLEFT"
 
 	def wiiInput(self):
 		#self.motioninput = self.wii.state['acc']
