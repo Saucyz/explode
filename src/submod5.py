@@ -1,5 +1,6 @@
 from module import Module
 from PyQt5 import QtWidgets, QtGui
+from random import randint
 
 class SubMod5(Module):
 	#Constructor
