@@ -295,11 +295,11 @@ class MainGUI(QtWidgets.QMainWindow):
 		#needs to stop and reset timer as well
 	def checkGameState(self, verbose):
 		#Ignore controller inputs for types SubMod1 since this uses text field
-		if not isinstance(self.game.bomb.getActiveModule(), bomb.SubMod1):
+		#if not isinstance(self.game.bomb.getActiveModule(), bomb.SubMod1):
 			#Wii input! Otherwise using keyboard
 			#self.game.wiiInput()
 			#self.inputHandler(self.keyinput)
-			pass
+			#pass
 			
 		x = self.game.bomb.checkModStates(verbose)
 
