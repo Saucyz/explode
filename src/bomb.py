@@ -5,7 +5,7 @@ import module
 from submod1 import SubMod1
 from submod2 import SubMod2
 from submod3 import SubMod3
-from submod5 import SubMod5
+#from submod5 import SubMod5
 import threading
 
 numModules = 3
@@ -58,8 +58,8 @@ class Bomb:
 			return SubMod2(self.frame)
 		elif level ==2:
 			return SubMod3(self.frame)
-		elif level ==3:
-			return SubMod5(self.frame)
+		#elif level ==3:
+		#	return SubMod5(self.frame)
 
 	def populate(self):
 		for x in range(numModules):
