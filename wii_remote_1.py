@@ -24,6 +24,9 @@ import time
 #on left side = [104, 136, 135] on right [162 .. ..
 
 
+
+
+
 button_delay = 0.05 #was 0.1
 
 print ('Press 1 + 2 on your Wii Remote now ...')
@@ -64,24 +67,43 @@ while True:
   #wii.rumble = (wii.state['acc'][0] < 134)
   if (buttons & cwiid.BTN_A):
     print (wii.state['acc'])
-  prev = wii.state['acc'][0] 
+  #prev = wii.state['acc'][0] 
   ind = 50
   left = 0
   right = 0
-  '''while (ind > 0):
-  
-    if(wii.state['acc'][0] < 100):
-      left += 1
-    if(wii.state['acc'][0] > 160): 
-     right += 1
-    ind -= 1
-    time.sleep(0.01)
+  neutral = 0
+  if (wii.state['acc'][0] < 100 or wii.state['acc'][0] > 160):
+    #print('Entered while')
+    while (ind > 0):
+      while(ind > 20):
+        if(wii.state['acc'][0] < 100):
+          right += 1
+          #prev = 'RIGHT'
+        #elif(wii.state['acc'][0] >160):
+          #left += 1
+        else:
+          left += 1#neutral +=1
+        ind-=1
+      #print('right = '+str(right))
+      #print('left = '+str(left))
+      if(right > (left + 2)):
+        while (neutral < 1000):
+          j = wii.state['acc'][0]
+          if( j > 100 and j < 160):
+            neutral +=1
+      elif(left > (right+2)): 
+        while (neutral < 1000):
+          j = wii.state['acc'][0]
+          if( j > 100 and j < 160):
+            neutral +=1
+      ind -= 1
+      #time.sleep(0.01)
+  if(right > left):  
+    print("Swing Right!")
+  elif(left > right):
+    print("Swing Left!")
 
-    if(left > right):
-      print("Swing left!")
-    if(right> left):
-     print("Swing right!")'''
-  #time.sleep(0.05)
+  time.sleep(0.2)
   if wii.state['buttons'] & cwiid.BTN_A:
       wii.led = (wii.state['led'] + 1 % 16)
   
@@ -137,3 +159,6 @@ while True:
   if (buttons & cwiid.BTN_PLUS):
     print( 'Plus Button pressed')
     time.sleep(button_delay)
+
+
+	

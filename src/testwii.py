@@ -1,5 +1,7 @@
 import gui
 
+def wiiAccelFilter
+
 def testWiimote():
 	testgame = gui.Game(50)
 	print('Testing no inputs, do not press anything')	

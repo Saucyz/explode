@@ -3,7 +3,7 @@ import time
 import bomb
 #Wii remote library!
 import cwiid
-#import serialCom
+import serialCom
 
 #TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
 
@@ -113,7 +113,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		qpixmap.convertFromImage(image)
 		self.label = QtWidgets.QLabel("Main")
 		self.label.setPixmap(qpixmap)
-
+		self.label2 = QtWidgets.QLabel()
 
 		self.grid = QtWidgets.QGridLayout()
 
@@ -122,17 +122,18 @@ class MainGUI(QtWidgets.QMainWindow):
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
 		self.grid.addWidget(self.label, 0, 0, 100, 100)
+		self.grid.addWidget(self.label2, 0, 0, 100, 100)
 		#self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		self.game = Game(self, totalTime)
-		self.moduleSelect = 1
+		self.moduleSelect = 0
 		self.faceSelect = 1
 		self.input = 0
 		self.startButtonPushed()
 		self.show()
 
 		#create Game
-		#self.srl = serialCom.serialCom()
+		self.srl = serialCom.serialCom()
 		
 		modNum = 1
 		for mod in self.game.bomb.moduleList:
@@ -191,18 +192,18 @@ class MainGUI(QtWidgets.QMainWindow):
 
 			elif self.game.wiiSwing() == 'SWINGLEFT':
 				self.faceSelect -= 1
-				elif self.faceSelect < 0:
-					self.faceSelect = 3
+				if self.faceSelect < 1:
+					self.faceSelect = 2
 			elif self.game.wiiSwing() == 'SWINGRIGHT':
 				self.faceSelect += 1
-				if self.faceSelect > 3:
-					self.faceSelect = 0
+				if self.faceSelect > 2:
+					self.faceSelect = 1
 
 			if self.faceSelect == 1:
 				self.game.bomb.moduleList[1].show()
 				self.game.bomb.moduleList[2].show()
 				self.game.bomb.moduleList[3].show()
-				self.game.bomb.moduleList[0].hide()
+				self.game.bomb.moduleList[0].show()
 
 				reader = QtGui.QImageReader("bombBackground.png")
 				image = reader.read()
@@ -215,36 +216,24 @@ class MainGUI(QtWidgets.QMainWindow):
 				self.strikesLabel.hide()
 				self.timeLabel.hide()
 				self.stateLabel.hide()
-			if self.faceSelect == 0 or self.faceSelect == 2:
+			
+			elif self.faceSelect == 2:
 				self.game.bomb.moduleList[1].hide()
 				self.game.bomb.moduleList[2].hide()
 				self.game.bomb.moduleList[3].hide()
-				#self.game.bomb.moduleList[4].hide()
-				reader = QtGui.QImageReader("bombSlide.png")
+				self.game.bomb.moduleList[0].hide()
+
+				reader = QtGui.QImageReader("bombBackground1.png")
 				image = reader.read()
 				qpixmap = QtGui.QPixmap()
 				qpixmap.convertFromImage(image)
 				self.label = QtWidgets.QLabel("Main")
 				self.label.setPixmap(qpixmap)
+
 				self.strikesLabel.show()
 				self.timeLabel.show()
 				self.stateLabel.show()
-			if self.faceSelect == 3:
-				self.game.bomb.moduleList[1].hide()
-				self.game.bomb.moduleList[2].hide()
-				self.game.bomb.moduleList[3].hide()
-				#self.game.bomb.moduleList[4].hide()
-
-				reader = QtGui.QImageReader("bombBackground.png")
-				image = reader.read()
-				qpixmap = QtGui.QPixmap()
-				qpixmap.convertFromImage(image)
-				self.label = QtWidgets.QLabel("Main")
-				self.label.setPixmap(qpixmap)
-
-				self.strikesLabel.hide()
-				self.timeLabel.hide()
-				self.stateLabel.hide()
+		self.game.wii.led = self.game.bomb.getActiveModIndex()
 		self.checkGameState(self.verbose)
 		
 		if self.verbose:
@@ -254,14 +243,14 @@ class MainGUI(QtWidgets.QMainWindow):
 		elapsed = int(time.time() - self.startTime)
 		
 		if self.game.state == 'Win':
-			pass#self.srl.serialWrite("W")
+			self.srl.serialWrite("W")
 		elif elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
 			self.game.state = 'Lose'
-			#self.srl.serialWrite("L")
+			self.srl.serialWrite("L")
 		else:
 			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
-			#self.srl.serialWrite("U")
+			self.srl.serialWrite("U")
 		
 		self.stateLabel.setText('State: ' + self.game.state)
 
@@ -317,8 +306,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.stateLabel = QtWidgets.QLabel("State: ")
 		self.timeLabel = QtWidgets.QLabel("Time remaining: ")
 		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
-		self.temp = QtWidgets.QLabel("DE2 input:")
-		self.grid.addWidget(self.temp, 2, 3)
+		#self.temp = QtWidgets.QLabel("DE2 input:")
+		#self.grid.addWidget(self.temp, 2, 3)
 
 
 		self.grid.addWidget(self.stateLabel, 0, 2)
@@ -373,10 +362,10 @@ class MainGUI(QtWidgets.QMainWindow):
 		x = self.game.bomb.checkModStates(verbose)
 
 		#reading DE2 module state
-		#y = self.srl.serialRead()
+		y = self.srl.serialRead()
 		#self.temp.setText(y)
 		#need to get rid of this line below for serial to work again
-		y = "T"#kill this for serial
+		#y = "T"#kill this for serial
 		if(y == "T"):
 			self.DE2win = True
 		if(y == "S"):
@@ -451,7 +440,7 @@ class Game:
 		
 		print ('Wii Remote connected...\n')
 		print ('Press some buttons!\n')
-		print ('Press PLUS and MINUS together to disconnect and quit.\n')
+		#print ('Press PLUS and MINUS together to disconnect and quit.\n')
 
 		#set Wiimote to report button presses and accelerometer state 
 		self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
@@ -468,7 +457,7 @@ class Game:
 		neutral = 0
 		if (self.wii.state['acc'][0] < 100 or self.wii.state['acc'][0] > 160):
 			while (ind > 0):
-				while(ind > 20):
+				while(ind > 10):
 					if(self.wii.state['acc'][0] < 100):
 						right += 1
 					else:
@@ -488,11 +477,11 @@ class Game:
 				ind -= 1
 #time.sleep(0.01)
 		if(right > left):  
-			print("Swing Right!")
-			return "SWINGRIGHT"
-		elif(left > right):
 			print("Swing Left!")
 			return "SWINGLEFT"
+		elif(left > right):
+			print("Swing Right!")
+			return "SWINGRIGHT"
 
 	def wiiInput(self):
 		#self.motioninput = self.wii.state['acc']

@@ -13,7 +13,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 def main():
-	time = 100
+	time = 160
 	if __name__ == "__main__":
 		# menu = QtWidgets.QApplication(sys.argv)
 		# menuGui = MainMenu(menu)

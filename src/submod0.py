@@ -1,4 +1,5 @@
 from module import Module
+from PyQt5 import QtWidgets, QtGui
 
 class SubMod0(Module):
 	#Constructor
