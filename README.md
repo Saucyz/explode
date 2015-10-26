@@ -1,2 +1,2 @@
 # explode
-Explosion game for CPEN391
+Explosion game for UBC CPEN391: Module 2.
