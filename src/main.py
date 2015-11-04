@@ -3,4 +3,5 @@
 import init
 import game
 import display
+import module
 
