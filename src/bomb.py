@@ -2,8 +2,9 @@
 
 import time
 import module
+import threading
 
-numModules = 1
+numModules = 3
 activeModule = 1
 
 COMPLETE = 0
@@ -22,14 +23,14 @@ class BombTimer:
 			s = int(time.time() - start)
 
 			if s > elapsed:
-				print (self.secs - s)
-				elapsed = s
-
+				with lock:
+					print ('Time left:' + str(self.secs - s))
+					elapsed = s
 
 
 class TempMod:
-	def __init__(self, rand_var, name):
-		self.rand_var = rand_var
+	def __init__(self, level, name):
+		self.level = level
 		self.name = name
 
 	def testFunction(self):
@@ -41,9 +42,10 @@ def modGen(level):
 	return TempMod(level, name[level])
 
 class Bomb:
-	def __init__(self):
+	def __init__(self, secs):
 		self.moduleList = list()
 		self.moduleStates = list()
+		self.timer = BombTimer(secs)
 	
 	def populate(self):
 		x = 1
@@ -52,17 +54,30 @@ class Bomb:
 			mod = modGen(x)
 			self.moduleList.append(mod)
 			self.moduleStates.append(INCOMPLETE)
+			with lock:
+				print('Made ' + self.moduleList[x].name + ' at ' + str(x))
 
-		print('number of modules = ' + str(len(self.moduleList)))
+		with lock:
+			print('number of modules = ' + str(len(self.moduleList)))
+
+	def start(self):
+		th1 = threading.Thread(target = self.timer.countdown)
+		th2 = threading.Thread(target = self.populate)
+		th1.start()
+		th2.start()
+
+lock = threading.Lock()
 
 #testing main function
 def main():
-	t = BombTimer(1)
-	t.countdown()
+	b = Bomb(3)
+	b.start()
+	#timer = BombTimer(100)
+	#timer.countdown()
 
-	b = Bomb()
-	b.populate()
+	#bomb = Bomb()
+	#bomb.populate()
 
-	b.moduleList[0].testFunction()
+	#bomb.moduleList[0].testFunction()
 
 main()
