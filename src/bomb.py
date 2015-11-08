@@ -2,14 +2,14 @@
 
 import time
 import module
-import submod1
+from submod1 import SubMod1
 import threading
 
 numModules = 3
 
-COMPLETE = 0
-INCOMPLETE = 1
-STRIKE = 2
+COMPLETE = 'COMPLETE'#0
+INCOMPLETE = 'INCOMPLETE'#1
+STRIKE = 'STRIKE'#2
 
 class BombTimer:
 	def __init__(self, secs):
@@ -39,7 +39,7 @@ class TempMod:
 #module generator dependent on level
 def modGen(level):
 	name = ['first', 'second', 'third']
-	return TempMod(level, name[level])
+	return SubMod1() #TempMod(level, name[level])
 
 class Bomb:
 	def __init__(self, secs):
@@ -48,9 +48,7 @@ class Bomb:
 		self.activeModule = 1
 	
 	def populate(self):
-		x = 1
-
-		for x in range(numModules):	#for loop that runs 1 time for now 
+		for x in range(numModules):
 			mod = modGen(x)
 			self.moduleList.append(mod)
 			with lock:
@@ -74,14 +72,16 @@ class Bomb:
 		strikes = 0
 		modulesCompleted = 0
 
-		for x in range(numModules):
-			if self.moduleList[x].state == STRIKE:
+		for y in range(numModules):
+			z = self.moduleList[y].getState()
+			if z == STRIKE:
 				strikes += 1
-				self.moduleList[x].changeStateIncomplete()
-			elif self.moduleList[x].state == COMPLETE:
+				self.moduleList[y].changeStateIncomplete()
+			elif z == COMPLETE:
 				modulesCompleted += 1
 			else:
 				pass
+			print(z)
 
 		if strikes > 0:
 			return strikes

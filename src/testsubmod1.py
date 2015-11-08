@@ -4,7 +4,7 @@ from module import Module
 def main():
 	failcount = 0
 	print('Testing Module creation')
-	testmodule = SubMod1('testmodule')
+	testmodule = SubMod1()
 	if( isinstance(testmodule, Module) ):
 		testresult = 'PASS'
 	else:
@@ -18,7 +18,7 @@ def main():
 		failcount += 1
 	print('Testmodule is SubMod1 test: ' + testresult)
 	print('Testmod name: ' + testmodule.getName())
-	if( testmodule.getName() == 'testmodule'):
+	if( testmodule.getName() == 'submod1'):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
@@ -76,9 +76,9 @@ def main():
 		failcount += 1
 	print('Test: ' + testresult + '\n')
 
-	testmodule.submod1main()
-
 	print ("Tests finished running.")
 	print ("Tests failed: " + str(failcount))
+
+	testmodule.submod1main()
 
 main()
