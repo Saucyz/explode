@@ -25,11 +25,6 @@ class Testmod:
 	def deSelect(self):
 		modselect = 0
 
-def main():
-	testmodule = Module()
-	if( isinstance(testmodule, Module) ):
-		print('Testmodule successfully created')
-
 	'''test = Testmod()
 	test.modSelect()
 	while test.modselect == 1:
@@ -38,14 +33,68 @@ def main():
 			modSelect()
 		else:
 			print("Your number +1 is: {}".format(x))'''
+
+def main():
+	print('Testing Module creation')
+	testmodule = Module('testmodule')
+	if( isinstance(testmodule, Module) ):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Testmodule creation test: ' + testresult)
+	print('Testmod name: ' + testmodule.getName())
+	if( testmodule.getName() == 'testmodule'):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Testmod name test: ' + testresult + '\n')
+
 	testmodstate = testmodule.getState()
 	print('Testmod initial state: ' + testmodstate)
 	if( testmodstate == 'INCOMPLETE'):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+	print('Testmod initialize test: ' + testresult + '\n')
 
-	print('Testmod state test: ' + testresult + '\n')
+	print('Testing change states')
+
+	print('Change to INCOMPLETE')
+	testmodule.changeStateIncomplete()
+	print('Testmod state: ' + testmodstate)
+	if(testmodule.getState() == 'INCOMPLETE'):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Test: ' + testresult + '\n')
+
+	print('Change to COMPLETE')
+	testmodule.changeStateComplete()
+	print('Testmod state: ' + testmodstate)
+	if(testmodule.getState() == 'COMPLETE'):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Test: ' + testresult + '\n')
+
+	print('Change to STRIKE')
+	testmodule.changeStateStrike()
+	print('Testmod state: ' + testmodstate)
+	if(testmodule.getState() == 'STRIKE'):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Test: ' + testresult + '\n')
+
+	print('Change to INCOMPLETE')
+	testmodule.changeStateIncomplete()
+	print('Testmod state: ' + testmodstate)
+	if(testmodule.getState() == 'INCOMPLETE'):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Test: ' + testresult + '\n')
+
 	print ("Tests finished running.")
 
 main()
