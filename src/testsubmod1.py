@@ -1,47 +1,19 @@
+from submod1 import SubMod1
 from module import Module
-
-#A test module
-class Testmod:
-	#Constructor
-	def __init__(self):
-		self.userinput = None
-		self.modselect = 0
-		#Can't have function do nothing, uses pass
-		pass
-
-	def strike(self):
-		return True
-
-	def complete(self):
-		return True
-
-	def getUserInput(self):
-		self.userinput = raw_input('Type a number\n')
-		return userinput
-
-	def modSelect(self):
-		modselect = 1
-
-	def deSelect(self):
-		modselect = 0
-
-	'''test = Testmod()
-	test.modSelect()
-	while test.modselect == 1:
-		x = int(getUserInput())
-		if x == 0:
-			modSelect()
-		else:
-			print("Your number +1 is: {}".format(x))'''
 
 def main():
 	print('Testing Module creation')
-	testmodule = Module('testmodule')
+	testmodule = SubMod1('testmodule')
 	if( isinstance(testmodule, Module) ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
-	print('Testmodule creation test: ' + testresult)
+	print('Testmodule is Module test: ' + testresult)
+	if( isinstance(testmodule, SubMod1) ):
+		testresult = 'PASS'
+	else:
+		testresult = 'FAIL'
+	print('Testmodule is SubMod1 test: ' + testresult)
 	print('Testmod name: ' + testmodule.getName())
 	if( testmodule.getName() == 'testmodule'):
 		testresult = 'PASS'
