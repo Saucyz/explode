@@ -2,23 +2,27 @@ from submod1 import SubMod1
 from module import Module
 
 def main():
+	failcount = 0
 	print('Testing Module creation')
 	testmodule = SubMod1('testmodule')
 	if( isinstance(testmodule, Module) ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmodule is Module test: ' + testresult)
 	if( isinstance(testmodule, SubMod1) ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmodule is SubMod1 test: ' + testresult)
 	print('Testmod name: ' + testmodule.getName())
 	if( testmodule.getName() == 'testmodule'):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmod name test: ' + testresult + '\n')
 
 	testmodstate = testmodule.getState()
@@ -27,6 +31,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmod initialize test: ' + testresult + '\n')
 
 	print('Testing change states')
@@ -38,6 +43,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to COMPLETE')
@@ -47,6 +53,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to STRIKE')
@@ -56,6 +63,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to INCOMPLETE')
@@ -65,8 +73,12 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
+	testmodule.submod1main()
+
 	print ("Tests finished running.")
+	print ("Tests failed: " + str(failcount))
 
 main()

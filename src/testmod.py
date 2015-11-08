@@ -35,18 +35,21 @@ class Testmod:
 			print("Your number +1 is: {}".format(x))'''
 
 def main():
+	failcount = 0
 	print('Testing Module creation')
 	testmodule = Module('testmodule')
 	if( isinstance(testmodule, Module) ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmodule creation test: ' + testresult)
 	print('Testmod name: ' + testmodule.getName())
 	if( testmodule.getName() == 'testmodule'):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmod name test: ' + testresult + '\n')
 
 	testmodstate = testmodule.getState()
@@ -55,6 +58,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Testmod initialize test: ' + testresult + '\n')
 
 	print('Testing change states')
@@ -66,6 +70,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to COMPLETE')
@@ -75,6 +80,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to STRIKE')
@@ -84,6 +90,7 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print('Change to INCOMPLETE')
@@ -93,8 +100,9 @@ def main():
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
+		failcount += 1
 	print('Test: ' + testresult + '\n')
 
 	print ("Tests finished running.")
-
+	print ("Tests failed: " + str(failcount))
 main()
