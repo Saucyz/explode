@@ -3,7 +3,12 @@
 import time
 import module
 
-num_Modules = 1
+numModules = 1
+activeModule = 1
+
+COMPLETE = 0
+INCOMPLETE = 1
+STRIKE = 2
 
 class BombTimer:
 	def __init__(self, secs):
@@ -22,33 +27,42 @@ class BombTimer:
 
 
 
-class temp_Mod():
-	def __init__(self, rand_var):
+class TempMod:
+	def __init__(self, rand_var, name):
 		self.rand_var = rand_var
+		self.name = name
 
-class ModuleHolder:
-	def module_Holder(self):
-		x = 1
-		module_List = [BombTimer]
-
-		for x in range(0, num_Modules):	#for loop that runs 1 time for now 
-			mod = mod_Gen(x)
-			module_List = [mod]
-
-		print('number of modules = ' + str(len(module_List)))
+	def testFunction(self):
+		print("hi")
 
 #module generator dependent on level
-def mod_Gen(level):
-	return temp_Mod(1)
+def modGen(level):
+	name = ['first', 'second', 'third']
+	return TempMod(level, name[level])
+
+class Bomb:
+	def __init__(self):
+		self.moduleList = list()
+		self.moduleStates = list()
+	
+	def populate(self):
+		x = 1
+
+		for x in range(numModules):	#for loop that runs 1 time for now 
+			mod = modGen(x)
+			self.moduleList.append(mod)
+			self.moduleStates.append(INCOMPLETE)
+
+		print('number of modules = ' + str(len(self.moduleList)))
 
 #testing main function
 def main():
-	b = BombTimer()
-	b.countdown()
+	t = BombTimer(1)
+	t.countdown()
 
-	holder = ModuleHolder()
-	holder.module_Holder()
+	b = Bomb()
+	b.populate()
 
-	holder.module_Holder()
+	b.moduleList[0].testFunction()
 
 main()
