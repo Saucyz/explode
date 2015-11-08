@@ -5,7 +5,7 @@ import game
 import display
 import bomb
 
-def mainGame():
+def main_game():
 	while True:
 		#run QT gui
 		#run audio generation
@@ -13,8 +13,8 @@ def mainGame():
 
 def menu():
 	while True:
-		userInput = input("Type Play to Start: ")
-		if userInput == "Play": 
+		user_input = input("Type Play to Start: ")
+		if user_input == "Play": 
 			return
 		
 			 
@@ -24,7 +24,7 @@ def menu():
 
 def main():
 	menu()
-	mainGame()
+	main_game()
 
 main()
 

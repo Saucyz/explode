@@ -1,0 +1,13 @@
+#!/usr/bin/python
+import sys
+import time
+from PyQt5.QtWidgets import QtGui, QtCore
+
+
+
+
+
+
+def main():
+
+main()
