@@ -1,10 +1,10 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-from firstgui import Ui_myfirstgui
+from secondgui import Ui_Dialog
  
-class MyFirstGuiProgram(Ui_myfirstgui):
+class MyFirstGuiProgram(Ui_Dialog):
 	def __init__(self, dialog):
-		Ui_myfirstgui.__init__(self)
+		Ui_Dialog.__init__(self)
 		self.setupUi(dialog)
  
 		# Connect "add" button with a custom function (addInputTextToListbox)
