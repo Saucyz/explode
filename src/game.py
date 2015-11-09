@@ -19,6 +19,17 @@ class Game:
 		else:
 			self.checkLose()
 
+		#Temporary get console input
+	def consoleInput(self):
+		return input()
+
+	#Gives input to bomb for bomb controls
+	def giveBombInput(self, bomb, bombinput):
+		bomb.changeBombInput(bombinput)
+
+	#gives input for active module on bomb.
+	def giveModInput(self, bomb, modinput):
+		bomb.getActiveModule().changeInput(modinput)
 
 	def win(self):
 		#print win screen and exit game

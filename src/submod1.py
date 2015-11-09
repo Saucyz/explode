@@ -1,25 +1,29 @@
 from module import Module
 
 class SubMod1(Module):
+	#Constructor
 	def __init__(self):
 		Module.__init__(self, 'submod1')
 
+	#Resets module
 	def resetModule(self):
 		self.changeStateIncomplete()
+		self.input = 0
 
-	#Temporary get console input
-	def consoleInput(self):
-		self.getInput(input('Type a number from 0 to 9: '))
-
+	#Runs module minigame
 	def submod1main(self):
 		while True:
-			#win if enter 1, strike otherwise.
-			self.consoleInput()
-			if (self.input == '1'):
-				self.changeStateComplete() 
+			#No input yet
+			if(self.input == 0):
+				pass
 			else:
-				self.changeStateStrike()
-			print('Submod1 current state: ' + self.getState())
-			print('Reset')
-			self.changeStateIncomplete()
-			print('Submod1 current state: ' + self.getState())
+				#Win if enter 1, strike otherwise.
+				if(self.input == '1'):
+					self.changeStateComplete() 
+				#Other inputs cause strike
+				else:
+					self.changeStateStrike()
+				print('Submod1 current state: ' + self.getState())
+				print('Reset')
+				self.resetModule()
+				print('Submod1 current state: ' + self.getState())

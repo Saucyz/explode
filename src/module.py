@@ -2,6 +2,7 @@ class Module:
 	def __init__(self, modname):
 		self.name = modname
 		self.state = 'INCOMPLETE'
+		self.input = 0
 
 	def getName(self):
 		return self.name
@@ -21,6 +22,6 @@ class Module:
 	def changeStateStrike(self):
 		self.changeState('STRIKE')
 
-	def getInput(self, userinput):
+	def changeInput(self, userinput):
 		self.input = userinput
 

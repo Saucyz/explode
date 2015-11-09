@@ -46,6 +46,7 @@ class Bomb:
 		self.moduleList = list()
 		self.timer = BombTimer(secs)
 		self.activeModule = 1
+		self.input = 0
 	
 	def populate(self):
 		for x in range(numModules):
@@ -63,10 +64,19 @@ class Bomb:
 		th1.start()
 		th2.start()
 
+	def changeBombInput(self, bombinput):
+		self.input = bombinput
+
 	def changeActiveModule(self, direction):
 		#so far only 1 module, later add logic for more modules based on directions
 		#modules should reset themselves when deactivated
 		self.activeModule = 1
+
+	def getActiveModIndex(self):
+		return self.activeModule
+
+	def getActiveModule(self):
+		return self.moduleList[getActiveModIndex()]
 
 	def checkModStates(self):
 		strikes = 0
