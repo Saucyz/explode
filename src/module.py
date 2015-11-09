@@ -21,3 +21,6 @@ class Module:
 	def changeStateStrike(self):
 		self.changeState('STRIKE')
 
+	def getInput(self, userinput):
+		self.input = userinput
+

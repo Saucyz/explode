@@ -6,9 +6,6 @@ class SubMod1(Module):
 
 	def resetModule(self):
 		self.changeStateIncomplete()
-	
-	def getInput(self, userinput):
-		self.input = userinput
 
 	#Temporary get console input
 	def consoleInput(self):
