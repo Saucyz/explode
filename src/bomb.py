@@ -47,6 +47,7 @@ class TempMod:
 #module generator dependent on level
 def modGen(level):
 	name = ['first', 'second', 'third']
+	#TEMPORY USES ONLY SUBMOD1'S!
 	return SubMod1() #TempMod(level, name[level])
 
 class Bomb:
