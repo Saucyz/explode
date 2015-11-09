@@ -14,6 +14,7 @@ STRIKE = 'STRIKE'#2
 class BombTimer:
 	def __init__(self, secs):
 		self.secs = secs
+		self.timeOut = False
 
 	def countdown(self):
 		start = time.time()
@@ -26,6 +27,13 @@ class BombTimer:
 				with lock:
 					print ('Time left:' + str(self.secs - s))
 					elapsed = s
+
+		#ran out of time hence lose
+		self.timeOut()
+
+	def timeOut(self):
+		print('Time has run out...')
+		self.timeOut = True
 
 
 class TempMod:
@@ -45,8 +53,9 @@ class Bomb:
 	def __init__(self, secs):
 		self.moduleList = list()
 		self.timer = BombTimer(secs)
-		self.activeModule = 1
 		self.input = 0
+		self.activeModule = 0
+		self.start()
 	
 	def populate(self):
 		for x in range(numModules):
@@ -56,11 +65,17 @@ class Bomb:
 				print('Made ' + self.moduleList[x].name + ' at ' + str(x))
 
 		with lock:
-			print('number of modules = ' + str(len(self.moduleList)))
+			print('Finished populating module list. # of modules = ' + str(len(self.moduleList)))
 
 	def start(self):
+		#init the bomb module
+		self.populate()
+
+		#start timer and run seperate thread for module
 		th1 = threading.Thread(target = self.timer.countdown)
-		th2 = threading.Thread(target = self.populate)
+		
+		#need to be able to cancel a thread and reinit the module when we switch to other modules
+		th2 = threading.Thread(target = self.moduleList[self.activeModule].someFunction)
 		th1.start()
 		th2.start()
 
@@ -70,7 +85,8 @@ class Bomb:
 	def changeActiveModule(self, direction):
 		#so far only 1 module, later add logic for more modules based on directions
 		#modules should reset themselves when deactivated
-		self.activeModule = 1
+		#create and run module on thread
+		self.activeModule = 0
 
 	def getActiveModIndex(self):
 		return self.activeModule
@@ -83,6 +99,7 @@ class Bomb:
 		modulesCompleted = 0
 
 		for y in range(numModules):
+			print(str(y))
 			z = self.moduleList[y].getState()
 			if z == STRIKE:
 				strikes += 1
