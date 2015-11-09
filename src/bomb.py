@@ -75,7 +75,7 @@ class Bomb:
 		th1 = threading.Thread(target = self.timer.countdown)
 		
 		#need to be able to cancel a thread and reinit the module when we switch to other modules
-		th2 = threading.Thread(target = self.moduleList[self.activeModule].someFunction)
+		th2 = threading.Thread(target = self.moduleList[self.activeModule].submod1main())
 		th1.start()
 		th2.start()
 
@@ -92,7 +92,7 @@ class Bomb:
 		return self.activeModule
 
 	def getActiveModule(self):
-		return self.moduleList[getActiveModIndex()]
+		return self.moduleList[self.getActiveModIndex()]
 
 	def checkModStates(self):
 		strikes = 0

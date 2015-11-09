@@ -32,7 +32,7 @@ class Game:
 	def consoleInput(self):
 		return input()
 
-	#Gives input to bomb for bomb controls
+	#Gives input to bomb for bomb controls	not sure should use bomb.changeActiveModule
 	def giveBombInput(self, bomb, bombinput):
 		bomb.changeBombInput(bombinput)
 
@@ -54,7 +54,7 @@ class Game:
 			print('Waiting...')	#replace for when the input signal becomes continuous
 			return True
 		else:
-			self.bomb.moduleList[self.bomb.activeModule].getInput(item)
+			self.bomb.giveModInput(item)
 			return False
 
 	def inputWaitLoop(self):
@@ -66,7 +66,7 @@ class Game:
 		while self.bomb.timer.timeOut == False:
 			if self.checkGameState() == 'ND':
 				self.inputWaitLoop()
-			else:
+			elif:
 				print('You lose...')
 				return
 
