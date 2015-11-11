@@ -30,6 +30,6 @@ def main():
 	print('Module.input = ' + testgame.bomb.getActiveModule().input)
 	print('Test Game input test: ' + testresult)
 	
-	
+	game.main()
 
 main()

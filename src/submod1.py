@@ -23,6 +23,6 @@ class SubMod1(Module):
 			else:
 				self.changeStateStrike()
 			print('Submod1 current state: ' + self.getState())
-			print('Reset')
+			'''print('Reset')
 			self.resetModule()
-			print('Submod1 current state: ' + self.getState())
+			print('Submod1 current state: ' + self.getState())'''

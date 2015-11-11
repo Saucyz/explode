@@ -54,7 +54,7 @@ class Game:
 			print('Waiting...')	#replace for when the input signal becomes continuous
 			return True
 		else:
-			self.bomb.giveModInput(item)
+			self.giveModInput(self.bomb, item)
 			return False
 
 	def inputWaitLoop(self):
@@ -64,6 +64,7 @@ class Game:
 
 	def gameLoop(self):
 		while self.bomb.timer.timeOut == False:
+			self.bomb.getActiveModule().submod1main()
 			gamestate = self.checkGameState()
 			if gamestate == 'ND':
 				self.inputWaitLoop()
