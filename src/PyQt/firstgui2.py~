@@ -1,3 +1,4 @@
+import sys
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'firstgui.ui'
@@ -54,7 +55,7 @@ class Ui_myfirstgui(object):
 
 
 if __name__ == "__main__":
-    import sys
+
     app = QtWidgets.QApplication(sys.argv)
     myfirstgui = QtWidgets.QDialog()
     ui = Ui_myfirstgui()
