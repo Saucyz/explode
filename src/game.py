@@ -64,9 +64,10 @@ class Game:
 
 	def gameLoop(self):
 		while self.bomb.timer.timeOut == False:
-			if self.checkGameState() == 'ND':
+			gamestate = self.checkGameState()
+			if gamestate == 'ND':
 				self.inputWaitLoop()
-			elif:
+			elif gamestate == 'Lose':
 				print('You lose...')
 				return
 
@@ -74,4 +75,4 @@ def main():
 	g = Game(5)
 	g.gameLoop()
 
-main()
+#main()

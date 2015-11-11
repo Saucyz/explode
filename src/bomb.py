@@ -56,7 +56,9 @@ class Bomb:
 		self.timer = BombTimer(secs)
 		self.input = 0
 		self.activeModule = 0
-		self.start()
+		self.populate()
+		#Not starting timer initially gets in the way of other tests
+		#self.start()
 	
 	def populate(self):
 		for x in range(numModules):
