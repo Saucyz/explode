@@ -11,18 +11,18 @@ class SubMod1(Module):
 		self.input = 0
 
 	#Runs module minigame
-	def check(self):
-		#No input yet
-		if(self.input == 0):
+	def submod1main(self):
+		if self.getState() == 'COMPLETE':
 			pass
 		else:
-			#Win if enter 1, strike otherwise.
-			if(self.input == '1'):
-				self.changeStateComplete() 
-			#Other inputs cause strike
+			#No input yet
+			if(self.input == 0):
+				pass
 			else:
-				self.changeStateStrike()
-			print('Submod1 current state: ' + self.getState())
-			print('Reset')
-			self.resetModule()
-			print('Submod1 current state: ' + self.getState())
+				#Win if enter 1, strike otherwise.
+				if(self.input == '1'):
+					self.changeStateComplete() 
+				#Other inputs cause strike
+				else:
+					self.changeStateStrike()
+				print('Submod1 current state: ' + self.getState())

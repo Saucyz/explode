@@ -29,10 +29,12 @@ class BombTimer:
 					elapsed = s
 
 		#ran out of time hence lose
-		with lock:
-			print('Time has run out...')
+		self.timeOut()
+
+	def timeOut(self):
+		print('Time has run out...')
 		self.timeOut = True
-		
+
 
 class TempMod:
 	def __init__(self, level, name):
@@ -45,6 +47,7 @@ class TempMod:
 #module generator dependent on level
 def modGen(level):
 	name = ['first', 'second', 'third']
+	#TEMPORY USES ONLY SUBMOD1'S!
 	return SubMod1() #TempMod(level, name[level])
 
 class Bomb:
@@ -53,7 +56,9 @@ class Bomb:
 		self.timer = BombTimer(secs)
 		self.input = 0
 		self.activeModule = 0
-		self.start()
+		self.populate()
+		#Not starting timer initially gets in the way of other tests
+		#self.start()
 	
 	def populate(self):
 		for x in range(numModules):
@@ -73,9 +78,9 @@ class Bomb:
 		th1 = threading.Thread(target = self.timer.countdown)
 		
 		#need to be able to cancel a thread and reinit the module when we switch to other modules
-		#th2 = threading.Thread(target = self.moduleList[self.activeModule].submod1main())
+		th2 = threading.Thread(target = self.moduleList[self.activeModule].submod1main())
 		th1.start()
-		#th2.start()
+		th2.start()
 
 	def changeBombInput(self, bombinput):
 		self.input = bombinput

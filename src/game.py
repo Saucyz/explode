@@ -17,11 +17,13 @@ class Game:
 			self.totalStrikes += x
 		elif x == 0:
 			self.won = True
+			self.win()
 			state = 'Win'
 		else:
 			pass
 
 		if self.totalStrikes >= 3:
+			self.lose()
 			state = 'Lose'
 
 		return state
@@ -37,24 +39,23 @@ class Game:
 	#gives input for active module on bomb.
 	def giveModInput(self, bomb, modinput):
 		bomb.getActiveModule().changeInput(modinput)
-		bomb.getActiveModule().check()
 
 	def win(self):
 		#print win screen and exit game
-		print('You win...')
+		pass
 
 	def lose(self):
 		#print lose screen and exit game
-		print('You lose...')
+		pass
 
 	def inputHandler(self):
-		item = input('Enter an answer...   \n')
-		# if item == '':
-		# 	print('Waiting...')	#replace for when the input signal becomes continuous
-		# 	return True
-		# else:
-		self.bomb.giveModInput(item)
-		return False
+		item = input('Enter an answer...   ')
+		if item == '':
+			print('Waiting...')	#replace for when the input signal becomes continuous
+			return True
+		else:
+			self.giveModInput(self.bomb, item)
+			return False
 
 	def inputWaitLoop(self):
 		wait = True
@@ -63,19 +64,16 @@ class Game:
 
 	def gameLoop(self):
 		while self.bomb.timer.timeOut == False:
-			state = self.checkGameState()
-			if state == 'ND':
+			self.bomb.getActiveModule().submod1main()
+			gamestate = self.checkGameState()
+			if gamestate == 'ND':
 				self.inputWaitLoop()
-			elif state == 'Lose':
-				self.lose()
+			elif gamestate == 'Lose':
+				print('You lose...')
 				return
-			else:
-				self.win()
-				return
-		self.lose()
 
 def main():
 	g = Game(5)
 	g.gameLoop()
 
-main()
+#main()
