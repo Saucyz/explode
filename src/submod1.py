@@ -11,7 +11,7 @@ class SubMod1(Module):
 		self.input = 0
 
 	#Runs module minigame
-	def submod1main(self):
+	def check(self):
 		#No input yet
 		if(self.input == 0):
 			pass
