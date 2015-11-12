@@ -9,10 +9,11 @@ import sys
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from firstgui import Ui_myfirstgui
 
 import time
 
-class MainGUI(QtWidgets.QMainWindow):
+class MainGUI(Ui_myfirstgui, QtWidgets.QMainWindow):
 
 	def button1pushed(self):
 		self.button2.setText(self.button2.text() + "!")
@@ -30,7 +31,7 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.startTime = time.time()
 
-	def __init__(self, app):
+	def __init__(self, dialog, app):
 		super().__init__()
 
 		self.button1 = QtWidgets.QPushButton("mytext1")
@@ -66,9 +67,16 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.button1.clicked.connect(self.button1pushed)
 		self.button2.clicked.connect(self.button2pushed)
+		self.setupUi(dialog)
+ 
+		# Connect "add" button with a custom function (addInputTextToListbox)
+		self.addBtn.clicked.connect(self.addInputTextToListbox)
 
 		# self.
 		self.show()
+	def addInputTextToListbox(self):
+		txt = self.myTextInput.text()
+		self.listWidget.addItem(txt)
 
 
 		# myfirstgui.setObjectName("myfirstgui")
@@ -116,7 +124,8 @@ class MainGUI(QtWidgets.QMainWindow):
 if __name__ == "__main__":
 
 	app = QtWidgets.QApplication(sys.argv)
-	gui = MainGUI(app)
-
+	dialog = QtWidgets.QDialog()
+	gui = MainGUI(dialog, app)
+	dialog.show()
 	sys.exit(app.exec_())
 
