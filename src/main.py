@@ -15,12 +15,9 @@ def main():
 	if __name__ == "__main__":
 		app = QtWidgets.QApplication(sys.argv)
 		gui = MainGUI(app, time)
-		mygame = Game(time)
 
 		#adding buttons works
 		#gui.addButton("test")
-
-		mygame.gameLoop()
 
 		sys.exit(app.exec_())
 

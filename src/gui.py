@@ -1,7 +1,6 @@
 import sys
 import time
 import bomb
-from game import Game
 
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
@@ -54,6 +53,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.timer.start()
 		self.startTime = time.time()
 		self.setModuleGuis()
+		#disable button to prevent multiple presses of start before reset
+		self.startButton.setEnabled(False)
 
 	def timerDone(self):
 		elapsed = int(time.time() - self.startTime)
@@ -73,8 +74,6 @@ class MainGUI(QtWidgets.QMainWindow):
 			self.le.setText(str(text))
 			self.game.inputHandler(text)
 			self.game.checkGameState()
-		else:
-			pass
 
 	def buttonHandler(self):
 		pass
@@ -107,16 +106,10 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def restart(self):
 		self.game = Game(self.totalTime)
+		self.startButton.setEnabled(True)
+		self.timer.~Qtimer()
 		#needs to stop and reset timer as well
 
-	'''def keyPressEvent(self, event):
-		key = event.key()
-		print(key)
-
-		if key == QtCore.Qt.Key_Left:
-			print('Left Arrow Pressed')
-		elif key == QtCore.Qt.Key_D:
-			print('D Key Pressed')'''
 
 MAX_STRIKES = 3
 
