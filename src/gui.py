@@ -77,6 +77,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.setModuleGuis()
 		#disable button to prevent multiple presses of start before reset
 		self.startButton.setEnabled(False)
+		self.module1.setEnabled(True)
+		self.module2.setEnabled(True)
 
 	def timerDone(self):
 		self.game.checkGameState(self.verbose)
@@ -154,10 +156,13 @@ class MainGUI(QtWidgets.QMainWindow):
 	def restart(self):
 		self.game = Game(self.totalTime)
 		self.startButton.setEnabled(True)
+		self.module1.setEnabled(False)
+		self.module2.setEnabled(False)
 		self.timer.stop()
 		self.stateLabel.setText('')
 		self.timeLabel.setText('')
 		self.strikesLabel.setText('')
+		self.entry.label.setText('')
 		#needs to stop and reset timer as well
 
 
