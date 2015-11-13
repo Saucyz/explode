@@ -6,7 +6,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 class Entry(QtWidgets.QWidget):
-	def __init__(self, labelText):
+	def __init__(self, labelText, textcallback):
 		super().__init__()
 
 		self.text = None
@@ -14,6 +14,7 @@ class Entry(QtWidgets.QWidget):
 		self.label = QtWidgets.QLabel(labelText)
 		self.textEdit = QtWidgets.QLineEdit()
 		self.button1 = QtWidgets.QPushButton('Enter')
+		self.callback = textcallback
 
 		grid = QtWidgets.QGridLayout()
 		self.setLayout(grid)
@@ -26,7 +27,7 @@ class Entry(QtWidgets.QWidget):
 
 	def setEntryText(self):
 		self.text = self.textEdit.text()
-		
+		self.callback()
 
 
 class MainGUI(QtWidgets.QMainWindow):
@@ -110,7 +111,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.module2 = QtWidgets.QPushButton("Module 2 (Nothing)")
 		self.restartButton = QtWidgets.QPushButton("Restart")
 
-		self.entry = Entry("Enter something interesting...")
+		self.entry = Entry("Enter something interesting...", self.textHandler)
 
 		self.module1.clicked.connect(self.textHandler)
 		#self.module2.clicked.connect(self.someFunc)
