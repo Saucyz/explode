@@ -4,7 +4,7 @@ import init
 from game import Game
 import display
 import module
-from gui import MainGUI
+#from gui import MainGUI
 import sys
 import time
 

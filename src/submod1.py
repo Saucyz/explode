@@ -1,4 +1,5 @@
 from module import Module
+from PyQt5 import QtCore
 
 class SubMod1(Module):
 	#Constructor
@@ -20,7 +21,7 @@ class SubMod1(Module):
 				pass
 			else:
 				#Win if enter 1, strike otherwise.
-				if(self.input == '1'):
+				if(self.input == QtCore.Qt.Key_A):
 					self.changeStateComplete() 
 				#Other inputs cause strike
 				else:

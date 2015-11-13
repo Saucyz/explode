@@ -40,7 +40,7 @@ class Game(QtWidgets.QMainWindow):
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		
 		self.startButton.clicked.connect(self.startButtonPushed)
-
+		
 		#Creating input text line
 		self.le = QLineEdit(self)
 		self.grid.addWidget(self.le, 3, 3)
@@ -114,10 +114,18 @@ class Game(QtWidgets.QMainWindow):
 		key = event.key()
 		print(key)
 
-		if key == QtCore.Qt.Key_Left:
-			print('Left Arrow Pressed')
+		if key == QtCore.Qt.Key_A:
+			print('A Key Pressed')
+
 		elif key == QtCore.Qt.Key_D:
 			print('D Key Pressed')
+
+		elif key == QtCore.Qt.Key_S:
+			print('S Key Pressed')
+
+		elif key == QtCore.Qt.Key_W:
+			print('W Key Pressed')
+		self.giveModInput(self.bomb, key)
 
 	def checkGameState(self):
 		self.state = 'ND'
@@ -158,29 +166,19 @@ class Game(QtWidgets.QMainWindow):
 		#print lose screen and exit game
 		pass
 
-	def inputHandler(self):
-		item = input('Enter an answer...   ')
+	def inputHandler(self, text):
+		item = text
 		if item == '':
 			print('Waiting...')	#replace for when the input signal becomes continuous
 			return True
 		else:
-			self.giveModInput(self.bomb, item)
+			#self.giveModInput(self.bomb, item)
 			return False
 
 	def inputWaitLoop(self):
 		wait = True
 		while wait == True:
 			wait = self.inputHandler()
-
-	def keyPressEvent(self, event):
-		key = event.key()
-		print(key)
-
-		if key == QtCore.Qt.Key_Left:
-			print('Left Arrow Pressed')
-			
-		elif key == QtCore.Qt.Key_D:
-			print('D Key Pressed')
 
 	def gameLoop(self):
 		while self.bomb.timer.timeOut == False:
