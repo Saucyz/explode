@@ -1,6 +1,7 @@
 import sys
 import time
 import bomb
+from game import Game
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
@@ -62,7 +63,7 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.timer.start()
 		self.startTime = time.time()
-		self.gameLoop()
+		self.game.gameLoop()
 
 	def timerDone(self):
 		elapsed = int(time.time() - self.startTime)
@@ -93,6 +94,14 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.numButtons += 1
 		self.show()
 
+	'''def keyPressEvent(self, event):
+		key = event.key()
+		print(key)
+
+		if key == QtCore.Qt.Key_Left:
+			print('Left Arrow Pressed')
+		elif key == QtCore.Qt.Key_D:
+			print('D Key Pressed')'''
 
 MAX_STRIKES = 3
 

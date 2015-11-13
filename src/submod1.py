@@ -25,4 +25,4 @@ class SubMod1(Module):
 				#Other inputs cause strike
 				else:
 					self.changeStateStrike()
-				print('Submod1 current state: ' + self.getState())
+				#print('Submod1 current state: ' + self.getState())

@@ -19,17 +19,19 @@ def main():
 		failcount += 1
 	print('Test active module = module: ' + testresult)
 
+
 	print('Testing Game inputs')
-	testinput = testgame.consoleInput()
-	testgame.giveModInput(testgame.bomb, testinput)
-	if( testgame.bomb.getActiveModule().input == testinput ):
+	while testgame.bomb.getActiveModule().input == 0:
+		pass
+	#testinput = testgame.consoleInput()
+	#testgame.giveModInput(testgame.bomb, testinput)
+	if( testgame.bomb.getActiveModule().input == game.QtCore.Qt.Key_Left ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
 		failcount += 1
-	print('Module.input = ' + testgame.bomb.getActiveModule().input)
+	print('Module.input = ' + str(testgame.bomb.getActiveModule().input))
 	print('Test Game input test: ' + testresult)
-	
-	game.main()
+	#game.main()
 
 main()
