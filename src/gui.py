@@ -59,17 +59,18 @@ class MainGUI(QtWidgets.QMainWindow):
 			print('strikes: ' + str(self.game.totalStrikes))
 		self.strikesLabel.setText(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
 		elapsed = int(time.time() - self.startTime)
-		if elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
+		if self.game.state == 'Win':
+			 self.timer.stop()
+		elif elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
 			self.game.state = 'Lose'
-			self.stateLabel.setText('State: ' + self.game.state)
 		else:
 			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
-			self.stateLabel.setText('State: ' + self.game.state)
+		self.stateLabel.setText('State: ' + self.game.state)
 
 	def textHandler(self):
 		self.game.bomb.getActiveModule().submod1main()
-		text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter answer...')
+		text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter number from 0 - 9: ')
 		if ok:
 			self.le.setText(str(text))
 			self.game.inputHandler(text)
