@@ -5,7 +5,7 @@ import module
 from submod1 import SubMod1
 import threading
 
-numModules = 3
+numModules = 1
 
 COMPLETE = 'COMPLETE'#0
 INCOMPLETE = 'INCOMPLETE'#1
@@ -97,12 +97,14 @@ class Bomb:
 	def getActiveModule(self):
 		return self.moduleList[self.getActiveModIndex()]
 
-	def checkModStates(self):
+	def checkModStates(self, verbose):
 		strikes = 0
 		modulesCompleted = 0
 
 		for y in range(numModules):
-			print(str(y))
+			if verbose:
+				print(str(y))
+
 			z = self.moduleList[y].getState()
 			if z == STRIKE:
 				strikes += 1
@@ -111,7 +113,9 @@ class Bomb:
 				modulesCompleted += 1
 			else:
 				pass
-			print(z)
+
+			if verbose:
+				print(z)
 
 		if strikes > 0:
 			return strikes

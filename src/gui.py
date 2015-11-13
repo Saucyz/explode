@@ -10,6 +10,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		super().__init__()
 
 		self.numButtons = 3
+		self.verbose = True
 		self.totalTime = totalTime
 
 		self.startButton = QtWidgets.QPushButton("Start Timer")
@@ -35,10 +36,6 @@ class MainGUI(QtWidgets.QMainWindow):
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		
 		self.startButton.clicked.connect(self.startButtonPushed)
-
-		#Creating input text line
-		self.le = QLineEdit(self)
-		self.grid.addWidget(self.le, 3, 3)
 		self.show()
 
 		#create Game
@@ -57,6 +54,10 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.startButton.setEnabled(False)
 
 	def timerDone(self):
+		self.game.checkGameState(self.verbose)
+		if self.verbose:
+			print('strikes: ' + str(self.game.totalStrikes))
+		self.strikesLabel.setText(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
 		elapsed = int(time.time() - self.startTime)
 		if elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
@@ -68,12 +69,10 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def textHandler(self):
 		self.game.bomb.getActiveModule().submod1main()
-			
 		text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter answer...')
 		if ok:
 			self.le.setText(str(text))
 			self.game.inputHandler(text)
-			self.game.checkGameState()
 
 	def buttonHandler(self):
 		pass
@@ -93,11 +92,15 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.stateLabel = QtWidgets.QLabel("State: ")
 		self.timeLabel = QtWidgets.QLabel("Time remaining: ")
-		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' strikes')
+		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
 
 		self.grid.addWidget(self.stateLabel, 0, 2)
 		self.grid.addWidget(self.timeLabel, 1, 2)
 		self.grid.addWidget(self.strikesLabel, 2, 2)
+
+		#Creating input text line
+		self.le = QLineEdit(self)
+		self.grid.addWidget(self.le, 3, 3)
 
 		# self.newButton = QtWidgets.QPushButton(buttonText)
 		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
@@ -107,7 +110,10 @@ class MainGUI(QtWidgets.QMainWindow):
 	def restart(self):
 		self.game = Game(self.totalTime)
 		self.startButton.setEnabled(True)
-		self.timer.~Qtimer()
+		self.timer.stop()
+		self.stateLabel.setText('')
+		self.timeLabel.setText('')
+		self.strikesLabel.setText('')
 		#needs to stop and reset timer as well
 
 
@@ -119,8 +125,8 @@ class Game:
 		self.totalStrikes = 0
 		self.state = 'ND'
 
-	def checkGameState(self):
-		x = self.bomb.checkModStates()
+	def checkGameState(self, verbose):
+		x = self.bomb.checkModStates(verbose)
 
 		if x > 0:
 			self.totalStrikes += x
@@ -129,7 +135,7 @@ class Game:
 		else:
 			pass
 
-		if self.totalStrikes >= 3:
+		if self.totalStrikes >= MAX_STRIKES:
 			self.state = 'Lose'
 
 	#Gives input to bomb for bomb controls	not sure should use bomb.changeActiveModule

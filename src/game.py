@@ -5,7 +5,7 @@ from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 MAX_STRIKES = 3
 
-class Game(QMainWindow):
+class Game:
 	def __init__(self, time):
 		self.bomb = bomb.Bomb(time)
 		self.totalStrikes = 0
