@@ -1,5 +1,7 @@
 #!/usr/bin/python
 import bomb
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 MAX_STRIKES = 3
 
@@ -62,12 +64,23 @@ class Game:
 		while wait == True:
 			wait = self.inputHandler()
 
+	def keyPressEvent(self, event):
+		key = event.key()
+		print(key)
+
+		if key == QtCore.Qt.Key_Left:
+			print('Left Arrow Pressed')
+			
+		elif key == QtCore.Qt.Key_D:
+			print('D Key Pressed')
+
 	def gameLoop(self):
 		while self.bomb.timer.timeOut == False:
 			self.bomb.getActiveModule().submod1main()
 			gamestate = self.checkGameState()
 			if gamestate == 'ND':
-				self.inputWaitLoop()
+				pass
+				#self.inputWaitLoop()
 			elif gamestate == 'Lose':
 				print('You lose...')
 				return
