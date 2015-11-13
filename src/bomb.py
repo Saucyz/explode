@@ -104,7 +104,8 @@ class Bomb:
 		for y in range(numModules):
 			if verbose:
 				print(str(y))
-
+			#Small fix for checking submodmain more often may be threading problem
+			self.moduleList[y].submod1main()
 			z = self.moduleList[y].getState()
 			if z == STRIKE:
 				strikes += 1
