@@ -5,6 +5,7 @@ import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
+#Should move this into class probably Game later
 MAX_STRIKES = 3
 
 class Game(QtWidgets.QMainWindow):
@@ -133,6 +134,7 @@ class Game(QtWidgets.QMainWindow):
 
 		if x > 0:
 			self.totalStrikes += x
+			self.strikesLabel.setText(str(self.totalStrikes) + "/" + str(MAX_STRIKES) + ' strikes')
 		elif x == 0:
 			self.won = True
 			self.win()
