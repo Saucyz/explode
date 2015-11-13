@@ -3,7 +3,7 @@ import time
 import bomb
 from game import Game
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 class MainGUI(QtWidgets.QMainWindow):
@@ -13,14 +13,9 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.numButtons = 3
 		self.totalTime = totalTime
 
-		self.button1 = QtWidgets.QPushButton("Start Timer")
-		self.button2 = QtWidgets.QPushButton("mytext2")
-		self.button3 = QtWidgets.QPushButton("mytext3")
+		self.startButton = QtWidgets.QPushButton("Start Timer")
 		
 		self.list1 = QtWidgets.QListWidget()
-
-		self.label = QtWidgets.QLabel()
-		self.label2 = QtWidgets.QLabel("0")
 
 		#Set and display image
 		# reader = QtGui.QImageReader("bomb-154456_1280.png")
@@ -37,15 +32,10 @@ class MainGUI(QtWidgets.QMainWindow):
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
 
-		self.grid.addWidget(self.button1, 0, 0)
-		self.grid.addWidget(self.button2, 1, 0)
-		self.grid.addWidget(self.button3, 2, 0)
-		self.grid.addWidget(self.list1, 0, 1, 4, 1)
-		self.grid.addWidget(self.label,0, 2, 4, 1)
-		self.grid.addWidget(self.label2, 3, 0)
-
-		self.button1.clicked.connect(self.button1pushed)
-		self.button2.clicked.connect(self.button2pushed)
+		self.grid.addWidget(self.startButton, 0, 0)
+		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
+		
+		self.startButton.clicked.connect(self.startButtonPushed)
 
 		#Creating input text line
 		self.le = QLineEdit(self)
@@ -55,7 +45,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		#create Game
 		self.game = Game(totalTime)
 
-	def button1pushed(self):
+	def startButtonPushed(self):
 		self.timer = QtCore.QTimer()
 		self.timer.setInterval(self.totalTime)
 		self.timer.timeout.connect(self.timerDone)
@@ -63,36 +53,61 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.timer.start()
 		self.startTime = time.time()
-		self.game.gameLoop()
+		self.setModuleGuis()
 
 	def timerDone(self):
 		elapsed = int(time.time() - self.startTime)
-		if elapsed > self.totalTime :
-			self.label2.setText('BOOM!!!!!')
+		if elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
+			self.timeLabel.setText('BOOM!!!!!')
+			self.game.state = 'Lose'
+			self.stateLabel.setText('State: ' + self.game.state)
 		else:
-			self.label2.setText(str(elapsed))
+			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
+			self.stateLabel.setText('State: ' + self.game.state)
 
-	def gameLoop(self):
-		while self.game.state == 'ND':
-			self.game.bomb.getActiveModule().submod1main()
+	def textHandler(self):
+		self.game.bomb.getActiveModule().submod1main()
+			
+		text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter answer...')
+		if ok:
+			self.le.setText(str(text))
+			self.game.inputHandler(text)
 			self.game.checkGameState()
-			if self.game.state == 'ND':
-				text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter answer...')
-				if ok:
-					self.le.setText(str(text))
-					self.game.inputHandler(text)
-				else:
-					return
+		else:
+			pass
 
-
-	def button2pushed(self):
+	def buttonHandler(self):
 		pass
 
-	def addButton(self, buttonText):
-		self.newButton = QtWidgets.QPushButton(buttonText)
-		self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
-		self.numButtons += 1
-		self.show()
+	def setModuleGuis(self):
+		self.module1 = QtWidgets.QPushButton("Module 1")
+		self.module2 = QtWidgets.QPushButton("Module 2 (Nothing)")
+		self.restartButton = QtWidgets.QPushButton("Restart")
+
+		self.module1.clicked.connect(self.textHandler)
+		#self.module2.clicked.connect(self.someFunc)
+		self.restartButton.clicked.connect(self.restart)
+
+		self.grid.addWidget(self.module1, 1, 0)
+		self.grid.addWidget(self.module2, 2, 0)
+		self.grid.addWidget(self.restartButton, 3, 0)
+
+		self.stateLabel = QtWidgets.QLabel("State: ")
+		self.timeLabel = QtWidgets.QLabel("Time remaining: ")
+		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' strikes')
+
+		self.grid.addWidget(self.stateLabel, 0, 2)
+		self.grid.addWidget(self.timeLabel, 1, 2)
+		self.grid.addWidget(self.strikesLabel, 2, 2)
+
+		# self.newButton = QtWidgets.QPushButton(buttonText)
+		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
+		# self.numButtons += 1
+		#self.show()
+
+	def restart(self):
+		self.game = Game(self.totalTime)
+		#needs to stop and reset timer as well
 
 	'''def keyPressEvent(self, event):
 		key = event.key()
@@ -112,24 +127,17 @@ class Game:
 		self.state = 'ND'
 
 	def checkGameState(self):
-		state = 'ND'
 		x = self.bomb.checkModStates()
 
 		if x > 0:
 			self.totalStrikes += x
 		elif x == 0:
-			self.win()
 			self.state = 'Win'
 		else:
 			pass
 
 		if self.totalStrikes >= 3:
-			self.lose()
 			self.state = 'Lose'
-
-		#Temporary get console input
-	def consoleInput(self):
-		return input()
 
 	#Gives input to bomb for bomb controls	not sure should use bomb.changeActiveModule
 	def giveBombInput(self, bomb, bombinput):
@@ -138,14 +146,6 @@ class Game:
 	#gives input for active module on bomb.
 	def giveModInput(self, bomb, modinput):
 		bomb.getActiveModule().changeInput(modinput)
-
-	def win(self):
-		#print win screen and exit game
-		pass
-
-	def lose(self):
-		#print lose screen and exit game
-		pass
 
 	def inputHandler(self, item):
 		self.giveModInput(self.bomb, item)
