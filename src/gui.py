@@ -5,12 +5,36 @@ import bomb
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
+class Entry(QtWidgets.QWidget):
+	def __init__(self, labelText):
+		super().__init__()
+
+		self.text = None
+
+		self.label = QtWidgets.QLabel(labelText)
+		self.textEdit = QtWidgets.QLineEdit()
+		self.button1 = QtWidgets.QPushButton('Enter')
+
+		grid = QtWidgets.QGridLayout()
+		self.setLayout(grid)
+
+		grid.addWidget(self.label, 0, 0, 1, 2)
+		grid.addWidget(self.textEdit,1,0, 1, 2)
+		grid.addWidget(self.button1, 2, 0)
+
+		self.button1.clicked.connect(self.setEntryText)
+
+	def setEntryText(self):
+		self.text = self.textEdit.text()
+		
+
+
 class MainGUI(QtWidgets.QMainWindow):
 	def __init__(self, app, totalTime):
 		super().__init__()
 
 		self.numButtons = 3
-		self.verbose = True
+		self.verbose = False
 		self.totalTime = totalTime
 
 		self.startButton = QtWidgets.QPushButton("Start Timer")
@@ -69,10 +93,13 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.stateLabel.setText('State: ' + self.game.state)
 
 	def textHandler(self):
+		self.entry.label.setText('Enter text for module 1: ')
 		self.game.bomb.getActiveModule().submod1main()
-		text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter number from 0 - 9: ')
-		if ok:
-			self.le.setText(str(text))
+		text = self.entry.text
+		print(text)
+		#text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter number from 0 - 9: ')
+		if text != None:
+			#self.le.setText(str(text))
 			self.game.inputHandler(text)
 
 	def buttonHandler(self):
@@ -82,6 +109,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.module1 = QtWidgets.QPushButton("Module 1")
 		self.module2 = QtWidgets.QPushButton("Module 2 (Nothing)")
 		self.restartButton = QtWidgets.QPushButton("Restart")
+
+		self.entry = Entry("Enter something interesting...")
 
 		self.module1.clicked.connect(self.textHandler)
 		#self.module2.clicked.connect(self.someFunc)
@@ -100,8 +129,21 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.grid.addWidget(self.strikesLabel, 2, 2)
 
 		#Creating input text line
-		self.le = QLineEdit(self)
-		self.grid.addWidget(self.le, 3, 3)
+#		self.le = QLineEdit(self)
+#		self.grid.addWidget(self.le, 3, 3)
+
+		self.grid.addWidget(self.entry, 4, 3)
+
+		self.grid.setColumnStretch(0, 1)
+		self.grid.setColumnStretch(1, 0)
+		self.grid.setColumnStretch(2, 1)
+		self.grid.setColumnStretch(3, 3)
+
+		self.grid.setRowStretch(0, 1)
+		self.grid.setRowStretch(1, 1)
+		self.grid.setRowStretch(2, 1)
+		self.grid.setRowStretch(3, 1)
+		self.grid.setRowStretch(4, 1)
 
 		# self.newButton = QtWidgets.QPushButton(buttonText)
 		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
