@@ -20,10 +20,9 @@ import cwiid
 import time
 #import RPi.GPIO as io
 
-#io.setmode(io.BCM)
-#pins = (2,3,4,17)
-#for i in pins:
-#  io.setup(i,io.OUT)
+#Neutral flat table acc = [135, 136, 161]
+#on left side = [104, 136, 135] on right [162 .. ..
+
 
 button_delay = 0.05 #was 0.1
 
@@ -51,7 +50,7 @@ wii.led = 1
 while True:
 	
   buttons = wii.state['buttons']
-  time.sleep(0.1)
+  time.sleep(0.05)
 
   # If Plus and Minus buttons pressed
   # together then rumble and quit.
@@ -63,25 +62,26 @@ while True:
     exit(wii)  
 
   #wii.rumble = (wii.state['acc'][0] < 134)
-  #print (wii.state['acc'])
+  if (buttons & cwiid.BTN_A):
+    print (wii.state['acc'])
   prev = wii.state['acc'][0] 
-  ind = 6
+  ind = 50
   left = 0
   right = 0
-  while (ind > 0):
+  '''while (ind > 0):
   
     if(wii.state['acc'][0] < 100):
       left += 1
     if(wii.state['acc'][0] > 160): 
      right += 1
     ind -= 1
-    time.sleep(0.05)
+    time.sleep(0.01)
 
     if(left > right):
       print("Swing left!")
     if(right> left):
-     print("Swing right!")
-  time.sleep(0.1)
+     print("Swing right!")'''
+  #time.sleep(0.05)
   if wii.state['buttons'] & cwiid.BTN_A:
       wii.led = (wii.state['led'] + 1 % 16)
   
@@ -117,9 +117,9 @@ while True:
     time.sleep(button_delay)          
 
   if (buttons & cwiid.BTN_A):
-    print ('Button A pressed')
-    time.sleep(button_delay)          
-    #for i in pins:
+   # print ('Button A pressed')
+    #time.sleep(button_delay)          
+    pass
       #io.output(i, False)    
 
   if (buttons & cwiid.BTN_B):
