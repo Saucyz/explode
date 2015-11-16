@@ -226,9 +226,10 @@ class Game:
 		#while True:
 		buttons = self.wii.state['buttons']
 
-		print(self.wii.state['acc'])
-		time.sleep(0.3)
-
+		#print(self.wii.state['acc'])
+		time.sleep(0.1) #was 0.3
+		if(buttons == 0):
+			self.inputHandler('NOTHING')
 		# If Plus and Minus buttons pressed
 		# together then rumble and quit.
 		if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):  
@@ -236,8 +237,56 @@ class Game:
 			self.wii.rumble = 1
 			time.sleep(1)
 			self.wii.rumble = 0
-			exit(self.wii) 
+			exit(self.wii)
 
+		# Check if other buttons are pressed by
+		# doing a bitwise AND of the buttons number
+		# and the predefined constant for that button.
+		if (buttons & cwiid.BTN_LEFT):
+			print ('Left pressed')
+			self.inputHandler('LEFT')
+
+		if(buttons & cwiid.BTN_RIGHT):
+			print ('Right pressed')
+			self.inputHandler('RIGHT')
+
+		if (buttons & cwiid.BTN_UP):
+			print ('Up pressed')        
+			self.inputHandler('UP')
+
+		if (buttons & cwiid.BTN_DOWN):
+			print ('Down pressed')      
+			self.inputHandler('DOWN')
+
+		if (buttons & cwiid.BTN_1):
+			print ('Button 1 pressed')
+			self.inputHandler('BUTTON1')         
+
+		if (buttons & cwiid.BTN_2):
+			print ('Button 2 pressed')
+			self.inputHandler('BUTTON2')         
+
+		if (buttons & cwiid.BTN_A):
+			print ('Button A pressed')
+			self.inputHandler('BUTTONA')
+
+		if (buttons & cwiid.BTN_B):
+			print ('Button B pressed')
+			self.inputHandler('BUTTONB')       
+
+		if (buttons & cwiid.BTN_HOME):
+			print ('Home Button pressed')
+			self.inputHandler('HOME')      
+
+		if (buttons & cwiid.BTN_MINUS):
+			print ('Minus Button pressed')
+			self.inputHandler('MINUS')  
+
+		if (buttons & cwiid.BTN_PLUS):
+			print( 'Plus Button pressed')
+			self.inputHandler('PLUS')
+
+		#time.sleep(button_delay)
 
 	def inputHandler(self, item):
 		self.giveModInput(self.bomb, item)
