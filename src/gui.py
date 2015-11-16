@@ -3,6 +3,7 @@ import time
 import bomb
 #Wii remote library!
 import cwiid
+import serialCom
 
 #TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
 
@@ -85,6 +86,7 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		#create Game
 		self.game = Game(self, totalTime)
+		serial = serialCom()
 
 		r = 8
 		col = 2
@@ -113,17 +115,25 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def timerDone(self):
 		self.game.checkGameState(self.verbose)
+		
 		if self.verbose:
 			print('strikes: ' + str(self.game.totalStrikes))
+		
 		self.strikesLabel.setText(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
 		elapsed = int(time.time() - self.startTime)
+		
 		if self.game.state == 'Win':
 			 self.timer.stop()
+			 serial.serialWrite("W")
 		elif elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
 			self.game.state = 'Lose'
+			serial.serialWrite("L")
+			self.timer.stop()
 		else:
 			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
+			serial.serialWrite("U")
+		
 		self.stateLabel.setText('State: ' + self.game.state)
 
 	def textHandler(self):
@@ -239,7 +249,10 @@ class Game:
 			#self.inputHandler(self.keyinput)
 			
 		x = self.bomb.checkModStates(verbose)
+		#reading DE2 module state
+		y = self.serial.serialRead()
 
+		if
 		if x > 0:
 			self.totalStrikes += x
 		elif x == 0:
