@@ -5,7 +5,7 @@ def testWiimote():
 	print('Testing no inputs, do not press anything')	
 	testgame.wiiInput()
 	failcount = 0
-	if( testgame.bomb.getActiveModule().input == 'NOTHING' ):
+	if( testgame.bomb.getActiveModule().input == 0 ):
 		testresult = 'PASS'
 	else:
 		testresult = 'FAIL'
@@ -13,7 +13,7 @@ def testWiimote():
 	print('Test for no input: ' + testresult)
 
 	print('Testing BUTTONA')
-	while (testgame.bomb.getActiveModule().input == 'NOTHING' ):
+	while (testgame.bomb.getActiveModule().input == 0 ):
 		testgame.wiiInput()
 	print('Input received: ' + testgame.bomb.getActiveModule().input )
 	if( testgame.bomb.getActiveModule().input == 'BUTTONA' ):

@@ -3,9 +3,10 @@
 import time
 import module
 from submod1 import SubMod1
+from submod2 import SubMod2
 import threading
 
-numModules = 1
+numModules = 2
 
 COMPLETE = 'COMPLETE'#0
 INCOMPLETE = 'INCOMPLETE'#1
@@ -35,20 +36,13 @@ class BombTimer:
 		print('Time has run out...')
 		self.timeOut = True
 
-
-class TempMod:
-	def __init__(self, level, name):
-		self.level = level
-		self.name = name
-
-	def testFunction(self):
-		print("hi")
-
 #module generator dependent on level
 def modGen(level):
 	name = ['first', 'second', 'third']
-	#TEMPORY USES ONLY SUBMOD1'S!
-	return SubMod1() #TempMod(level, name[level])
+	if(level == 0):
+		return SubMod1()
+	else:
+		return SubMod2()
 
 class Bomb:
 	def __init__(self, secs):
@@ -78,7 +72,7 @@ class Bomb:
 		th1 = threading.Thread(target = self.timer.countdown)
 		
 		#need to be able to cancel a thread and reinit the module when we switch to other modules
-		th2 = threading.Thread(target = self.moduleList[self.activeModule].submod1main())
+		th2 = threading.Thread(target = self.moduleList[self.activeModule].main())
 		th1.start()
 		th2.start()
 
@@ -86,11 +80,10 @@ class Bomb:
 		self.input = bombinput
 
 	def changeActiveModule(self, direction):
-		#so far only 1 module, later add logic for more modules based on directions
+		#for now changes active mod to direction index in list
 		#modules should reset themselves when deactivated
 		#create and run module on thread
-		self.activeModule = 0
-
+		self.activeModule = direction
 	def getActiveModIndex(self):
 		return self.activeModule
 
@@ -105,7 +98,7 @@ class Bomb:
 			if verbose:
 				print(str(y))
 			#Small fix for checking submodmain more often may be threading problem
-			self.moduleList[y].submod1main()
+			self.moduleList[y].main()
 			z = self.moduleList[y].getState()
 			if z == STRIKE:
 				strikes += 1

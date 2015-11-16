@@ -11,7 +11,7 @@ class SubMod1(Module):
 		self.input = 0
 
 	#Runs module minigame
-	def submod1main(self):
+	def main(self):
 		if self.getState() == 'COMPLETE':
 			pass
 		else:

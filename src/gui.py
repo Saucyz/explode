@@ -3,6 +3,8 @@ import time
 import bomb
 import cwiid
 
+#TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
+
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
@@ -98,7 +100,7 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def textHandler(self):
 		self.entry.label.setText('Enter text for module 1: ')
-		self.game.bomb.getActiveModule().submod1main()
+		self.game.bomb.getActiveModule().main()
 		text = self.entry.text
 		print(text)
 		#text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter number from 0 - 9: ')
@@ -111,13 +113,13 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def setModuleGuis(self):
 		self.module1 = QtWidgets.QPushButton("Module 1")
-		self.module2 = QtWidgets.QPushButton("Module 2 (Nothing)")
+		self.module2 = QtWidgets.QPushButton("Module 2 (Wiimote)")
 		self.restartButton = QtWidgets.QPushButton("Restart")
 
 		self.entry = Entry("Enter something interesting...", self.textHandler)
 
-		self.module1.clicked.connect(self.textHandler)
-		#self.module2.clicked.connect(self.someFunc)
+		self.module1.clicked.connect(self.game.bomb.changeActiveModule, 0)
+		self.module2.clicked.connect(self.game.bomb.changeActiveModule, 1)
 		self.restartButton.clicked.connect(self.restart)
 
 		self.grid.addWidget(self.module1, 1, 0)
@@ -152,7 +154,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		# self.newButton = QtWidgets.QPushButton(buttonText)
 		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
 		# self.numButtons += 1
-		#self.show()
+		# self.show()
 
 	def restart(self):
 		self.game = Game(self.totalTime)
@@ -229,7 +231,7 @@ class Game:
 		#print(self.wii.state['acc'])
 		time.sleep(0.1) #was 0.3
 		if(buttons == 0):
-			self.inputHandler('NOTHING')
+			self.inputHandler(0)
 		# If Plus and Minus buttons pressed
 		# together then rumble and quit.
 		if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):  
