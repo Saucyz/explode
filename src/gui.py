@@ -57,6 +57,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.numButtons = 3
 		self.verbose = False
 		self.totalTime = totalTime
+		self.DE2win = False
 
 		self.startButton = QtWidgets.QPushButton("Start Timer")
 		
@@ -234,16 +235,20 @@ class MainGUI(QtWidgets.QMainWindow):
 			#self.inputHandler(self.keyinput)
 			
 		x = self.game.bomb.checkModStates(verbose)
+
 		#reading DE2 module state
 		y = self.srl.serialRead()
 		self.temp.setText(y)
-
-		if (y == 'S'):
-			x+=1
-
+		if(y == "T"):
+			self.DE2win = True
+		if(y == "S"):
+			if(x == -1):
+				x += 2
+			else:
+				x = x+1
 		if x > 0:
 			self.game.totalStrikes += x
-		elif x == 0 and y == "T":
+		elif x == 0 and self.DE2win:
 			self.game.state = 'Win'
 
 		if self.game.totalStrikes >= MAX_STRIKES:
