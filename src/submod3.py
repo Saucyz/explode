@@ -74,7 +74,7 @@ class SubMod3(Module):
 		if self.init ==0:
 			self.stage += 1
 			self.init = 1
-			selectedButton = 1
+			self.selectedButton = 1
 			print ("stage1reach")
 		else:
 			pass
@@ -89,7 +89,7 @@ class SubMod3(Module):
 		else:
 			#No input yet
 
-			if(self.input == 0):
+			if(False):
 				pass
 			else:
 				if self.input == 'UP' or self.input == 'RIGHT':
@@ -98,18 +98,21 @@ class SubMod3(Module):
 						self.selectedButton = 1
 				elif self.input == 'DOWN' or self.input == 'LEFT':
 					self.selectedButton -= 1
-					if selectedButton < 1:
+					if self.selectedButton < 1:
 						self.selectedButton = 3
 
 				if self.selectedButton == 1:
 					self.select1.setText("?")
+					self.select1.show()
 					self.select2.hide()
 					self.select3.hide()
 				elif self.selectedButton == 2:
 					self.select2.setText("?")
+					self.select2.show()
 					self.select1.hide()
 					self.select3.hide()
 				elif self.selectedButton == 3:
+					self.select3.show()
 					self.select3.setText("?")
 					self.select2.hide()
 					self.select1.hide()
@@ -340,7 +343,7 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA'
+						if self.input == 'BUTTONA':
 							if self.displayStage2 == 1:
 								if self.labelStage0 == 1:
 									if self.orderStage2 == 1 or self.orderStage2 == 2:
@@ -397,7 +400,8 @@ class SubMod3(Module):
 										if self.selectedButton == 3:
 											self.correctAns()
 										else:
-											self.incorrectAns()										self.posState2 = 3
+											self.incorrectAns()										
+										self.posState2 = 3
 							if self.displayStage2 == 2:
 								if self.selectedButton == 3:
 									self.correctAns()
@@ -462,7 +466,7 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA'
+						if self.input == 'BUTTONA':
 							if self.displayStage3 == 1:
 								if self.displayStage0 == 1:
 									if self.selectedButton == 1:
