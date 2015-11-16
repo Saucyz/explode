@@ -1,6 +1,7 @@
 import sys
 import time
 import bomb
+import cwiid
 
 from PyQt5 import QtCore, QtGui, QtWidgets, Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
@@ -173,6 +174,7 @@ class Game:
 		self.bomb = bomb.Bomb(time)
 		self.totalStrikes = 0
 		self.state = 'ND'
+		self.wiiSetUp()
 
 	def checkGameState(self, verbose):
 		x = self.bomb.checkModStates(verbose)
@@ -194,6 +196,48 @@ class Game:
 	#gives input for active module on bomb.
 	def giveModInput(self, bomb, modinput):
 		bomb.getActiveModule().changeInput(modinput)
+	
+	def wiiSetUp(self):
+		print ('Press 1 + 2 on your Wii Remote now ...')
+		time.sleep(1)
+
+		# Connect to the Wii Remote. If it times out
+		# then quit.
+		try:
+			self.wii=cwiid.Wiimote()
+		except RuntimeError:
+			print( "Error opening wiimote connection")
+			quit()
+		
+		print ('Wii Remote connected...\n')
+		print ('Press some buttons!\n')
+		print ('Press PLUS and MINUS together to disconnect and quit.\n')
+
+		#set Wiimote to report button presses and accelerometer state 
+		self.wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
+		time.sleep(1)
+		#turn on led to show connected 
+		self.wii.led = 1
+
+	def wiiInput(self):
+		#self.motioninput = self.wii.state['acc']
+		button_delay = 0.05 #was 0.1
+		
+		#while True:
+		buttons = self.wii.state['buttons']
+
+		print(self.wii.state['acc'])
+		time.sleep(0.3)
+
+		# If Plus and Minus buttons pressed
+		# together then rumble and quit.
+		if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):  
+			print ('\nClosing connection ...')
+			self.wii.rumble = 1
+			time.sleep(1)
+			self.wii.rumble = 0
+			exit(self.wii) 
+
 
 	def inputHandler(self, item):
 		self.giveModInput(self.bomb, item)
