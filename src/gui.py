@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 class Entry(QtWidgets.QWidget):
 	def __init__(self, labelText, textcallback):
-		super().__init__()
+		super(Entry, self).__init__()
 
 		self.text = None
 
@@ -32,7 +32,7 @@ class Entry(QtWidgets.QWidget):
 
 class MainGUI(QtWidgets.QMainWindow):
 	def __init__(self, app, totalTime):
-		super().__init__()
+		super(MainGUI, self).__init__()
 
 		self.numButtons = 3
 		self.verbose = False
