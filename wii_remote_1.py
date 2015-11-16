@@ -43,16 +43,16 @@ print ('Press some buttons!\n')
 print ('Press PLUS and MINUS together to disconnect and quit.\n')
 
 #set Wiimote to report button presses and accelerometer state 
-wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
+wii.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
  
 #turn on led to show connected 
-wm.led = 1
+wii.led = 1
  
 while True:
 	
   buttons = wii.state['buttons']
 
-	print(wm.state['acc'])
+  print(wii.state['acc'])
   time.sleep(0.3)
 
   # If Plus and Minus buttons pressed
