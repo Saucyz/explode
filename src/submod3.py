@@ -340,7 +340,7 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA'
+						if self.input == 'BUTTONA':
 							if self.displayStage2 == 1:
 								if self.labelStage0 == 1:
 									if self.orderStage2 == 1 or self.orderStage2 == 2:
@@ -397,7 +397,8 @@ class SubMod3(Module):
 										if self.selectedButton == 3:
 											self.correctAns
 										else:
-											self.incorrectAns										self.posState2 = 3
+											self.incorrectAns										
+										self.posState2 = 3
 							if self.displayStage2 == 2:
 								if self.selectedButton == 3:
 									self.correctAns
@@ -462,7 +463,7 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA'
+						if self.input == 'BUTTONA':
 							if self.displayStage3 == 1:
 								if self.displayStage0 == 1:
 									if self.selectedButton == 1:
