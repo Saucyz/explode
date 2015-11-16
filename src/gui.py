@@ -2,7 +2,7 @@ import sys
 import time
 import bomb
 #Wii remote library!
-#import cwiid
+import cwiid
 
 #TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
 
@@ -228,15 +228,15 @@ class Game:
 		self.state = 'ND'
 		self.lastinput = 0
 		#Wii remote setup!
-		#self.wiiSetUp()
+		self.wiiSetUp()
 		self.keyinput = 0
 
 	def checkGameState(self, verbose):
 		#Ignore controller inputs for types SubMod1 since this uses text field
 		if not isinstance(self.bomb.getActiveModule(), bomb.SubMod1):
 			#Wii input! Otherwise using keyboard
-			#self.wiiInput()
-			self.inputHandler(self.keyinput)
+			self.wiiInput()
+			#self.inputHandler(self.keyinput)
 			
 		x = self.bomb.checkModStates(verbose)
 

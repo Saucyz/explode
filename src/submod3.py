@@ -89,7 +89,7 @@ class SubMod3(Module):
 		else:
 			#No input yet
 
-			if(self.input == 0):
+			if(False):
 				pass
 			else:
 				if self.input == 'UP' or self.input == 'RIGHT':
