@@ -172,6 +172,9 @@ class MainGUI(QtWidgets.QMainWindow):
 MAX_STRIKES = 3
 
 class Game:
+
+
+
 	def __init__(self, time):
 		self.bomb = bomb.Bomb(time)
 		self.totalStrikes = 0
@@ -181,18 +184,15 @@ class Game:
 
 	def checkGameState(self, verbose):
 		#Ignore controller inputs for types SubMod1 since this uses text field
-		if (isinstance(self.bomb.getActiveModule(), bomb.SubMod1)):
-			pass
-		else:
+		if not isinstance(self.bomb.getActiveModule(), bomb.SubMod1):
 			self.wiiInput()
+
 		x = self.bomb.checkModStates(verbose)
 
 		if x > 0:
 			self.totalStrikes += x
 		elif x == 0:
 			self.state = 'Win'
-		else:
-			pass
 
 		if self.totalStrikes >= MAX_STRIKES:
 			self.state = 'Lose'
