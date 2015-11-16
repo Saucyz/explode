@@ -23,7 +23,7 @@ class SubMod2(Module):
 			if(self.input == 0):
 				pass
 			else:
-				#Win if enter 1, strike otherwise.
+				#Enter Konami code
 				if(self.input == self.getCurrentInstruction()):
 					self.instruction_index += 1
 					if(self.instruction_index >= len(self.instructions)):
@@ -32,5 +32,6 @@ class SubMod2(Module):
 				else:
 					self.changeStateStrike()
 					self.instruction_index = 0
+					print('Enter KONAMI code on Wiimote')
 			#ADDED THIS SO INPUT WOULDN'T STAY, NEED TO FIX!
 			self.input = 0

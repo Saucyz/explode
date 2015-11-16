@@ -118,8 +118,8 @@ class MainGUI(QtWidgets.QMainWindow):
 
 		self.entry = Entry("Enter something interesting...", self.textHandler)
 
-		self.module1.clicked.connect(self.game.bomb.changeActiveModule, 0)
-		self.module2.clicked.connect(self.game.bomb.changeActiveModule, 1)
+		self.module1.clicked.connect(lambda: self.game.bomb.changeActiveModule(0))
+		self.module2.clicked.connect(lambda: self.game.bomb.changeActiveModule(1))
 		self.restartButton.clicked.connect(self.restart)
 
 		self.grid.addWidget(self.module1, 1, 0)
@@ -176,9 +176,15 @@ class Game:
 		self.bomb = bomb.Bomb(time)
 		self.totalStrikes = 0
 		self.state = 'ND'
+		self.lastinput = 0
 		self.wiiSetUp()
 
 	def checkGameState(self, verbose):
+		#Ignore controller inputs for types SubMod1 since this uses text field
+		if (isinstance(self.bomb.getActiveModule(), bomb.SubMod1)):
+			pass
+		else:
+			self.wiiInput()
 		x = self.bomb.checkModStates(verbose)
 
 		if x > 0:
@@ -291,4 +297,8 @@ class Game:
 		#time.sleep(button_delay)
 
 	def inputHandler(self, item):
+		if(self.lastinput == item):
+			self.giveModInput(self.bomb, 0)
+			return
 		self.giveModInput(self.bomb, item)
+		self.lastinput = item
