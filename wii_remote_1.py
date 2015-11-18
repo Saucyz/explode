@@ -25,7 +25,7 @@ import time
 #for i in pins:
 #  io.setup(i,io.OUT)
 
-button_delay = 0.1
+button_delay = 0.05 #was 0.1
 
 print ('Press 1 + 2 on your Wii Remote now ...')
 time.sleep(1)
@@ -42,11 +42,18 @@ print ('Wii Remote connected...\n')
 print ('Press some buttons!\n')
 print ('Press PLUS and MINUS together to disconnect and quit.\n')
 
-wii.rpt_mode = cwiid.RPT_BTN
+#set Wiimote to report button presses and accelerometer state 
+wm.rpt_mode = cwiid.RPT_BTN | cwiid.RPT_ACC 
+ 
+#turn on led to show connected 
+wm.led = 1
  
 while True:
-
+	
   buttons = wii.state['buttons']
+
+	print(wm.state['acc'])
+  time.sleep(0.3)
 
   # If Plus and Minus buttons pressed
   # together then rumble and quit.
