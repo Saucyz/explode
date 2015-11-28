@@ -1,11 +1,13 @@
 import sys
 import time
 import bomb
-import cwiid
+#Wii remote library!
+#import cwiid
 
 #TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
 
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 class Entry(QtWidgets.QWidget):
@@ -111,6 +113,23 @@ class MainGUI(QtWidgets.QMainWindow):
 	def buttonHandler(self):
 		pass
 
+	def keyPressEvent(self, event):
+		key = event.key()
+		if (key == Qt.Key_Left):
+			self.game.keyinput = 'LEFT'
+		elif (key == Qt.Key_Right):
+			self.game.keyinput = 'RIGHT'
+		elif (key == Qt.Key_Down):
+			self.game.keyinput = 'DOWN'
+		elif (key == Qt.Key_Up):
+			self.game.keyinput = 'UP'
+		elif (key == Qt.Key_A):
+			self.game.keyinput = 'BUTTONA'
+		elif (key == Qt.Key_B):
+			self.game.keyinput = 'BUTTONB'
+		else:
+			self.game.keyinput = 0
+
 	def setModuleGuis(self):
 		self.module1 = QtWidgets.QPushButton("Module 1")
 		self.module2 = QtWidgets.QPushButton("Module 2 (Wiimote)")
@@ -173,20 +192,22 @@ MAX_STRIKES = 3
 
 class Game:
 
-
-
 	def __init__(self, time):
 		self.bomb = bomb.Bomb(time)
 		self.totalStrikes = 0
 		self.state = 'ND'
 		self.lastinput = 0
-		self.wiiSetUp()
+		#Wii remote setup!
+		#self.wiiSetUp()
+		self.keyinput = 0
 
 	def checkGameState(self, verbose):
 		#Ignore controller inputs for types SubMod1 since this uses text field
 		if not isinstance(self.bomb.getActiveModule(), bomb.SubMod1):
-			self.wiiInput()
-
+			#Wii input! Otherwise using keyboard
+			#self.wiiInput()
+			self.inputHandler(self.keyinput)
+			
 		x = self.bomb.checkModStates(verbose)
 
 		if x > 0:
