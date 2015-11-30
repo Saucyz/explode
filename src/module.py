@@ -1,5 +1,8 @@
-class Module:
+from PyQt5 import QtWidgets
+
+class Module(QtWidgets.QWidget):
 	def __init__(self, modname):
+		super(Module, self).__init__()
 		self.name = modname
 		self.state = 'INCOMPLETE'
 		self.input = 0
