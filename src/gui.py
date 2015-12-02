@@ -28,10 +28,23 @@ class Entry(QtWidgets.QWidget):
 		grid.addWidget(self.textEdit,1,0, 1, 2)
 		grid.addWidget(self.button1, 2, 0)
 
+		#Set and display image
+		#reader = QtGui.QImageReader("pie.png")
+		#image = reader.read()
+		#qpixmap = QtGui.QPixmap()
+		#qpixmap.convertFromImage(image)
+		#self.label.setPixmap(qpixmap)
+
 		self.button1.clicked.connect(self.setEntryText)
 
 	def setEntryText(self):
 		self.text = self.textEdit.text()
+		reader = QtGui.QImageReader("pie2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label.setPixmap(qpixmap)
+		#self.update()
 		self.callback()
 
 
@@ -48,11 +61,12 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.list1 = QtWidgets.QListWidget()
 
 		#Set and display image
-		# reader = QtGui.QImageReader("bomb-154456_1280.png")
-		# image = reader.read()
-		# qpixmap = QtGui.QPixmap()
-		# qpixmap.convertFromImage(image)
-		# self.label.setPixmap(qpixmap)
+		#reader = QtGui.QImageReader("pie.png")
+		#image = reader.read()
+		#qpixmap = QtGui.QPixmap()
+		#qpixmap.convertFromImage(image)
+		#self.label = QtWidgets.QLabel("Main")
+		#self.label.setPixmap(qpixmap)
 
 
 		self.grid = QtWidgets.QGridLayout()
@@ -69,7 +83,17 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.show()
 
 		#create Game
-		self.game = Game(totalTime)
+		self.game = Game(self, totalTime)
+
+		r = 8
+		col = 2
+		for mod in self.game.bomb.moduleList:
+			self.grid.addWidget(mod,r,col)
+			mod.hide()
+			col += 1
+
+		#self.grid.setMinimumRowHeight(r, 300)
+
 
 	def startButtonPushed(self):
 		self.timer = QtCore.QTimer()
@@ -101,7 +125,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.stateLabel.setText('State: ' + self.game.state)
 
 	def textHandler(self):
-		self.entry.label.setText('Enter text for module 1: ')
+		#self.entry.label.setText('Enter text for module 1: ')
 		self.game.bomb.getActiveModule().main()
 		text = self.entry.text
 		print(text)
@@ -176,7 +200,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		# self.show()
 
 	def restart(self):
-		self.game = Game(self.totalTime)
+		self.game = Game(self, self.totalTime)
 		self.startButton.setEnabled(True)
 		self.module1.setEnabled(False)
 		self.module2.setEnabled(False)
@@ -192,8 +216,8 @@ MAX_STRIKES = 3
 
 class Game:
 
-	def __init__(self, time):
-		self.bomb = bomb.Bomb(time)
+	def __init__(self, frame, time):
+		self.bomb = bomb.Bomb(frame, time)
 		self.totalStrikes = 0
 		self.state = 'ND'
 		self.lastinput = 0

@@ -36,16 +36,9 @@ class BombTimer:
 		print('Time has run out...')
 		self.timeOut = True
 
-#module generator dependent on level
-def modGen(level):
-	name = ['first', 'second', 'third']
-	if(level == 0):
-		return SubMod1()
-	else:
-		return SubMod2()
-
 class Bomb:
-	def __init__(self, secs):
+	def __init__(self, frame, secs):
+		self.frame = frame
 		self.moduleList = list()
 		self.timer = BombTimer(secs)
 		self.input = 0
@@ -53,10 +46,18 @@ class Bomb:
 		self.populate()
 		#Not starting timer initially gets in the way of other tests
 		#self.start()
-	
+
+	#module generator dependent on level
+	def modGen(self,level):
+		name = ['first', 'second', 'third']
+		if(level == 0):
+			return SubMod1(self.frame)
+		else:
+			return SubMod2(self.frame)
+
 	def populate(self):
 		for x in range(numModules):
-			mod = modGen(x)
+			mod = self.modGen(x)
 			self.moduleList.append(mod)
 			with lock:
 				print('Made ' + self.moduleList[x].name + ' at ' + str(x))
@@ -84,6 +85,15 @@ class Bomb:
 		#modules should reset themselves when deactivated
 		#create and run module on thread
 		self.activeModule = direction
+		i = 0
+		while (i < len(self.moduleList)):
+			if (i != direction):
+				self.moduleList[i].hide()
+			i += 1
+		
+		self.getActiveModule().show()
+		
+
 	def getActiveModIndex(self):
 		return self.activeModule
 

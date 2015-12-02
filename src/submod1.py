@@ -2,8 +2,8 @@ from module import Module
 
 class SubMod1(Module):
 	#Constructor
-	def __init__(self):
-		Module.__init__(self, 'submod1')
+	def __init__(self, frame):
+		Module.__init__(self, frame, 'submod1')
 
 	#Resets module
 	def resetModule(self):

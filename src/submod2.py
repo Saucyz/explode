@@ -1,11 +1,24 @@
 from module import Module
+from PyQt5 import QtWidgets, QtGui
 
 class SubMod2(Module):
 	#Constructor
-	def __init__(self):
-		Module.__init__(self, 'submod2')
+	def __init__(self, frame):
+		Module.__init__(self, frame, 'submod2')
 		self.instructions = ['UP','UP','DOWN','DOWN','LEFT','RIGHT','LEFT','RIGHT','BUTTONB','BUTTONA']
 		self.instruction_index = 0
+		self.label = QtWidgets.QLabel()
+		self.label.setGeometry(10,10,100,200)
+
+		grid = QtWidgets.QGridLayout()
+		self.setLayout(grid)
+
+		grid.addWidget(self.label, 50, 50, 100, 100)
+		reader = QtGui.QImageReader("pie.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label.setPixmap(qpixmap)
 
 	def resetModule(self):
 		self.changeStateIncomplete()
