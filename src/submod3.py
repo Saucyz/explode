@@ -1,6 +1,31 @@
 from module import Module
 from PyQt5 import QtWidgets, QtGui
 from random import randint
+"""
+Manual:
+
+Stage 1:
+If the display is 1, press the button in the first position.
+If the display is 2, press the button in the second position.
+If the display is 3, press the button in the third position.
+
+Stage 2:
+If the display is 1, press the button labeled "3".
+If the display is 2, press the button in the same position as you pressed in stage 1.
+If the display is 3, press the button in the first position.
+
+
+Stage 3:
+If the display is 1, press the button with the same label you pressed in stage 1.
+If the display is 2, press the button in the third position.
+If the display is 3, press the button labeled "3".
+
+Stage 4:
+If the display is 1, press the button in the same position as you pressed in stage 1.
+If the display is 2, press the button in the same position as you pressed in stage 2.
+If the display is 3, press the button in the same position as you pressed in stage 3.
+"""
+
 class SubMod3(Module):
 	#Constructor
 	def __init__(self, frame):
