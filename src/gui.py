@@ -1,9 +1,13 @@
 import sys
 import time
 import bomb
-import cwiid
+#Wii remote library!
+#import cwiid
 
-from PyQt5 import QtCore, QtGui, QtWidgets, Qt
+#TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QInputDialog, QLineEdit)
 
 class Entry(QtWidgets.QWidget):
@@ -24,6 +28,13 @@ class Entry(QtWidgets.QWidget):
 		grid.addWidget(self.textEdit,1,0, 1, 2)
 		grid.addWidget(self.button1, 2, 0)
 
+		#Set and display image
+		#reader = QtGui.QImageReader("pie.png")
+		#image = reader.read()
+		#qpixmap = QtGui.QPixmap()
+		#qpixmap.convertFromImage(image)
+		#self.label.setPixmap(qpixmap)
+
 		self.button1.clicked.connect(self.setEntryText)
 
 	def setEntryText(self):
@@ -43,20 +54,24 @@ class MainGUI(QtWidgets.QMainWindow):
 		
 		self.list1 = QtWidgets.QListWidget()
 
-		#Set and display image
-		# reader = QtGui.QImageReader("bomb-154456_1280.png")
-		# image = reader.read()
-		# qpixmap = QtGui.QPixmap()
-		# qpixmap.convertFromImage(image)
-		# self.label.setPixmap(qpixmap)
-
-
 		self.grid = QtWidgets.QGridLayout()
 
 
 		window = QtWidgets.QWidget()
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
+
+		#Set and display image
+		reader = QtGui.QImageReader("pie2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label = QtWidgets.QLabel("Main")
+		self.label.setPixmap(qpixmap)
+
+		self.sublayout1 = QtWidgets.QGridLayout()
+		self.sublayout1.addWidget(self.label, 0, 0)
+		self.grid.addLayout(self.sublayout1, 0, 0, 0, 0)
 
 		self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
@@ -65,7 +80,20 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.show()
 
 		#create Game
-		self.game = Game(totalTime)
+		self.game = Game(self, totalTime)
+
+		r = 7
+		col = 0
+		#Check where to add layout maybe put layout lower
+		self.sublayout2 = QtWidgets.QGridLayout()
+		for mod in self.game.bomb.moduleList:
+			#self.grid.addWidget(mod,r,col)	
+			self.sublayout2.addWidget(mod, r, col)
+			mod.hide()
+			col += 1
+		self.grid.addLayout(self.sublayout2, 0, 0, 0, 0)
+		#self.grid.setRowMinimumHeight(r, 300)
+
 
 	def startButtonPushed(self):
 		self.timer = QtCore.QTimer()
@@ -97,8 +125,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.stateLabel.setText('State: ' + self.game.state)
 
 	def textHandler(self):
-		self.entry.label.setText('Enter text for module 1: ')
-		self.game.bomb.getActiveModule().submod1main()
+		#self.entry.label.setText('Enter text for module 1: ')
+		self.game.bomb.getActiveModule().main()
 		text = self.entry.text
 		print(text)
 		#text, ok = QInputDialog.getText(self, 'Input Answer', 'Enter number from 0 - 9: ')
@@ -109,15 +137,33 @@ class MainGUI(QtWidgets.QMainWindow):
 	def buttonHandler(self):
 		pass
 
+	def keyPressEvent(self, event):
+		print("fire")
+		key = event.key()
+		if (key == Qt.Key_Left):
+			self.game.keyinput = 'LEFT'
+		elif (key == Qt.Key_Right):
+			self.game.keyinput = 'RIGHT'
+		elif (key == Qt.Key_Down):
+			self.game.keyinput = 'DOWN'
+		elif (key == Qt.Key_Up):
+			self.game.keyinput = 'UP'
+		elif (key == Qt.Key_A):
+			self.game.keyinput = 'BUTTONA'
+		elif (key == Qt.Key_B):
+			self.game.keyinput = 'BUTTONB'
+		else:
+			self.game.keyinput = 0
+
 	def setModuleGuis(self):
 		self.module1 = QtWidgets.QPushButton("Module 1")
-		self.module2 = QtWidgets.QPushButton("Module 2 (Nothing)")
+		self.module2 = QtWidgets.QPushButton("Module 2 (Wiimote)")
 		self.restartButton = QtWidgets.QPushButton("Restart")
 
 		self.entry = Entry("Enter something interesting...", self.textHandler)
 
-		self.module1.clicked.connect(self.textHandler)
-		#self.module2.clicked.connect(self.someFunc)
+		self.module1.clicked.connect(lambda: self.game.bomb.changeActiveModule(0))
+		self.module2.clicked.connect(lambda: self.game.bomb.changeActiveModule(1))
 		self.restartButton.clicked.connect(self.restart)
 
 		self.grid.addWidget(self.module1, 1, 0)
@@ -152,10 +198,10 @@ class MainGUI(QtWidgets.QMainWindow):
 		# self.newButton = QtWidgets.QPushButton(buttonText)
 		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)
 		# self.numButtons += 1
-		#self.show()
+		# self.show()
 
 	def restart(self):
-		self.game = Game(self.totalTime)
+		self.game = Game(self, self.totalTime)
 		self.startButton.setEnabled(True)
 		self.module1.setEnabled(False)
 		self.module2.setEnabled(False)
@@ -170,21 +216,29 @@ class MainGUI(QtWidgets.QMainWindow):
 MAX_STRIKES = 3
 
 class Game:
-	def __init__(self, time):
-		self.bomb = bomb.Bomb(time)
+
+	def __init__(self, frame, time):
+		self.bomb = bomb.Bomb(frame, time)
 		self.totalStrikes = 0
 		self.state = 'ND'
-		self.wiiSetUp()
+		self.lastinput = 0
+		#Wii remote setup!
+		#self.wiiSetUp()
+		self.keyinput = 0
 
 	def checkGameState(self, verbose):
+		#Ignore controller inputs for types SubMod1 since this uses text field
+		if not isinstance(self.bomb.getActiveModule(), bomb.SubMod1):
+			#Wii input! Otherwise using keyboard
+			#self.wiiInput()
+			self.inputHandler(self.keyinput)
+			
 		x = self.bomb.checkModStates(verbose)
 
 		if x > 0:
 			self.totalStrikes += x
 		elif x == 0:
 			self.state = 'Win'
-		else:
-			pass
 
 		if self.totalStrikes >= MAX_STRIKES:
 			self.state = 'Lose'
@@ -229,7 +283,7 @@ class Game:
 		#print(self.wii.state['acc'])
 		time.sleep(0.1) #was 0.3
 		if(buttons == 0):
-			self.inputHandler('NOTHING')
+			self.inputHandler(0)
 		# If Plus and Minus buttons pressed
 		# together then rumble and quit.
 		if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):  
@@ -289,4 +343,8 @@ class Game:
 		#time.sleep(button_delay)
 
 	def inputHandler(self, item):
+		if(self.lastinput == item):
+			self.giveModInput(self.bomb, 0)
+			return
 		self.giveModInput(self.bomb, item)
+		self.lastinput = item
