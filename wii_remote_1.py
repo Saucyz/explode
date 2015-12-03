@@ -51,9 +51,7 @@ wii.led = 1
 while True:
 	
   buttons = wii.state['buttons']
-
-  print(wii.state['acc'])
-  time.sleep(0.3)
+  time.sleep(0.1)
 
   # If Plus and Minus buttons pressed
   # together then rumble and quit.
@@ -63,6 +61,29 @@ while True:
     time.sleep(1)
     wii.rumble = 0
     exit(wii)  
+
+  #wii.rumble = (wii.state['acc'][0] < 134)
+  #print (wii.state['acc'])
+  prev = wii.state['acc'][0] 
+  ind = 6
+  left = 0
+  right = 0
+  while (ind > 0):
+  
+    if(wii.state['acc'][0] < 100):
+      left += 1
+    if(wii.state['acc'][0] > 160): 
+     right += 1
+    ind -= 1
+    time.sleep(0.05)
+
+    if(left > right):
+      print("Swing left!")
+    if(right> left):
+     print("Swing right!")
+  time.sleep(0.1)
+  if wii.state['buttons'] & cwiid.BTN_A:
+      wii.led = (wii.state['led'] + 1 % 16)
   
   # Check if other buttons are pressed by
   # doing a bitwise AND of the buttons number
