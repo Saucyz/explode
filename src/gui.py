@@ -23,7 +23,7 @@ class Entry(QtWidgets.QWidget):
 
 		grid = QtWidgets.QGridLayout()
 		self.setLayout(grid)
-
+		
 		grid.addWidget(self.label, 0, 0, 1, 2)
 		grid.addWidget(self.textEdit,1,0, 1, 2)
 		grid.addWidget(self.button1, 2, 0)
@@ -38,7 +38,14 @@ class Entry(QtWidgets.QWidget):
 		self.button1.clicked.connect(self.setEntryText)
 
 	def setEntryText(self):
+		#self.label.setGeometry(QtCore.QRect(0,0,400, 400))
 		self.text = self.textEdit.text()
+		reader = QtGui.QImageReader("pie2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label.setPixmap(qpixmap)
+		#self.update()
 		self.callback()
 
 
@@ -54,24 +61,21 @@ class MainGUI(QtWidgets.QMainWindow):
 		
 		self.list1 = QtWidgets.QListWidget()
 
+		#Set and display image
+		#reader = QtGui.QImageReader("pie.png")
+		#image = reader.read()
+		#qpixmap = QtGui.QPixmap()
+		#qpixmap.convertFromImage(image)
+		#self.label = QtWidgets.QLabel("Main")
+		#self.label.setPixmap(qpixmap)
+
+
 		self.grid = QtWidgets.QGridLayout()
 
 
 		window = QtWidgets.QWidget()
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
-
-		#Set and display image
-		reader = QtGui.QImageReader("pie2.png")
-		image = reader.read()
-		qpixmap = QtGui.QPixmap()
-		qpixmap.convertFromImage(image)
-		self.label = QtWidgets.QLabel("Main")
-		self.label.setPixmap(qpixmap)
-
-		self.sublayout1 = QtWidgets.QGridLayout()
-		self.sublayout1.addWidget(self.label, 0, 0)
-		self.grid.addLayout(self.sublayout1, 0, 0, 0, 0)
 
 		self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
@@ -82,17 +86,14 @@ class MainGUI(QtWidgets.QMainWindow):
 		#create Game
 		self.game = Game(self, totalTime)
 
-		r = 7
-		col = 0
-		#Check where to add layout maybe put layout lower
-		self.sublayout2 = QtWidgets.QGridLayout()
+		r = 8
+		col = 2
 		for mod in self.game.bomb.moduleList:
-			#self.grid.addWidget(mod,r,col)	
-			self.sublayout2.addWidget(mod, r, col)
-			mod.hide()
+			self.grid.addWidget(mod,r,col)
+			#mod.hide()
 			col += 1
-		self.grid.addLayout(self.sublayout2, 0, 0, 0, 0)
-		#self.grid.setRowMinimumHeight(r, 300)
+
+		#self.grid.setMinimumRowHeight(r, 300)
 
 
 	def startButtonPushed(self):
@@ -138,7 +139,6 @@ class MainGUI(QtWidgets.QMainWindow):
 		pass
 
 	def keyPressEvent(self, event):
-		print("fire")
 		key = event.key()
 		if (key == Qt.Key_Left):
 			self.game.keyinput = 'LEFT'
@@ -158,18 +158,20 @@ class MainGUI(QtWidgets.QMainWindow):
 	def setModuleGuis(self):
 		self.module1 = QtWidgets.QPushButton("Module 1")
 		self.module2 = QtWidgets.QPushButton("Module 2 (Wiimote)")
+		self.module3 = QtWidgets.QPushButton("Module 3")
 		self.restartButton = QtWidgets.QPushButton("Restart")
 
 		self.entry = Entry("Enter something interesting...", self.textHandler)
 
 		self.module1.clicked.connect(lambda: self.game.bomb.changeActiveModule(0))
 		self.module2.clicked.connect(lambda: self.game.bomb.changeActiveModule(1))
+		self.module3.clicked.connect(lambda: self.game.bomb.changeActiveModule(2))
 		self.restartButton.clicked.connect(self.restart)
 
 		self.grid.addWidget(self.module1, 1, 0)
 		self.grid.addWidget(self.module2, 2, 0)
 		self.grid.addWidget(self.restartButton, 3, 0)
-
+		self.grid.addWidget(self.module3, 4, 0)
 		self.stateLabel = QtWidgets.QLabel("State: ")
 		self.timeLabel = QtWidgets.QLabel("Time remaining: ")
 		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')

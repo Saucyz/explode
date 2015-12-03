@@ -4,6 +4,7 @@ import time
 import module
 from submod1 import SubMod1
 from submod2 import SubMod2
+from submod3 import SubMod3
 import threading
 
 numModules = 2
