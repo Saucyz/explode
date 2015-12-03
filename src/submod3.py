@@ -1,3 +1,4 @@
+import time
 from module import Module
 from PyQt5 import QtWidgets, QtGui
 from random import randint
@@ -24,6 +25,8 @@ Stage 4:
 If the display is 1, press the button in the same position as you pressed in stage 1.
 If the display is 2, press the button in the same position as you pressed in stage 2.
 If the display is 3, press the button in the same position as you pressed in stage 3.
+
+Note: some strike when there shouldn't be
 """
 
 class SubMod3(Module):
@@ -31,8 +34,10 @@ class SubMod3(Module):
 	def __init__(self, frame):
 		Module.__init__(self, frame, 'submod3')
 		
-		stage = 0
-
+		self.stage = 0
+		self.init = 1
+		self.posState2 = 0
+		self.posState1 = 0
 		self.background = QtWidgets.QLabel()
 		self.button1 = QtWidgets.QPushButton()
 		self.button2 = QtWidgets.QPushButton()
@@ -59,372 +64,390 @@ class SubMod3(Module):
 		self.input = 0
 
 	def correctAns(self):
-		stage = stage + 1
+		if self.init ==0:
+			self.stage = self.stage + 1
+			self.init = 1
+			print ("stage1reach")
+		else:
+			pass
 
-	def incorrectAns(self);
+	def incorrectAns(self):
 		self.changeStateStrike()
+		print ("stage1strike")
 
 	def main(self):
 		if self.getState() == 'COMPLETE':
 			pass
 		else:
 			#No input yet
-			if(self.input == 0):
+
+			if(False):
 				pass
 			else:
-				if stage == 0:
-					orderStage0 = randint(1,6)
-					displayStage0 = randint(1,3)
+				if self.stage == 0:
+					if self.init == 1:
+						print ("stage0init")
+						self.orderStage0 = randint(1,6)
+						self.displayStage0 = randint(1,3)
+						self.init = 0
+					else:
+				
+						if self.displayStage0 == 1:
+							self.displayNum.setText("1")
+						elif self.displayStage0 == 2:
+							self.displayNum.setText("2")
+						elif self.displayStage0 == 3:
+							self.displayNum.setText("3")
 
-					if displayStage0 == 1:
-						self.displayNum = QtWidgets.QLabel("1")
-					elif displayStage0 == 2:
-						self.displayNum = QtWidgets.QLabel("2")
-					elif displayStage0 == 3:
-						self.displayNum = QtWidgets.QLabel("3")
+						if self.orderStage0 == 1:
+							self.button1.setText("1")
+							self.button2.setText("2")
+							self.button3.setText("3")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 1
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 2
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 3
+						elif self.orderStage0 == 2:
+							self.button1.setText("1")
+							self.button2.setText("3")
+							self.button3.setText("2")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 1
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 3
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 2
+						elif self.orderStage0 ==3:
+							self.button1.setText("2")
+							self.button2.setText("1")
+							self.button3.setText("3")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 2
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 1
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 3
+						elif self.orderStage0 == 4:
+							self.button1.setText("2")
+							self.button2.setText("3")
+							self.button3.setText("1")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 2
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 3
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 1
+						elif self.orderStage0 == 5:
+							self.button1.setText("3")
+							self.button2.setText("1")
+							self.button3.setText("2")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 3
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 1
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 2
+						elif self.orderStage0 == 6:
+							self.button1.setText("3")
+							self.button2.setText("2")
+							self.button3.setText("1")
+							if self.displayStage0 == 1:
+								self.labelStage0 = 3
+							elif self.displayStage0 == 2:
+								self.labelStage0 = 2
+							elif self.displayStage0 == 3:
+								self.labelStage0 = 1
 
-					if orderStage0 = 1:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("3")
-						if displayStage0 == 1:
-							labelStage0 = 1
-						elif displayStage0 == 2:
-							labelStage0 = 2
-						elif displayStage0 == 3:
-							labelStage0 = 3
-					elif orderStage0 = 2:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("2")
-						if displayStage0 == 1:
-							labelStage0 = 1
-						elif displayStage0 == 2:
-							labelStage0 = 3
-						elif displayStage0 == 3:
-							labelStage0 = 2
-					elif orderStage0 = 3:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("3")
-						if displayStage0 == 1:
-							labelStage0 = 2
-						elif displayStage0 == 2:
-							labelStage0 = 1
-						elif displayStage0 == 3:
-							labelStage0 = 3
-					elif orderStage0 = 4:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("1")
-						if displayStage0 == 1:
-							labelStage0 = 2
-						elif displayStage0 == 2:
-							labelStage0 = 3
-						elif displayStage0 == 3:
-							labelStage0 = 1
-					elif orderStage0 = 5:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("2")
-						if displayStage0 == 1:
-							labelStage0 = 3
-						elif displayStage0 == 2:
-							labelStage0 = 1
-						elif displayStage0 == 3:
-							labelStage0 = 2
-					elif orderStage0 = 6:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("1")
-						if displayStage0 == 1:
-							labelStage0 = 3
-						elif displayStage0 == 2:
-							labelStage0 = 2
-						elif displayStage0 == 3:
-							labelStage0 = 1
+						
 
-					self.show()
-
-					if displayStage0 == 1:
-						self.button1.clicked.connect(self.correctAns)
-						self.button2.clicked.connect(self.incorrectAns)
-						self.button3.clicked.connect(self.incorrectAns)
-					elif displayStage0 == 2:
-						self.button1.clicked.connect(self.incorrectAns)
-						self.button2.clicked.connect(self.correctAns)
-						self.button3.clicked.connect(self.incorrectAns)
-					elif displayStage0 == 3:
-						self.button1.clicked.connect(self.incorrectAns)
-						self.button2.clicked.connect(self.incorrectAns)
-						self.button3.clicked.connect(self.correctAns)
+						if self.displayStage0 == 1:
+							self.button1.clicked.connect(self.correctAns)
+							self.button2.clicked.connect(self.incorrectAns)
+							self.button3.clicked.connect(self.incorrectAns)
+						elif self.displayStage0 == 2:
+							self.button1.clicked.connect(self.incorrectAns)
+							self.button2.clicked.connect(self.correctAns)
+							self.button3.clicked.connect(self.incorrectAns)
+						elif self.displayStage0 == 3:
+							self.button1.clicked.connect(self.incorrectAns)
+							self.button2.clicked.connect(self.incorrectAns)
+							self.button3.clicked.connect(self.correctAns)
 
 					
-				elif stage == 1:
-					orderStage1 = randint(1,6)
-					displayStage1 = randint(1,3)
+				elif self.stage == 1:
+					if self.init == 1:
+						print ("stage1init")
+						self.orderStage1 = randint(1,6)
+						self.displayStage1 = randint(1,3)
+						self.init = 0
+					else:
+						if self.displayStage1 == 1:
+							self.displayNum.setText("1")
+						elif self.displayStage1 == 2:
+							self.displayNum.setText("2")
+						elif self.displayStage1 == 3:
+							self.displayNum.setText("3")
 
-					if displayStage1 == 1:
-						self.displayNum = QtWidgets.QLabel("1")
-					elif displayStage1 == 2:
-						self.displayNum = QtWidgets.QLabel("2")
-					elif displayStage1 == 3:
-						self.displayNum = QtWidgets.QLabel("3")
+						if self.orderStage1 == 1:
+							self.button1.setText("1")
+							self.button2.setText("2")
+							self.button3.setText("3")
+						elif self.orderStage1 == 2:
+							self.button1.setText("1")
+							self.button2.setText("3")
+							self.button3.setText("2")
+						elif self.orderStage1 == 3:
+							self.button1.setText("2")
+							self.button2.setText("1")
+							self.button3.setText("3")
+						elif self.orderStage1 == 4:
+							self.button1.setText("2")
+							self.button2.setText("3")
+							self.button3.setText("1")
+						elif self.orderStage1 == 5:
+							self.button1.setText("3")
+							self.button2.setText("1")
+							self.button3.setText("2")
+						elif self.orderStage1 == 6:
+							self.button1.setText("3")
+							self.button2.setText("2")
+							self.button3.setText("1")
 
-					if orderStage1 = 1:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage1 = 2:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage1 = 3:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage1 = 4:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("1")
-					elif orderStage1 = 5:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage1 = 6:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("1")
+						
 
-					self.show()
-
-					if displayStage1 == 1:
-						if orderStage1 == 5 or orderStage1 == 6:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.correctAns)
-							posState1 = 3
-						if orderStage1 == 1 or orderStage1 == 3:
-							self.button1.clicked.connect(self.correctAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.incorrectAns)
-							posState1 = 1
-						if orderStage1 == 2 or orderStage1 == 4:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-							posState1 = 2
-					elif displayStage1 == 2:
-						if displayStage0 == 1:
-							self.button1.clicked.connect(self.correctAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.incorrectAns)
-							posState1 == 1
-						elif displayStage0 == 2:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-							posState1 == 2
-						elif displayStage0 == 3:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.correctAns)
-							posState1 == 3
-					elif displayStage1 == 3:
-						self.button1.clicked.connect(self.correctAns)
-						self.button2.clicked.connect(self.incorrectAns)
-						self.button3.clicked.connect(self.incorrectAns)
-						posState1 = 1
-				elif stage == 2:
-					orderStage2 = randint(1,6)
-					displayStage2 = randint(1,3)
-
-					if displayStage2 == 1:
-						self.displayNum = QtWidgets.QLabel("1")
-					elif displayStage2 == 2:
-						self.displayNum = QtWidgets.QLabel("2")
-					elif displayStage2 == 3:
-						self.displayNum = QtWidgets.QLabel("3")
-
-					if orderStage2 = 1:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage2 = 2:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage2 = 3:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage2 = 4:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("1")
-					elif orderStage2 = 5:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage2 = 6:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("1")
-
-					self.show()
-
-					if displayStage2 == 1:
-						if labelStage0 == 1:
-							if orderStage2 == 1 or orderStage2 == 2:
-								self.button1.clicked.connect(self.correctAns)
-								self.button2.clicked.connect(self.incorrectAns)
-								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 1
-							if orderStage2 == 3 or orderStage2 == 5:
-								self.button1.clicked.connect(self.incorrectAns)
-								self.button2.clicked.connect(self.correctAns)
-								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 2
-							if orderStage2 == 4 or orderStage2 == 6:
+						if self.displayStage1 == 1:
+							if self.orderStage1 == 1 or self.orderStage1 == 3:
 								self.button1.clicked.connect(self.incorrectAns)
 								self.button2.clicked.connect(self.incorrectAns)
 								self.button3.clicked.connect(self.correctAns)
-								posState2 = 3
-						if labelStage0 == 2:
-							if orderStage2 == 3 or orderStage2 == 4:
+								self.posState1 = 3
+							if self.orderStage1 == 5 or self.orderStage1 == 6:
 								self.button1.clicked.connect(self.correctAns)
 								self.button2.clicked.connect(self.incorrectAns)
 								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 1
-							if orderStage2 == 1 or orderStage2 == 6:
+								self.posState1 = 1
+							if self.orderStage1 == 2 or self.orderStage1 == 4:
 								self.button1.clicked.connect(self.incorrectAns)
 								self.button2.clicked.connect(self.correctAns)
 								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 2
-							if orderStage2 == 2 or orderStage2 == 5:
-								self.button1.clicked.connect(self.incorrectAns)
-								self.button2.clicked.connect(self.incorrectAns)
-								self.button3.clicked.connect(self.correctAns)
-								posState2 = 3
-						if labelStage0 == 3:
-							if orderStage2 == 5 or orderStage2 == 6:
+								self.posState1 = 2
+						elif self.displayStage1 == 2:
+							if self.displayStage0 == 1:
 								self.button1.clicked.connect(self.correctAns)
 								self.button2.clicked.connect(self.incorrectAns)
 								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 1
-							if orderStage2 == 2 or orderStage2 == 4:
+								self.posState1 == 1
+							elif self.displayStage0 == 2:
 								self.button1.clicked.connect(self.incorrectAns)
 								self.button2.clicked.connect(self.correctAns)
 								self.button3.clicked.connect(self.incorrectAns)
-								posState2 = 2
-							if orderStage2 == 1 or orderStage2 == 3:
+								self.posState1 == 2
+							elif self.displayStage0 == 3:
 								self.button1.clicked.connect(self.incorrectAns)
 								self.button2.clicked.connect(self.incorrectAns)
 								self.button3.clicked.connect(self.correctAns)
-								posState2 = 3
-					if displayStage2 == 2:
-						self.button1.clicked.connect(self.incorrectAns)
-						self.button2.clicked.connect(self.incorrectAns)
-						self.button3.clicked.connect(self.correctAns)
-						posState2 = 3
-					if displayStage2 == 3:
-						if orderStage2 == 5 or orderStage2 == 6:
+								self.posState1 == 3
+						elif self.displayStage1 == 3:
 							self.button1.clicked.connect(self.correctAns)
 							self.button2.clicked.connect(self.incorrectAns)
 							self.button3.clicked.connect(self.incorrectAns)
-							posState2 = 1
-						if orderStage2 == 2 or orderStage2 == 4:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-							posState2 = 2
-						if orderStage2 == 1 or orderStage2 == 3:
+							self.posState1 = 1
+				elif self.stage == 2:
+					if self.init == 1:
+						print ("stage2init")
+						self.orderStage2 = randint(1,6)
+						self.displayStage2 = randint(1,3)
+						self.init = 0
+					else:
+						if self.displayStage2 == 1:
+							self.displayNum.setText("1")
+						elif self.displayStage2 == 2:
+							self.displayNum.setText("2")
+						elif self.displayStage2 == 3:
+							self.displayNum.setText("3")
+
+						if self.orderStage2 == 1:
+							self.button1.setText("1")
+							self.button2.setText("2")
+							self.button3.setText("3")
+						elif self.orderStage2 == 2:
+							self.button1.setText("1")
+							self.button2.setText("3")
+							self.button3.setText("2")
+						elif self.orderStage2 == 3:
+							self.button1.setText("2")
+							self.button2.setText("1")
+							self.button3.setText("3")
+						elif self.orderStage2 == 4:
+							self.button1.setText("2")
+							self.button2.setText("3")
+							self.button3.setText("1")
+						elif self.orderStage2 == 5:
+							self.button1.setText("3")
+							self.button2.setText("1")
+							self.button3.setText("2")
+						elif self.orderStage2 ==6:
+							self.button1.setText("3")
+							self.button2.setText("2")
+							self.button3.setText("1")
+
+						
+
+						if self.displayStage2 == 1:
+							if self.labelStage0 == 1:
+								if self.orderStage2 == 1 or self.orderStage2 == 2:
+									self.button1.clicked.connect(self.correctAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 1
+								if self.orderStage2 == 3 or self.orderStage2 == 5:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.correctAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 2
+								if self.orderStage2 == 4 or self.orderStage2 == 6:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.correctAns)
+									self.posState2 = 3
+							if self.labelStage0 == 2:
+								if self.orderStage2 == 3 or self.orderStage2 == 4:
+									self.button1.clicked.connect(self.correctAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 1
+								if self.orderStage2 == 1 or self.orderStage2 == 6:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.correctAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 2
+								if self.orderStage2 == 2 or self.orderStage2 == 5:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.correctAns)
+									self.posState2 = 3
+							if self.labelStage0 == 3:
+								if self.orderStage2 == 5 or self.orderStage2 == 6:
+									self.button1.clicked.connect(self.correctAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 1
+								if self.orderStage2 == 2 or self.orderStage2 == 4:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.correctAns)
+									self.button3.clicked.connect(self.incorrectAns)
+									self.posState2 = 2
+								if self.orderStage2 == 1 or self.orderStage2 == 3:
+									self.button1.clicked.connect(self.incorrectAns)
+									self.button2.clicked.connect(self.incorrectAns)
+									self.button3.clicked.connect(self.correctAns)
+									self.posState2 = 3
+						if self.displayStage2 == 2:
 							self.button1.clicked.connect(self.incorrectAns)
 							self.button2.clicked.connect(self.incorrectAns)
 							self.button3.clicked.connect(self.correctAns)
-							posState2 = 3
-				elif stage == 3:
-					orderStage3 = randint(1,6)
-					displayStage3 = randint(1,3)
+							self.posState2 = 3
+						if self.displayStage2 == 3:
+							if self.orderStage2 == 5 or self.orderStage2 == 6:
+								self.button1.clicked.connect(self.correctAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.incorrectAns)
+								self.posState2 = 1
+							if self.orderStage2 == 2 or self.orderStage2 == 4:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.correctAns)
+								self.button3.clicked.connect(self.incorrectAns)
+								self.posState2 = 2
+							if self.orderStage2 == 1 or self.orderStage2 == 3:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.correctAns)
+								self.posState2 = 3
+				elif self.stage == 3:
+					if self.init == 1:
+						print ("stage3init")
+						self.orderStage3 = randint(1,6)
+						self.displayStage3 = randint(1,3)
+						self.init = 0
+					else:
+						if self.displayStage3 == 1:
+							self.displayNum.setText("1")
+						elif self.displayStage3 == 2:
+							self.displayNum.setText("2")
+						elif self.displayStage3 == 3:
+							self.displayNum.setText("3")
 
-					if displayStage3 == 1:
-						self.displayNum = QtWidgets.QLabel("1")
-					elif displayStage3 == 2:
-						self.displayNum = QtWidgets.QLabel("2")
-					elif displayStage3 == 3:
-						self.displayNum = QtWidgets.QLabel("3")
+						if self.orderStage3 == 1:
+							self.button1.setText("1")
+							self.button2.setText("2")
+							self.button3.setText("3")
+						elif self.orderStage3 == 2:
+							self.button1.setText("1")
+							self.button2.setText("3")
+							self.button3.setText("2")
+						elif self.orderStage3 == 3:
+							self.button1.setText("2")
+							self.button2.setText("1")
+							self.button3.setText("3")
+						elif self.orderStage3 == 4:
+							self.button1.setText("2")
+							self.button2.setText("3")
+							self.button3.setText("1")
+						elif self.orderStage3 == 5:
+							self.button1.setText("3")
+							self.button2.setText("1")
+							self.button3.setText("2")
+						elif self.orderStage3 == 6:
+							self.button1.setText("3")
+							self.button2.setText("2")
+							self.button3.setText("1")
 
-					if orderStage3 = 1:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage3 = 2:
-						self.button1 = QtWidgets.QPushButton("1")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage3 = 3:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("3")
-					elif orderStage3 = 4:
-						self.button1 = QtWidgets.QPushButton("2")
-						self.button2 = QtWidgets.QPushButton("3")
-						self.button3 = QtWidgets.QPushButton("1")
-					elif orderStage3 = 5:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("1")
-						self.button3 = QtWidgets.QPushButton("2")
-					elif orderStage3 = 6:
-						self.button1 = QtWidgets.QPushButton("3")
-						self.button2 = QtWidgets.QPushButton("2")
-						self.button3 = QtWidgets.QPushButton("1")
+						
 
-					self.show()
-
-					if displayStage3 == 1:
-						if displayStage0 == 1:
-							self.button1.clicked.connect(self.correctAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if displayStage0 == 2:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if displayStage0 == 3:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.correctAns)
-					if displayStage3 == 2:
-						if posState1 == 1:
-							self.button1.clicked.connect(self.correctAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if posState1 == 2:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if posState1 == 3:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.correctAns)
-					if displayStage3 == 3:
-						if posState2 == 1:
-							self.button1.clicked.connect(self.correctAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if posState2 == 2:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.correctAns)
-							self.button3.clicked.connect(self.incorrectAns)
-						if posState2 == 3:
-							self.button1.clicked.connect(self.incorrectAns)
-							self.button2.clicked.connect(self.incorrectAns)
-							self.button3.clicked.connect(self.correctAns)
-				elif stage == 4:
+						if self.displayStage3 == 1:
+							if self.displayStage0 == 1:
+								self.button1.clicked.connect(self.correctAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.displayStage0 == 2:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.correctAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.displayStage0 == 3:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.correctAns)
+						if self.displayStage3 == 2:
+							if self.posState1 == 1:
+								self.button1.clicked.connect(self.correctAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.posState1 == 2:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.correctAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.posState1 == 3:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.correctAns)
+						if self.displayStage3 == 3:
+							if self.posState2 == 1:
+								self.button1.clicked.connect(self.correctAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.posState2 == 2:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.correctAns)
+								self.button3.clicked.connect(self.incorrectAns)
+							if self.posState2 == 3:
+								self.button1.clicked.connect(self.incorrectAns)
+								self.button2.clicked.connect(self.incorrectAns)
+								self.button3.clicked.connect(self.correctAns)
+				elif self.stage == 4:
 					self.changeStateComplete()
-
-
-
-
+					print ("done")
+			#self.update()
 			#ADDED THIS SO INPUT WOULDN'T STAY, NEED TO FIX!
 			self.input = 0

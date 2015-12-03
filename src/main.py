@@ -11,7 +11,7 @@ import time
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 def main():
-	time = 30
+	time = 100
 	if __name__ == "__main__":
 		app = QtWidgets.QApplication(sys.argv)
 		gui = MainGUI(app, time)

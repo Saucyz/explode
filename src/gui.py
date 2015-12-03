@@ -109,6 +109,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.startButton.setEnabled(False)
 		self.module1.setEnabled(True)
 		self.module2.setEnabled(True)
+		self.module3.setEnabled(True)
 
 	def timerDone(self):
 		self.game.checkGameState(self.verbose)
@@ -212,6 +213,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.timeLabel.setText('')
 		self.strikesLabel.setText('')
 		self.entry.label.setText('')
+		self.module3 = QtWidgets.QPushButton("Module Three")
+
 		#needs to stop and reset timer as well
 
 

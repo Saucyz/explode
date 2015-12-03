@@ -86,7 +86,7 @@ class Game:
 				return
 
 def main():
-	g = Game(5)
+	g = Game(30)
 	g.gameLoop()
 
 #main()

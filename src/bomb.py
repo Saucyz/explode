@@ -7,7 +7,7 @@ from submod2 import SubMod2
 from submod3 import SubMod3
 import threading
 
-numModules = 2
+numModules = 3
 
 COMPLETE = 'COMPLETE'#0
 INCOMPLETE = 'INCOMPLETE'#1
@@ -53,8 +53,10 @@ class Bomb:
 		name = ['first', 'second', 'third']
 		if(level == 0):
 			return SubMod1(self.frame)
-		else:
+		elif level ==1:
 			return SubMod2(self.frame)
+		elif level ==2:
+			return SubMod3(self.frame)
 
 	def populate(self):
 		for x in range(numModules):
