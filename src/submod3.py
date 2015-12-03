@@ -89,7 +89,7 @@ class SubMod3(Module):
 		else:
 			#No input yet
 
-			if(False):
+			if(self.input == 0):
 				pass
 			else:
 				if self.input == 'UP' or self.input == 'RIGHT':
@@ -193,28 +193,28 @@ class SubMod3(Module):
 						if self.input == 'BUTTONA':
 							if self.displayStage0 == 1:
 								if self.selectedButton == 1:
-									self.correctAns
+									self.correctAns()
 								else:
-									self.incorrectAns
-								#self.button1.clicked.connect(self.correctAns)
-								#self.button2.clicked.connect(self.incorrectAns)
-								#self.button3.clicked.connect(self.incorrectAns)
+									self.incorrectAns()
+								#self.button1.clicked.connect(self.correctAns())
+								#self.button2.clicked.connect(self.incorrectAns())
+								#self.button3.clicked.connect(self.incorrectAns())
 							elif self.displayStage0 == 2:
 								if self.selectedButton == 2:
-									self.correctAns
+									self.correctAns()
 								else:
-									self.incorrectAns
-								# self.button1.clicked.connect(self.incorrectAns)
-								# self.button2.clicked.connect(self.correctAns)
-								# self.button3.clicked.connect(self.incorrectAns)
+									self.incorrectAns()
+								# self.button1.clicked.connect(self.incorrectAns())
+								# self.button2.clicked.connect(self.correctAns())
+								# self.button3.clicked.connect(self.incorrectAns())
 							elif self.displayStage0 == 3:
 								if self.selectedButton == 3:
-									self.correctAns
+									self.correctAns()
 								else:
-									self.incorrectAns
-								# self.button1.clicked.connect(self.incorrectAns)
-								# self.button2.clicked.connect(self.incorrectAns)
-								# self.button3.clicked.connect(self.correctAns)
+									self.incorrectAns()
+								# self.button1.clicked.connect(self.incorrectAns())
+								# self.button2.clicked.connect(self.incorrectAns())
+								# self.button3.clicked.connect(self.correctAns())
 
 					
 				elif self.stage == 1:
@@ -260,46 +260,46 @@ class SubMod3(Module):
 							if self.displayStage1 == 1:
 								if self.orderStage1 == 1 or self.orderStage1 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 = 3
 								if self.orderStage1 == 5 or self.orderStage1 == 6:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 = 1
 								if self.orderStage1 == 2 or self.orderStage1 == 4:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 = 2
 							elif self.displayStage1 == 2:
 								if self.displayStage0 == 1:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 == 1
 								elif self.displayStage0 == 2:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 == 2
 								elif self.displayStage0 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState1 == 3
 							elif self.displayStage1 == 3:
 								if self.selectedButton == 1:
-									self.correctAns
+									self.correctAns()
 								else:
-									self.incorrectAns
+									self.incorrectAns()
 								self.posState1 = 1
 				elif self.stage == 2:
 					if self.init == 1:
@@ -340,89 +340,88 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA':
+						if self.input == 'BUTTONA'
 							if self.displayStage2 == 1:
 								if self.labelStage0 == 1:
 									if self.orderStage2 == 1 or self.orderStage2 == 2:
 										if self.selectedButton == 1:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 1
 									if self.orderStage2 == 3 or self.orderStage2 == 5:
 										if self.selectedButton == 2:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 2
 									if self.orderStage2 == 4 or self.orderStage2 == 6:
 										if self.selectedButton == 3:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 3
 								if self.labelStage0 == 2:
 									if self.orderStage2 == 3 or self.orderStage2 == 4:
 										if self.selectedButton == 1:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 1
 									if self.orderStage2 == 1 or self.orderStage2 == 6:
 										if self.selectedButton == 2:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 2
 									if self.orderStage2 == 2 or self.orderStage2 == 5:
 										if self.selectedButton == 3:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 3
 								if self.labelStage0 == 3:
 									if self.orderStage2 == 5 or self.orderStage2 == 6:
 										if self.selectedButton == 1:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 1
 									if self.orderStage2 == 2 or self.orderStage2 == 4:
 										if self.selectedButton == 2:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns
+											self.incorrectAns()
 										self.posState2 = 2
 									if self.orderStage2 == 1 or self.orderStage2 == 3:
 										if self.selectedButton == 3:
-											self.correctAns
+											self.correctAns()
 										else:
-											self.incorrectAns										
-										self.posState2 = 3
+											self.incorrectAns()										self.posState2 = 3
 							if self.displayStage2 == 2:
 								if self.selectedButton == 3:
-									self.correctAns
+									self.correctAns()
 								else:
-									self.incorrectAns
+									self.incorrectAns()
 								self.posState2 = 3
 							if self.displayStage2 == 3:
 								if self.orderStage2 == 5 or self.orderStage2 == 6:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState2 = 1
 								if self.orderStage2 == 2 or self.orderStage2 == 4:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState2 = 2
 								if self.orderStage2 == 1 or self.orderStage2 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 									self.posState2 = 3
 				elif self.stage == 3:
 					if self.init == 1:
@@ -463,55 +462,55 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
-						if self.input == 'BUTTONA':
+						if self.input == 'BUTTONA'
 							if self.displayStage3 == 1:
 								if self.displayStage0 == 1:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.displayStage0 == 2:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.displayStage0 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 							if self.displayStage3 == 2:
 								if self.posState1 == 1:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.posState1 == 2:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.posState1 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 							if self.displayStage3 == 3:
 								if self.posState2 == 1:
 									if self.selectedButton == 1:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.posState2 == 2:
 									if self.selectedButton == 2:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 								if self.posState2 == 3:
 									if self.selectedButton == 3:
-										self.correctAns
+										self.correctAns()
 									else:
-										self.incorrectAns
+										self.incorrectAns()
 				elif self.stage == 4:
 					self.changeStateComplete()
 					print ("done")
