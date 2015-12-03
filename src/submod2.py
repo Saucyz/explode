@@ -8,12 +8,12 @@ class SubMod2(Module):
 		self.instructions = ['UP','UP','DOWN','DOWN','LEFT','RIGHT','LEFT','RIGHT','BUTTONB','BUTTONA']
 		self.instruction_index = 0
 		self.label = QtWidgets.QLabel()
-		self.label.setGeometry(10,10,100,200)
+		#self.label.setGeometry(10,10,100,200)
 
 		grid = QtWidgets.QGridLayout()
 		self.setLayout(grid)
 
-		grid.addWidget(self.label, 50, 50, 100, 100)
+		grid.addWidget(self.label, 0, 0, 100, 100)
 		reader = QtGui.QImageReader("pie.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()

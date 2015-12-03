@@ -39,12 +39,6 @@ class Entry(QtWidgets.QWidget):
 
 	def setEntryText(self):
 		self.text = self.textEdit.text()
-		reader = QtGui.QImageReader("pie2.png")
-		image = reader.read()
-		qpixmap = QtGui.QPixmap()
-		qpixmap.convertFromImage(image)
-		self.label.setPixmap(qpixmap)
-		#self.update()
 		self.callback()
 
 
@@ -60,21 +54,24 @@ class MainGUI(QtWidgets.QMainWindow):
 		
 		self.list1 = QtWidgets.QListWidget()
 
-		#Set and display image
-		#reader = QtGui.QImageReader("pie.png")
-		#image = reader.read()
-		#qpixmap = QtGui.QPixmap()
-		#qpixmap.convertFromImage(image)
-		#self.label = QtWidgets.QLabel("Main")
-		#self.label.setPixmap(qpixmap)
-
-
 		self.grid = QtWidgets.QGridLayout()
 
 
 		window = QtWidgets.QWidget()
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
+
+		#Set and display image
+		reader = QtGui.QImageReader("pie2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label = QtWidgets.QLabel("Main")
+		self.label.setPixmap(qpixmap)
+
+		self.sublayout1 = QtWidgets.QGridLayout()
+		self.sublayout1.addWidget(self.label, 0, 0)
+		self.grid.addLayout(self.sublayout1, 0, 0, 0, 0)
 
 		self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
@@ -85,14 +82,17 @@ class MainGUI(QtWidgets.QMainWindow):
 		#create Game
 		self.game = Game(self, totalTime)
 
-		r = 8
-		col = 2
+		r = 7
+		col = 0
+		#Check where to add layout maybe put layout lower
+		self.sublayout2 = QtWidgets.QGridLayout()
 		for mod in self.game.bomb.moduleList:
-			self.grid.addWidget(mod,r,col)
+			#self.grid.addWidget(mod,r,col)	
+			self.sublayout2.addWidget(mod, r, col)
 			mod.hide()
 			col += 1
-
-		#self.grid.setMinimumRowHeight(r, 300)
+		self.grid.addLayout(self.sublayout2, 0, 0, 0, 0)
+		#self.grid.setRowMinimumHeight(r, 300)
 
 
 	def startButtonPushed(self):
@@ -138,6 +138,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		pass
 
 	def keyPressEvent(self, event):
+		print("fire")
 		key = event.key()
 		if (key == Qt.Key_Left):
 			self.game.keyinput = 'LEFT'
