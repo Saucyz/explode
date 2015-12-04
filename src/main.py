@@ -10,9 +10,14 @@ import time
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
+
+
 def main():
 	time = 100
 	if __name__ == "__main__":
+		# menu = QtWidgets.QApplication(sys.argv)
+		# menuGui = MainMenu(menu)
+
 		app = QtWidgets.QApplication(sys.argv)
 		gui = MainGUI(app, time)
 

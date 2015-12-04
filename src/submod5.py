@@ -10,6 +10,10 @@ class SubMod5(Module):
 		self.stage = 0
 		self.selectedButton = 1
 		self.label = QtWidgets.QLabel()
+		self.outline1 = QtWidgets.QLabel()
+		self.outline2 = QtWidgets.QLabel()
+		self.outline3 = QtWidgets.QLabel()
+		self.outline4 = QtWidgets.QLabel()
 		#self.label.setGeometry(10,10,100,200)
 		self.button1 = QtWidgets.QPushButton()
 		self.button2 = QtWidgets.QPushButton()
@@ -23,6 +27,10 @@ class SubMod5(Module):
 		self.setLayout(grid)
 
 		grid.addWidget(self.label, 0, 0, 100, 100)
+		grid.addWidget(self.outline1, 2, 2)
+		grid.addWidget(self.outline2, 2, 3)
+		grid.addWidget(self.outline3, 3, 2)
+		grid.addWidget(self.outline4, 3, 3)
 		grid.addWidget(self.button1, 2, 2)
 		grid.addWidget(self.button2, 2, 3)
 		grid.addWidget(self.button3, 3, 2)
@@ -31,11 +39,19 @@ class SubMod5(Module):
 		grid.addWidget(self.select2, 2, 4)
 		grid.addWidget(self.select3, 3, 1)
 		grid.addWidget(self.select4, 3, 4)
-		reader = QtGui.QImageReader("pie.png")
+		# reader = QtGui.QImageReader("pie.png")
+		# image = reader.read()
+		# qpixmap = QtGui.QPixmap()
+		# qpixmap.convertFromImage(image)
+		# self.label.setPixmap(qpixmap)
+		reader = QtGui.QImageReader("buttonBox.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
-		self.label.setPixmap(qpixmap)
+		self.outline1.setPixmap(qpixmap)
+		self.outline2.setPixmap(qpixmap)
+		self.outline3.setPixmap(qpixmap)
+		self.outline4.setPixmap(qpixmap)
 
 	def resetModule(self):
 		self.changeStateIncomplete()
@@ -148,10 +164,12 @@ class SubMod5(Module):
 			pass
 		else:
 			#No input yet
-			if(self.input == 0):
+			if(False):
 				pass
 			else:
 				if self.init == 1:
+
+
 					self.symbolGen = randint(1,6)
 					self.posGen = randint(1,4)
 					if self.symbolGen == 1:
@@ -332,7 +350,7 @@ class SubMod5(Module):
 							self.select1.hide()
 							self.select3.hide()
 
-					if self.input == 'BUTTONA'
+					if self.input == 'BUTTONA':
 						if self.stage == 0:
 							if self.symbolGen == 1:
 								self.checkAns0()		
