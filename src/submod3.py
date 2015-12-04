@@ -113,7 +113,7 @@ class SubMod3(Module):
 					qpixmap = QtGui.QPixmap()
 					qpixmap.convertFromImage(image)
 					self.select1.setPixmap(qpixmap)
-					#self.select1.show()
+					self.select1.show()
 					self.select2.hide()
 					self.select3.hide()
 				elif self.selectedButton == 2:
@@ -122,16 +122,17 @@ class SubMod3(Module):
 					qpixmap = QtGui.QPixmap()
 					qpixmap.convertFromImage(image)
 					self.select2.setPixmap(qpixmap)
-					#self.select2.show()
+					self.select2.show()
 					self.select1.hide()
 					self.select3.hide()
 				elif self.selectedButton == 3:
-					#self.select3.show()
+					
 					reader = QtGui.QImageReader("underline.png")
 					image = reader.read()
 					qpixmap = QtGui.QPixmap()
 					qpixmap.convertFromImage(image)
 					self.select3.setPixmap(qpixmap)
+					self.select3.show()
 					self.select2.hide()
 					self.select1.hide()
 
