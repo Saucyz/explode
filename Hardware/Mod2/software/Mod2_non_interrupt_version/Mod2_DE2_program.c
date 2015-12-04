@@ -21,7 +21,6 @@
 void av_config_setup();
 void timer_isr(void*, alt_u32);
 void audio_isr(void*, alt_u32);
-int val = 0;
 
 volatile char *isComplete = "F";
 volatile int ans = 0;
@@ -91,35 +90,70 @@ int main() {
 
   int expecting = 1;
   int gotc;
-  char* msg = "s";
-  char* cstring;
+  char* cstring = "U";
+  int prev_ans = -1;
+  int change = 0;
 
   while(1){
 	ans = IORD(SWITCHES_BASE, 0);
-	if(ans == 0x1){
-		isComplete = "T";
+	if(prev_ans != ans){
+		change = 1;
+		if(ans == 0x1){
+			isComplete = "T";
+			write(fp, isComplete, strlen(isComplete));
+		} else if (ans != 0x0){
+			isComplete = "S";
+			write(fp, isComplete, strlen(isComplete));
+			//isComplete = "F";
+		} else {
+			isComplete = "F";
+			write(fp, isComplete, strlen(isComplete));
+		}
 	}
 
+
+/*
 	while(expecting){
 		gotc = read(fp, cstring, expecting);
 		if(gotc > 0){
 			expecting -= gotc;
 		}
 	}
+	expecting = 1;
+*/
+	gotc = read(fp, cstring, expecting);
 
-	write(fp, msg, strlen(msg));
+	if (strcmp(cstring,  "L") == 0){
+		alt_irq_disable(TIMER_0_IRQ);
+		alt_up_audio_disable_write_interrupt(audio_dev);
+		alt_up_character_lcd_init(char_lcd_dev);
+		alt_up_character_lcd_string(char_lcd_dev, "You Lose...");
+		return 0;
+	}
 
-	alt_up_character_lcd_init(char_lcd_dev);
-	alt_up_character_lcd_string(char_lcd_dev, "Getting: ");
-	alt_up_character_lcd_string(char_lcd_dev, cstring);
-	alt_up_character_lcd_set_cursor_pos(char_lcd_dev, 0, 1);
-	alt_up_character_lcd_string(char_lcd_dev, "Mod ");
-	alt_up_character_lcd_string(char_lcd_dev, isComplete);
-	alt_up_character_lcd_string(char_lcd_dev, " Ans ");
-	char istring[2];
-	istring[0]=ans + '0';
-	istring[1]='\0';
-	alt_up_character_lcd_string(char_lcd_dev, istring);
+	if (strcmp(cstring, "W") == 0){
+		alt_irq_disable(TIMER_0_IRQ);
+		alt_up_audio_disable_write_interrupt(audio_dev);
+		alt_up_character_lcd_init(char_lcd_dev);
+		alt_up_character_lcd_string(char_lcd_dev, "You Win!!!");
+		return 0;
+	}
+
+	if(change == 1){
+		alt_up_character_lcd_init(char_lcd_dev);
+		alt_up_character_lcd_string(char_lcd_dev, "Getting: ");
+		alt_up_character_lcd_string(char_lcd_dev, cstring);
+		alt_up_character_lcd_set_cursor_pos(char_lcd_dev, 0, 1);
+		alt_up_character_lcd_string(char_lcd_dev, "Mod ");
+		alt_up_character_lcd_string(char_lcd_dev, isComplete);
+		alt_up_character_lcd_string(char_lcd_dev, " Ans ");
+		char istring[2];
+		istring[0]=ans + '0';
+		istring[1]='\0';
+		alt_up_character_lcd_string(char_lcd_dev, istring);
+		change = 0;
+  	}
+	prev_ans = ans;
   }
   return 0;
 }
