@@ -174,25 +174,25 @@ class SubMod5(Module):
 					self.posGen = randint(1,4)
 					if self.symbolGen == 1:
 						if posGen == 1:
-							self.button1.setText('λ')
-							self.button2.setText('Σ')
-							self.button3.setText('Ψ')
-							self.button4.setText('π')
+							self.button1.setText('[')
+							self.button2.setText('<')
+							self.button3.setText('3')
+							self.button4.setText(']')
 						if posGen == 2:
-							self.button2.setText('λ')
-							self.button3.setText('Σ')
-							self.button4.setText('Ψ')
-							self.button1.setText('π')
+							self.button2.setText('[')
+							self.button3.setText('<')
+							self.button4.setText('3')
+							self.button1.setText(']')
 						if posGen == 3:
-							self.button3.setText('λ')
-							self.button4.setText('Σ')
-							self.button1.setText('Ψ')
-							self.button2.setText('π')
+							self.button3.setText('[')
+							self.button4.setText('<')
+							self.button1.setText('3')
+							self.button2.setText(']')
 						if posGen == 4:
-							self.button4.setText('λ')
-							self.button1.setText('Σ')
-							self.button2.setText('Ψ')
-							self.button3.setText('π')
+							self.button4.setText('[')
+							self.button1.setText('<')
+							self.button2.setText('3')
+							self.button3.setText(']')
 					elif self.symbolGen == 2:
 						if posGen == 1:
 							self.button1.setText('$')
@@ -260,23 +260,23 @@ class SubMod5(Module):
 						if posGen == 1:
 							self.button1.setText(':')
 							self.button2.setText('&')
-							self.button3.setText('Ψ')
-							self.button4.setText('π')
+							self.button3.setText('=')
+							self.button4.setText('{')
 						if posGen == 2:
 							self.button2.setText(':')
 							self.button3.setText('&')
-							self.button4.setText('Ψ')
-							self.button1.setText('π')
+							self.button4.setText('=')
+							self.button1.setText('{')
 						if posGen == 3:
 							self.button3.setText(':')
 							self.button4.setText('&')
-							self.button1.setText('Ψ')
-							self.button2.setText('π')
+							self.button1.setText('=')
+							self.button2.setText('{')
 						if posGen == 4:
 							self.button4.setText(':')
 							self.button1.setText('&')
-							self.button2.setText('Ψ')
-							self.button3.setText('π')
+							self.button2.setText('=')
+							self.button3.setText('{')
 					elif self.symbolGen == 6:
 						if posGen == 1:
 							self.button1.setText('/')
