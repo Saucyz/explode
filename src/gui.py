@@ -133,13 +133,19 @@ class MainGUI(QtWidgets.QMainWindow):
 		#create Game
 		#self.srl = serialCom.serialCom()
 		
-
-		r = 3
-		col = 1
+		modNum = 1
 		for mod in self.game.bomb.moduleList:
-			self.grid.addWidget(mod,r,col)
+			if modNum == 1
+				self.grid.addWidget(mod,1, 1)
+			elif modNum == 2
+				self.grid.addWidget(mod,1, 2)
+			elif modNum == 3
+				self.grid.addWidget(mod,2, 1)	
+			elif modNum == 4
+				self.grid.addWidget(mod,2, 2)		
+			modNum += 1
 			#mod.hide()
-			col += 1
+			
 
 		#self.grid.setMinimumRowHeight(r, 300)
 

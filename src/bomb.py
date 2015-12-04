@@ -93,10 +93,10 @@ class Bomb:
 		#create and run module on thread
 		self.activeModule = direction
 		i = 0
-		while (i < len(self.moduleList)):
-			if (i != direction):
-				self.moduleList[i].hide()
-			i += 1
+		# while (i < len(self.moduleList)):
+		# 	# if (i != direction):
+		# 	# 	self.moduleList[i].hide()
+		# 	i += 1
 		
 		self.getActiveModule().show()
 		
