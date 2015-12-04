@@ -40,6 +40,7 @@ class SubMod3(Module):
 		self.posState1 = 0
 		self.selectedButton = 1
 		self.background = QtWidgets.QLabel()
+		self.background1 = QtWidgets.QLabel()
 		self.button1 = QtWidgets.QPushButton()
 		self.button2 = QtWidgets.QPushButton()
 		self.button3 = QtWidgets.QPushButton()
@@ -55,7 +56,8 @@ class SubMod3(Module):
 		self.background = QtWidgets.QLabel()
 
 		'''
-		grid.addWidget(self.background, 0, 0, 100, 100)
+		grid.addWidget(self.background, 0, 0, 0, 1)
+		grid.addWidget(self.background1, 0, 0, 1, 0)
 		grid.addWidget(self.button3, 2, 3)
 		grid.addWidget(self.button2, 2, 2)
 		grid.addWidget(self.button1, 2, 1)
@@ -65,11 +67,18 @@ class SubMod3(Module):
 		grid.addWidget(self.displayNum, 1, 1, 1, 2)
 		grid.addWidget(self.stageLabel, 1, 3, 1, 1)
 
-		reader = QtGui.QImageReader("moduleBox.png")
+		reader = QtGui.QImageReader("Mod3Line1.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
 		self.background.setPixmap(qpixmap)
+
+		reader = QtGui.QImageReader("Mod3Line2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.background1.setPixmap(qpixmap)
+
 
 	def resetModule(self):
 		self.changeStateIncomplete()

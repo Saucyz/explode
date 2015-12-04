@@ -14,7 +14,7 @@ class SubMod2(Module):
 		self.setLayout(grid)
 
 		grid.addWidget(self.label, 0, 0, 100, 100)
-		reader = QtGui.QImageReader("moduleBox.png")
+		reader = QtGui.QImageReader("Mod2Line.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
