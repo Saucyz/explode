@@ -13,6 +13,7 @@ class SubMod5(Module):
 
 		self.label = QtWidgets.QLabel()
 		self.label1 = QtWidgets.QLabel()
+		self.label2 = QtWidgets.QLabel()
 		self.outline1 = QtWidgets.QLabel()
 		self.outline2 = QtWidgets.QLabel()
 		self.outline3 = QtWidgets.QLabel()
@@ -31,6 +32,7 @@ class SubMod5(Module):
 
 		grid.addWidget(self.label, 0, 0, 0, 1)
 		grid.addWidget(self.label1, 0, 0, 1, 0)
+		grid.addWidget(self.label2, 4, 0, 1, 0)
 		grid.addWidget(self.outline1, 2, 2)
 		grid.addWidget(self.outline2, 2, 3)
 		grid.addWidget(self.outline3, 3, 2)
@@ -55,6 +57,12 @@ class SubMod5(Module):
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
 		self.label1.setPixmap(qpixmap)
+
+		reader = QtGui.QImageReader("Mod3Line2.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label2.setPixmap(qpixmap)
 
 		reader = QtGui.QImageReader("buttonBox.png")
 		image = reader.read()
