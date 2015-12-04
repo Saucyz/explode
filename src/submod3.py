@@ -54,20 +54,20 @@ class SubMod3(Module):
 		self.background = QtWidgets.QLabel()
 
 		'''
-		grid.addWidget(self.background, 0, 0, 100, 100)
+		#grid.addWidget(self.background, 0, 0, 100, 100)
 		grid.addWidget(self.button3, 2, 3)
 		grid.addWidget(self.button2, 2, 2)
 		grid.addWidget(self.button1, 2, 1)
 		grid.addWidget(self.select3, 3, 3)
 		grid.addWidget(self.select2, 3, 2)
 		grid.addWidget(self.select1, 3, 1)
-		grid.addWidget(self.displayNum, 1, 2)
+		grid.addWidget(self.displayNum, 1, 1, 1, 3)
 
-		reader = QtGui.QImageReader("modBackground.jpg")
-		image = reader.read()
-		qpixmap = QtGui.QPixmap()
-		qpixmap.convertFromImage(image)
-		self.background.setPixmap(qpixmap)
+		# reader = QtGui.QImageReader("modBackground.jpg")
+		# image = reader.read()
+		# qpixmap = QtGui.QPixmap()
+		# qpixmap.convertFromImage(image)
+		# self.background.setPixmap(qpixmap)
 
 	def resetModule(self):
 		self.changeStateIncomplete()
@@ -129,16 +129,26 @@ class SubMod3(Module):
 					else:
 				
 						if self.displayStage0 == 1:
-							reader = QtGui.QImageReader("modBackground.jpg")
+							reader = QtGui.QImageReader("memoryDisp1.jpg")
 							image = reader.read()
 							qpixmap = QtGui.QPixmap()
 							qpixmap.convertFromImage(image)
 							self.displayNum.setPixmap(qpixmap)
-							self.displayNum.setText("1")
+						
 						elif self.displayStage0 == 2:
-							self.displayNum.setText("2")
+							reader = QtGui.QImageReader("memoryDisp2.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+							
 						elif self.displayStage0 == 3:
-							self.displayNum.setText("3")
+							reader = QtGui.QImageReader("memoryDisp3.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+							
 
 						if self.orderStage0 == 1:
 							self.button1.setText("1")
@@ -236,11 +246,25 @@ class SubMod3(Module):
 						self.init = 0
 					else:
 						if self.displayStage1 == 1:
-							self.displayNum.setText("1")
+							reader = QtGui.QImageReader("memoryDisp1.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+						
 						elif self.displayStage1 == 2:
-							self.displayNum.setText("2")
+							reader = QtGui.QImageReader("memoryDisp2.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+							
 						elif self.displayStage1 == 3:
-							self.displayNum.setText("3")
+							reader = QtGui.QImageReader("memoryDisp3.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
 
 						if self.orderStage1 == 1:
 							self.button1.setText("1")
@@ -320,11 +344,25 @@ class SubMod3(Module):
 						self.init = 0
 					else:
 						if self.displayStage2 == 1:
-							self.displayNum.setText("1")
+							reader = QtGui.QImageReader("memoryDisp1.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+						
 						elif self.displayStage2 == 2:
-							self.displayNum.setText("2")
+							reader = QtGui.QImageReader("memoryDisp2.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+							
 						elif self.displayStage2 == 3:
-							self.displayNum.setText("3")
+							reader = QtGui.QImageReader("memoryDisp3.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
 
 						if self.orderStage2 == 1:
 							self.button1.setText("1")
@@ -443,11 +481,25 @@ class SubMod3(Module):
 						self.init = 0
 					else:
 						if self.displayStage3 == 1:
-							self.displayNum.setText("1")
+							reader = QtGui.QImageReader("memoryDisp1.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+						
 						elif self.displayStage3 == 2:
-							self.displayNum.setText("2")
+							reader = QtGui.QImageReader("memoryDisp2.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
+							
 						elif self.displayStage3 == 3:
-							self.displayNum.setText("3")
+							reader = QtGui.QImageReader("memoryDisp3.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
 
 						if self.orderStage3 == 1:
 							self.button1.setText("1")

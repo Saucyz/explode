@@ -64,7 +64,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.list1 = QtWidgets.QListWidget()
 
 		#Set and display image
-		reader = QtGui.QImageReader("bombBackground.jpg")
+		reader = QtGui.QImageReader("bombBackground.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
