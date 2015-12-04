@@ -176,30 +176,110 @@ class SubMod5(Module):
 							self.button2.setText('Ψ')
 							self.button3.setText('π')
 					elif self.symbolGen == 2:
-						self.button1.setText('λ')
-						self.button2.setText('Σ')
-						self.button3.setText('Ψ')
-						self.button4.setText('π')
+						if posGen == 1:
+							self.button1.setText('$')
+							self.button2.setText('@')
+							self.button3.setText('#')
+							self.button4.setText('!')
+						if posGen == 2:
+							self.button2.setText('$')
+							self.button3.setText('@')
+							self.button4.setText('#')
+							self.button1.setText('!')
+						if posGen == 3:
+							self.button3.setText('$')
+							self.button4.setText('@')
+							self.button1.setText('#')
+							self.button2.setText('!')
+						if posGen == 4:
+							self.button4.setText('$')
+							self.button1.setText('@')
+							self.button2.setText('#')
+							self.button3.setText('!')
 					elif self.symbolGen == 3:
-						self.button1.setText('λ')
-						self.button2.setText('Σ')
-						self.button3.setText('Ψ')
-						self.button4.setText('π')
+						if posGen == 1:
+							self.button1.setText('^')
+							self.button2.setText('&')
+							self.button3.setText('%')
+							self.button4.setText('*')
+						if posGen == 2:
+							self.button2.setText('^')
+							self.button3.setText('&')
+							self.button4.setText('%')
+							self.button1.setText('*')
+						if posGen == 3:
+							self.button3.setText('^')
+							self.button4.setText('&')
+							self.button1.setText('%')
+							self.button2.setText('*')
+						if posGen == 4:
+							self.button4.setText('^')
+							self.button1.setText('&')
+							self.button2.setText('%')
+							self.button3.setText('*')
 					elif self.symbolGen == 4:
-						self.button1.setText('λ')
-						self.button2.setText('Σ')
-						self.button3.setText('Ψ')
-						self.button4.setText('π')
+						if posGen == 1:
+							self.button1.setText('<')
+							self.button2.setText('~')
+							self.button3.setText('>')
+							self.button4.setText(',')
+						if posGen == 2:
+							self.button2.setText('<')
+							self.button3.setText('~')
+							self.button4.setText('>')
+							self.button1.setText(',')
+						if posGen == 3:
+							self.button3.setText('<')
+							self.button4.setText('~')
+							self.button1.setText('>')
+							self.button2.setText(',')
+						if posGen == 4:
+							self.button4.setText('<')
+							self.button1.setText('~')
+							self.button2.setText('>')
+							self.button3.setText(',')
 					elif self.symbolGen == 5:
-						self.button1.setText('λ')
-						self.button2.setText('Σ')
-						self.button3.setText('Ψ')
-						self.button4.setText('π')
+						if posGen == 1:
+							self.button1.setText(':')
+							self.button2.setText('&')
+							self.button3.setText('Ψ')
+							self.button4.setText('π')
+						if posGen == 2:
+							self.button2.setText(':')
+							self.button3.setText('&')
+							self.button4.setText('Ψ')
+							self.button1.setText('π')
+						if posGen == 3:
+							self.button3.setText(':')
+							self.button4.setText('&')
+							self.button1.setText('Ψ')
+							self.button2.setText('π')
+						if posGen == 4:
+							self.button4.setText(':')
+							self.button1.setText('&')
+							self.button2.setText('Ψ')
+							self.button3.setText('π')
 					elif self.symbolGen == 6:
-						self.button1.setText('λ')
-						self.button2.setText('Σ')
-						self.button3.setText('Ψ')
-						self.button4.setText('π')
+						if posGen == 1:
+							self.button1.setText('/')
+							self.button2.setText('+')
+							self.button3.setText('#')
+							self.button4.setText('?')
+						if posGen == 2:
+							self.button2.setText('/')
+							self.button3.setText('+')
+							self.button4.setText('#')
+							self.button1.setText('?')
+						if posGen == 3:
+							self.button3.setText('/')
+							self.button4.setText('+')
+							self.button1.setText('#')
+							self.button2.setText('?')
+						if posGen == 4:
+							self.button4.setText('/')
+							self.button1.setText('+')
+							self.button2.setText('#')
+							self.button3.setText('?')
 				else:
 					if selectedButton == 1:
 						if self.input == 'RIGHT':
