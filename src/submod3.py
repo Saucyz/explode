@@ -48,6 +48,7 @@ class SubMod3(Module):
 		self.select2 = QtWidgets.QLabel()
 		self.select3 = QtWidgets.QLabel()
 
+		self.stageLabel = QtWidgets.QLabel()
 		grid = QtWidgets.QGridLayout()
 		self.setLayout(grid)
 		'''
@@ -61,7 +62,8 @@ class SubMod3(Module):
 		grid.addWidget(self.select3, 3, 3)
 		grid.addWidget(self.select2, 3, 2)
 		grid.addWidget(self.select1, 3, 1)
-		grid.addWidget(self.displayNum, 1, 1, 1, 3)
+		grid.addWidget(self.displayNum, 1, 1, 1, 2)
+		grid.addWidget(self.stageLabel, 1, 3, 1, 1)
 
 		# reader = QtGui.QImageReader("modBackground.png")
 		# image = reader.read()
@@ -138,6 +140,7 @@ class SubMod3(Module):
 						print ("stage0init")
 						self.orderStage0 = randint(1,6)
 						self.displayStage0 = randint(1,3)
+						self.stageLabel.setText("stage: 0")
 						self.init = 0
 					else:
 				
@@ -256,6 +259,7 @@ class SubMod3(Module):
 						print ("stage1init")
 						self.orderStage1 = randint(1,6)
 						self.displayStage1 = randint(1,3)
+						self.stageLabel.setText("stage: 1")
 						self.init = 0
 					else:
 						if self.displayStage1 == 1:
@@ -354,6 +358,7 @@ class SubMod3(Module):
 						print ("stage2init")
 						self.orderStage2 = randint(1,6)
 						self.displayStage2 = randint(1,3)
+						self.stageLabel.setText("stage: 2")
 						self.init = 0
 					else:
 						if self.displayStage2 == 1:
@@ -491,6 +496,7 @@ class SubMod3(Module):
 						print ("stage3init")
 						self.orderStage3 = randint(1,6)
 						self.displayStage3 = randint(1,3)
+						self.stageLabel.setText("stage: 3")
 						self.init = 0
 					else:
 						if self.displayStage3 == 1:
@@ -589,6 +595,7 @@ class SubMod3(Module):
 									else:
 										self.incorrectAns()
 				elif self.stage == 4:
+					self.stageLabel.setText("stage: 4")
 					self.changeStateComplete()
 					print ("done")
 			#self.update()
