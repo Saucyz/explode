@@ -236,22 +236,22 @@ class SubMod5(Module):
 					elif self.symbolGen == 3:
 						if self.posGen == 1:
 							self.button1.setText('^')
-							self.button2.setText('&')
+							self.button2.setText('/')
 							self.button3.setText('%')
 							self.button4.setText('*')
 						if self.posGen == 2:
 							self.button2.setText('^')
-							self.button3.setText('&')
+							self.button3.setText('/')
 							self.button4.setText('%')
 							self.button1.setText('*')
 						if self.posGen == 3:
 							self.button3.setText('^')
-							self.button4.setText('&')
+							self.button4.setText('/')
 							self.button1.setText('%')
 							self.button2.setText('*')
 						if self.posGen == 4:
 							self.button4.setText('^')
-							self.button1.setText('&')
+							self.button1.setText('/')
 							self.button2.setText('%')
 							self.button3.setText('*')
 					elif self.symbolGen == 4:
@@ -278,23 +278,23 @@ class SubMod5(Module):
 					elif self.symbolGen == 5:
 						if self.posGen == 1:
 							self.button1.setText(':')
-							self.button2.setText('&')
-							self.button3.setText('=')
+							self.button2.setText('?')
+							self.button3.setText('+')
 							self.button4.setText('{')
 						if self.posGen == 2:
 							self.button2.setText(':')
-							self.button3.setText('&')
-							self.button4.setText('=')
+							self.button3.setText('?')
+							self.button4.setText('+')
 							self.button1.setText('{')
 						if self.posGen == 3:
 							self.button3.setText(':')
-							self.button4.setText('&')
-							self.button1.setText('=')
+							self.button4.setText('?')
+							self.button1.setText('+')
 							self.button2.setText('{')
 						if self.posGen == 4:
 							self.button4.setText(':')
-							self.button1.setText('&')
-							self.button2.setText('=')
+							self.button1.setText('?')
+							self.button2.setText('+')
 							self.button3.setText('{')
 					elif self.symbolGen == 6:
 						if self.posGen == 1:
