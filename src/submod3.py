@@ -143,7 +143,7 @@ class SubMod3(Module):
 						self.displayStage0 = randint(1,3)
 						self.stageLabel.setText("stage: 0")
 						self.init = 0
-					else:
+					
 				
 						if self.displayStage0 == 1:
 							reader = QtGui.QImageReader("memoryDisp1.png")
@@ -227,7 +227,7 @@ class SubMod3(Module):
 								self.labelStage0 = 2
 							elif self.displayStage0 == 3:
 								self.labelStage0 = 1
-
+					else:
 						if self.input == 'BUTTONA':
 							if self.displayStage0 == 1:
 								if self.selectedButton == 1:
@@ -262,7 +262,7 @@ class SubMod3(Module):
 						self.displayStage1 = randint(1,3)
 						self.stageLabel.setText("stage: 1")
 						self.init = 0
-					else:
+					
 						if self.displayStage1 == 1:
 							reader = QtGui.QImageReader("memoryDisp1.png")
 							image = reader.read()
@@ -309,6 +309,7 @@ class SubMod3(Module):
 							self.button2.setText("2")
 							self.button3.setText("1")
 
+					else:
 						if self.input == 'BUTTONA':
 							if self.displayStage1 == 1:
 								if self.orderStage1 == 1 or self.orderStage1 == 3:
@@ -361,7 +362,7 @@ class SubMod3(Module):
 						self.displayStage2 = randint(1,3)
 						self.stageLabel.setText("stage: 2")
 						self.init = 0
-					else:
+					
 						if self.displayStage2 == 1:
 							reader = QtGui.QImageReader("memoryDisp1.png")
 							image = reader.read()
@@ -407,7 +408,7 @@ class SubMod3(Module):
 							self.button1.setText("3")
 							self.button2.setText("2")
 							self.button3.setText("1")
-
+					else:
 						if self.input == 'BUTTONA':
 							if self.displayStage2 == 1:
 								if self.labelStage0 == 1:
@@ -499,7 +500,7 @@ class SubMod3(Module):
 						self.displayStage3 = randint(1,3)
 						self.stageLabel.setText("stage: 3")
 						self.init = 0
-					else:
+					
 						if self.displayStage3 == 1:
 							reader = QtGui.QImageReader("memoryDisp1.png")
 							image = reader.read()
@@ -545,7 +546,7 @@ class SubMod3(Module):
 							self.button1.setText("3")
 							self.button2.setText("2")
 							self.button3.setText("1")
-
+					else:
 						if self.input == 'BUTTONA':
 							if self.displayStage3 == 1:
 								if self.displayStage0 == 1:
