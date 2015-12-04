@@ -8,7 +8,6 @@ class SubMod5(Module):
 		Module.__init__(self, frame, 'submod5')
 		
 		self.init = 1
-		self.correct = 0
 		self.stage = 0
 		self.selectedButton = 1
 
@@ -42,11 +41,13 @@ class SubMod5(Module):
 		grid.addWidget(self.select2, 2, 4)
 		grid.addWidget(self.select3, 3, 1)
 		grid.addWidget(self.select4, 3, 4)
-		# reader = QtGui.QImageReader("pie.png")
-		# image = reader.read()
-		# qpixmap = QtGui.QPixmap()
-		# qpixmap.convertFromImage(image)
-		# self.label.setPixmap(qpixmap)
+
+		reader = QtGui.QImageReader("moduleBox.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label.setPixmap(qpixmap)
+
 		reader = QtGui.QImageReader("buttonBox.png")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
@@ -62,12 +63,13 @@ class SubMod5(Module):
 		self.input = 0
 
 	def correctAns(self):
-		
-		self.stage += 1
-		
-		
-		print ("stage1reach")
-		
+		if self.init ==0:
+			self.stage += 1
+			self.init = 1
+			self.selectedButton = 1
+			print ("stage1reach")
+		else:
+			pass
 
 	def incorrectAns(self):
 		self.changeStateStrike()
@@ -170,7 +172,7 @@ class SubMod5(Module):
 				pass
 			else:
 				if self.init == 1:
-					self.init=0
+
 
 					self.symbolGen = randint(1,6)
 					self.posGen = randint(1,4)
@@ -301,60 +303,56 @@ class SubMod5(Module):
 							self.button2.setText('#')
 							self.button3.setText('?')
 				else:
-					if self.selectedButton == 1:
+					if selectedButton == 1:
 						if self.input == 'RIGHT':
-							self.selectedButton = 2
+							self.selectedButton == 2
 						if self.input == 'DOWN':
-							self.selectedButton = 3
+							self.selectedButton == 3
 						else:
 							pass
-					elif self.selectedButton == 2:
+					elif selectedButton == 2:
 						if self.input == 'LEFT':
-							self.selectedButton = 1
+							self.selectedButton == 1
 						if self.input == 'DOWN':
-							self.selectedButton = 4
+							self.selectedButton == 4
 						else:
 							pass
-					elif self.selectedButton == 3:
+					elif selectedButton == 3:
 						if self.input == 'RIGHT':
-							self.selectedButton = 4
+							self.selectedButton == 4
 						if self.input == 'UP':
-							self.selectedButton = 1
+							self.selectedButton == 1
 						else:
 							pass
-					elif self.selectedButton == 4:
+					elif selectedButton == 4:
 						if self.input == 'LEFT':
-							self.selectedButton = 3
+							self.selectedButton == 3
 						if self.input == 'UP':
-							self.selectedButton = 2
+							self.selectedButton == 2
 						else:
 							pass
 
-					
 					if self.selectedButton == 1:
-						self.select1.setText(">")
-						self.select1.show()
-						self.select2.hide()
-						self.select3.hide()
-						self.select4.hide()
-					elif self.selectedButton == 2:
-						self.select2.setText("<")
-						self.select2.show()
-						self.select1.hide()
-						self.select3.hide()
-						self.select4.hide()
-					elif self.selectedButton == 3:
-						self.select4.hide()
-						self.select3.setText(">")
-						self.select3.show()
-						self.select2.hide()
-						self.select1.hide()
-					elif self.selectedButton == 4:
-						self.select4.setText("<")
-						self.select4.show()
-						self.select1.hide()
-						self.select2.hide()
-						self.select3.hide()
+						if self.selectedButton == 1:
+							self.select1.setText(">")
+							self.select1.show()
+							self.select2.hide()
+							self.select3.hide()
+						elif self.selectedButton == 2:
+							self.select2.setText("<")
+							self.select2.show()
+							self.select1.hide()
+							self.select3.hide()
+						elif self.selectedButton == 3:
+							self.select3.show()
+							self.select3.setText(">")
+							self.select2.hide()
+							self.select1.hide()
+						elif self.selectedButton == 4:
+							self.select2.setText("<")
+							self.select2.show()
+							self.select1.hide()
+							self.select3.hide()
 
 					if self.input == 'BUTTONA':
 						if self.stage == 0:
@@ -371,7 +369,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns0()
 
-						elif self.stage == 1:
+						if self.stage == 1:
 							if self.symbolGen == 1:
 								self.checkAns1()		
 							elif self.symbolGen == 2:
@@ -385,7 +383,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns1()
 
-						elif self.stage == 2:
+						if self.stage == 2:
 							if self.symbolGen == 1:
 								self.checkAns2()		
 							elif self.symbolGen == 2:
@@ -399,7 +397,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns2()
 
-						elif self.stage == 3:
+						if self.stage == 3:
 							if self.symbolGen == 1:
 								self.checkAns3()		
 							elif self.symbolGen == 2:
@@ -413,7 +411,7 @@ class SubMod5(Module):
 							elif self.symbolGen == 6:
 								self.checkAns3()
 
-						elif self.stage == 4:
+						if self.stage == 4:
 							self.changeStateComplete()
 
 			#ADDED THIS SO INPUT WOULDN'T STAY, NEED TO FIX!

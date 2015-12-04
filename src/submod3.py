@@ -55,7 +55,7 @@ class SubMod3(Module):
 		self.background = QtWidgets.QLabel()
 
 		'''
-		#grid.addWidget(self.background, 0, 0, 100, 100)
+		grid.addWidget(self.background, 0, 0, 100, 100)
 		grid.addWidget(self.button3, 2, 3)
 		grid.addWidget(self.button2, 2, 2)
 		grid.addWidget(self.button1, 2, 1)
@@ -65,11 +65,11 @@ class SubMod3(Module):
 		grid.addWidget(self.displayNum, 1, 1, 1, 2)
 		grid.addWidget(self.stageLabel, 1, 3, 1, 1)
 
-		# reader = QtGui.QImageReader("modBackground.png")
-		# image = reader.read()
-		# qpixmap = QtGui.QPixmap()
-		# qpixmap.convertFromImage(image)
-		# self.background.setPixmap(qpixmap)
+		reader = QtGui.QImageReader("moduleBox.png")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.background.setPixmap(qpixmap)
 
 	def resetModule(self):
 		self.changeStateIncomplete()
