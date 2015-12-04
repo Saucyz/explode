@@ -50,7 +50,10 @@ class SubMod3(Module):
 
 		grid = QtWidgets.QGridLayout()
 		self.setLayout(grid)
+		'''
+		self.background = QtWidgets.QLabel()
 
+		'''
 		grid.addWidget(self.background, 0, 0, 100, 100)
 		grid.addWidget(self.button3, 2, 3)
 		grid.addWidget(self.button2, 2, 2)
@@ -60,7 +63,7 @@ class SubMod3(Module):
 		grid.addWidget(self.select1, 3, 1)
 		grid.addWidget(self.displayNum, 1, 2)
 
-		reader = QtGui.QImageReader("pie.png")
+		reader = QtGui.QImageReader("modBackground.jpg")
 		image = reader.read()
 		qpixmap = QtGui.QPixmap()
 		qpixmap.convertFromImage(image)
@@ -126,6 +129,11 @@ class SubMod3(Module):
 					else:
 				
 						if self.displayStage0 == 1:
+							reader = QtGui.QImageReader("modBackground.jpg")
+							image = reader.read()
+							qpixmap = QtGui.QPixmap()
+							qpixmap.convertFromImage(image)
+							self.displayNum.setPixmap(qpixmap)
 							self.displayNum.setText("1")
 						elif self.displayStage0 == 2:
 							self.displayNum.setText("2")

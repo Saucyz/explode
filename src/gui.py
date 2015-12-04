@@ -2,8 +2,8 @@ import sys
 import time
 import bomb
 #Wii remote library!
-import cwiid
-import serialCom
+#import cwiid
+#import serialCom
 
 #TO DO: Look at check mod states to check mod states also instead of just game state, and disable button for module when complete. Maybe new widget or loop for module logics / game logic and connect to module buttons instead of change active module. Another label for completed modules.
 
@@ -63,12 +63,12 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.list1 = QtWidgets.QListWidget()
 
 		#Set and display image
-		#reader = QtGui.QImageReader("pie.png")
-		#image = reader.read()
-		#qpixmap = QtGui.QPixmap()
-		#qpixmap.convertFromImage(image)
-		#self.label = QtWidgets.QLabel("Main")
-		#self.label.setPixmap(qpixmap)
+		reader = QtGui.QImageReader("bombBackground.jpg")
+		image = reader.read()
+		qpixmap = QtGui.QPixmap()
+		qpixmap.convertFromImage(image)
+		self.label = QtWidgets.QLabel("Main")
+		self.label.setPixmap(qpixmap)
 
 
 		self.grid = QtWidgets.QGridLayout()
@@ -77,7 +77,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		window = QtWidgets.QWidget()
 		window.setLayout(self.grid)
 		self.setCentralWidget(window)
-
+		self.grid.addWidget(self.label, 0, 0, 10, 10)
 		self.grid.addWidget(self.startButton, 0, 0)
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		
@@ -85,7 +85,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.show()
 
 		#create Game
-		self.srl = serialCom.serialCom()
+		#self.srl = serialCom.serialCom()
 		self.game = Game(self, totalTime)
 
 		r = 8
@@ -123,11 +123,11 @@ class MainGUI(QtWidgets.QMainWindow):
 		elapsed = int(time.time() - self.startTime)
 		
 		if self.game.state == 'Win':
-			self.srl.serialWrite("W")
+			pass#self.srl.serialWrite("W")
 		elif elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
 			self.game.state = 'Lose'
-			self.srl.serialWrite("L")
+			#self.srl.serialWrite("L")
 		else:
 			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
 			#self.srl.serialWrite("U")
@@ -230,12 +230,13 @@ class MainGUI(QtWidgets.QMainWindow):
 		#Ignore controller inputs for types SubMod1 since this uses text field
 		if not isinstance(self.game.bomb.getActiveModule(), bomb.SubMod1):
 			#Wii input! Otherwise using keyboard
-			self.game.wiiInput()
+			#self.game.wiiInput()
 			#self.inputHandler(self.keyinput)
+			pass
 			
 		x = self.game.bomb.checkModStates(verbose)
 		#reading DE2 module state
-		y = self.srl.serialRead()
+		#y = self.srl.serialRead()
 		self.temp.setText(y)
 
 		if (y == 'S'):
@@ -260,7 +261,7 @@ class Game:
 		self.state = 'ND'
 		self.lastinput = 0
 		#Wii remote setup!
-		self.wiiSetUp()
+		#self.wiiSetUp()
 		self.keyinput = 0
 		#self.srl = srl
 
