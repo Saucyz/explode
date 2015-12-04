@@ -57,6 +57,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.numButtons = 3
 		self.verbose = False
 		self.totalTime = totalTime
+		self.DE2win = False
 
 		self.startButton = QtWidgets.QPushButton("Start Timer")
 		
@@ -85,8 +86,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.show()
 
 		#create Game
+		self.srl = serialCom.serialCom()
 		self.game = Game(self, totalTime)
-		serial = serialCom()
 
 		r = 8
 		col = 2
@@ -114,7 +115,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.module3.setEnabled(True)
 
 	def timerDone(self):
-		self.game.checkGameState(self.verbose)
+		self.checkGameState(self.verbose)
 		
 		if self.verbose:
 			print('strikes: ' + str(self.game.totalStrikes))
@@ -123,16 +124,14 @@ class MainGUI(QtWidgets.QMainWindow):
 		elapsed = int(time.time() - self.startTime)
 		
 		if self.game.state == 'Win':
-			 self.timer.stop()
-			 serial.serialWrite("W")
+			self.srl.serialWrite("W")
 		elif elapsed > self.totalTime or self.game.totalStrikes >= MAX_STRIKES:
 			self.timeLabel.setText('BOOM!!!!!')
 			self.game.state = 'Lose'
-			serial.serialWrite("L")
-			self.timer.stop()
+			self.srl.serialWrite("L")
 		else:
 			self.timeLabel.setText('Time remaining: ' + str(self.totalTime - elapsed))
-			serial.serialWrite("U")
+			#self.srl.serialWrite("U")
 		
 		self.stateLabel.setText('State: ' + self.game.state)
 
@@ -186,6 +185,8 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.stateLabel = QtWidgets.QLabel("State: ")
 		self.timeLabel = QtWidgets.QLabel("Time remaining: ")
 		self.strikesLabel = QtWidgets.QLabel(str(self.game.totalStrikes) + "/" + str(MAX_STRIKES) + ' Strikes')
+		self.temp = QtWidgets.QLabel("DE2 input:")
+		self.grid.addWidget(self.temp, 2, 3)
 
 		self.grid.addWidget(self.stateLabel, 0, 2)
 		self.grid.addWidget(self.timeLabel, 1, 2)
@@ -226,6 +227,32 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.module3 = QtWidgets.QPushButton("Module Three")
 
 		#needs to stop and reset timer as well
+	def checkGameState(self, verbose):
+		#Ignore controller inputs for types SubMod1 since this uses text field
+		if not isinstance(self.game.bomb.getActiveModule(), bomb.SubMod1):
+			#Wii input! Otherwise using keyboard
+			self.game.wiiInput()
+			#self.inputHandler(self.keyinput)
+			
+		x = self.game.bomb.checkModStates(verbose)
+
+		#reading DE2 module state
+		y = self.srl.serialRead()
+		self.temp.setText(y)
+		if(y == "T"):
+			self.DE2win = True
+		if(y == "S"):
+			if(x == -1):
+				x += 2
+			else:
+				x = x+1
+		if x > 0:
+			self.game.totalStrikes += x
+		elif x == 0 and self.DE2win:
+			self.game.state = 'Win'
+
+		if self.game.totalStrikes >= MAX_STRIKES:
+			self.game.state = 'Lose'
 
 
 MAX_STRIKES = 3
@@ -240,8 +267,9 @@ class Game:
 		#Wii remote setup!
 		self.wiiSetUp()
 		self.keyinput = 0
+		#self.srl = srl
 
-	def checkGameState(self, verbose):
+	'''def checkGameState(self, verbose):
 		#Ignore controller inputs for types SubMod1 since this uses text field
 		if not isinstance(self.bomb.getActiveModule(), bomb.SubMod1):
 			#Wii input! Otherwise using keyboard
@@ -250,16 +278,18 @@ class Game:
 			
 		x = self.bomb.checkModStates(verbose)
 		#reading DE2 module state
-		y = self.serial.serialRead()
+		y = self.srl.serialRead()
 
-		if
+		if (y == "S"):
+			x+=1
+
 		if x > 0:
 			self.totalStrikes += x
-		elif x == 0:
+		elif x == 0 and y == "T":
 			self.state = 'Win'
 
 		if self.totalStrikes >= MAX_STRIKES:
-			self.state = 'Lose'
+			self.state = 'Lose' '''
 
 	#Gives input to bomb for bomb controls	not sure should use bomb.changeActiveModule
 	def giveBombInput(self, bomb, bombinput):
