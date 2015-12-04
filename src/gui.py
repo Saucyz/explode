@@ -126,6 +126,7 @@ class MainGUI(QtWidgets.QMainWindow):
 		#self.grid.addWidget(self.list1, 0, 1, 4, 1)
 		self.game = Game(self, totalTime)
 		self.moduleSelect = 1
+		self.faceSelect = 1
 		self.input = 0
 		self.startButtonPushed()
 		self.show()
@@ -168,6 +169,63 @@ class MainGUI(QtWidgets.QMainWindow):
 
 	def timerDone(self):
 		self.input = self.game.wiiInput()
+		if self.input == 'SWINGLEFT':
+			self.faceSelect -= 1
+			if self.faceSelect < 0:
+				self.faceSelect = 3
+		elif self.input == 'SWINGRIGHT':
+			self.faceSelect += 1
+			if self.faceSelect > 3:
+				self.faceSelect = 0
+
+		if self.faceSelect == 1:
+			self.game.bomb.moduleList[1].show()
+			self.game.bomb.moduleList[2].show()
+			self.game.bomb.moduleList[3].show()
+			self.game.bomb.moduleList[4].show()
+
+			reader = QtGui.QImageReader("bombBackground.png")
+			image = reader.read()
+			qpixmap = QtGui.QPixmap()
+			qpixmap.convertFromImage(image)
+			self.label = QtWidgets.QLabel("Main")
+			self.label.setPixmap(qpixmap)
+
+
+			self.strikesLabel.hide()
+			self.timeLabel.hide()
+			self.stateLabel.hide()
+		if self.faceSelect == 0 or self.faceSelect == 2:
+			self.game.bomb.moduleList[1].hide()
+			self.game.bomb.moduleList[2].hide()
+			self.game.bomb.moduleList[3].hide()
+			self.game.bomb.moduleList[4].hide()
+			reader = QtGui.QImageReader("bombSlide.png")
+			image = reader.read()
+			qpixmap = QtGui.QPixmap()
+			qpixmap.convertFromImage(image)
+			self.label = QtWidgets.QLabel("Main")
+			self.label.setPixmap(qpixmap)
+			self.strikesLabel.show()
+			self.timeLabel.show()
+			self.stateLabel.show()
+		if self.faceSelect == 3:
+			self.game.bomb.moduleList[1].hide()
+			self.game.bomb.moduleList[2].hide()
+			self.game.bomb.moduleList[3].hide()
+			self.game.bomb.moduleList[4].hide()
+
+			reader = QtGui.QImageReader("bombBackground.png")
+			image = reader.read()
+			qpixmap = QtGui.QPixmap()
+			qpixmap.convertFromImage(image)
+			self.label = QtWidgets.QLabel("Main")
+			self.label.setPixmap(qpixmap)
+
+			self.strikesLabel.hide()
+			self.timeLabel.hide()
+			self.stateLabel.hide()
+
 		if self.moduleSelect == 1:
 			if self.input == 'MINUS':
 				self.game.bomb.changeActiveModule(0)
@@ -260,26 +318,29 @@ class MainGUI(QtWidgets.QMainWindow):
 		self.temp = QtWidgets.QLabel("DE2 input:")
 		self.grid.addWidget(self.temp, 2, 3)
 
+
 		self.grid.addWidget(self.stateLabel, 0, 2)
 		self.grid.addWidget(self.timeLabel, 1, 2)
 		self.grid.addWidget(self.strikesLabel, 2, 2)
-
+		self.strikesLabel.hide()
+		self.timeLabel.hide()
+		self.stateLabel.hide()
 		#Creating input text line
 #		self.le = QLineEdit(self)
 #		self.grid.addWidget(self.le, 3, 3)
 
 		#self.grid.addWidget(self.entry, 4, 3)
 
-		self.grid.setColumnStretch(0, 1)
-		self.grid.setColumnStretch(1, 0)
-		self.grid.setColumnStretch(2, 1)
-		self.grid.setColumnStretch(3, 3)
+		# self.grid.setColumnStretch(0, 1)
+		# self.grid.setColumnStretch(1, 0)
+		# self.grid.setColumnStretch(2, 1)
+		# self.grid.setColumnStretch(3, 3)
 
-		self.grid.setRowStretch(0, 1)
-		self.grid.setRowStretch(1, 1)
-		self.grid.setRowStretch(2, 1)
-		self.grid.setRowStretch(3, 1)
-		self.grid.setRowStretch(4, 1)
+		# self.grid.setRowStretch(0, 1)
+		# self.grid.setRowStretch(1, 1)
+		# self.grid.setRowStretch(2, 1)
+		# self.grid.setRowStretch(3, 1)
+		# self.grid.setRowStretch(4, 1)
 
 		# self.newButton = QtWidgets.QPushButton(buttonText)
 		# self.grid.addWidget(self.newButton, self.numButtons + 1, 0)

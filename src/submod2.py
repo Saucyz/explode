@@ -7,18 +7,18 @@ class SubMod2(Module):
 		Module.__init__(self, frame, 'submod2')
 		self.instructions = ['UP','UP','DOWN','DOWN','LEFT','RIGHT','LEFT','RIGHT','BUTTONB','BUTTONA']
 		self.instruction_index = 0
-		self.label = QtWidgets.QLabel()
-		#self.label.setGeometry(10,10,100,200)
+		# self.label = QtWidgets.QLabel()
+		# #self.label.setGeometry(10,10,100,200)
 
-		grid = QtWidgets.QGridLayout()
-		self.setLayout(grid)
+		# grid = QtWidgets.QGridLayout()
+		# self.setLayout(grid)
 
-		grid.addWidget(self.label, 0, 0, 100, 100)
-		reader = QtGui.QImageReader("Mod2Line.png")
-		image = reader.read()
-		qpixmap = QtGui.QPixmap()
-		qpixmap.convertFromImage(image)
-		self.label.setPixmap(qpixmap)
+		# grid.addWidget(self.label, 0, 0, 100, 100)
+		# reader = QtGui.QImageReader("Mod2Line.png")
+		# image = reader.read()
+		# qpixmap = QtGui.QPixmap()
+		# qpixmap.convertFromImage(image)
+		# self.label.setPixmap(qpixmap)
 
 	def resetModule(self):
 		self.changeStateIncomplete()
