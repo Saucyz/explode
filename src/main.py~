@@ -3,55 +3,22 @@
 import init
 from game import Game
 import display
-<<<<<<< HEAD
 import module
 from gui import MainGUI
 import sys
 import time
-=======
-import bomb
-
-def mainGame():
-	while True:
-		#run QT gui
-		#run audio generation
-		#run game logic
-
-def menu():
-	while True:
-		userInput = input("Type Play to Start: ")
-		if userInput == "Play": 
-			return
-		
-			 
-			
-		
-	
-
-def main():
-	menu()
-	mainGame()
-
-main()
-
->>>>>>> pyqt
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 def main():
-	time = 5
+	time = 30
 	if __name__ == "__main__":
 		app = QtWidgets.QApplication(sys.argv)
 		gui = MainGUI(app, time)
 
-
 		#adding buttons works
 		#gui.addButton("test")
 
-		#g.gameLoop()
-
 		sys.exit(app.exec_())
-
-
 
 main()

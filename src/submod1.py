@@ -2,8 +2,8 @@ from module import Module
 
 class SubMod1(Module):
 	#Constructor
-	def __init__(self):
-		Module.__init__(self, 'submod1')
+	def __init__(self, frame):
+		Module.__init__(self, frame, 'submod1')
 
 	#Resets module
 	def resetModule(self):
@@ -11,7 +11,7 @@ class SubMod1(Module):
 		self.input = 0
 
 	#Runs module minigame
-	def submod1main(self):
+	def main(self):
 		if self.getState() == 'COMPLETE':
 			pass
 		else:
@@ -20,7 +20,7 @@ class SubMod1(Module):
 				pass
 			else:
 				#Win if enter 1, strike otherwise.
-				if(self.input == '1'):
+				if(self.input == 'BUTTONA'):
 					self.changeStateComplete() 
 				#Other inputs cause strike
 				else:

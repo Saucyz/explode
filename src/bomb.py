@@ -2,10 +2,14 @@
 
 import time
 import module
+from submod0 import SubMod0
 from submod1 import SubMod1
+from submod2 import SubMod2
+from submod3 import SubMod3
+from submod5 import SubMod5
 import threading
 
-numModules = 1
+numModules = 4
 
 COMPLETE = 'COMPLETE'#0
 INCOMPLETE = 'INCOMPLETE'#1
@@ -35,23 +39,9 @@ class BombTimer:
 		print('Time has run out...')
 		self.timeOut = True
 
-
-class TempMod:
-	def __init__(self, level, name):
-		self.level = level
-		self.name = name
-
-	def testFunction(self):
-		print("hi")
-
-#module generator dependent on level
-def modGen(level):
-	name = ['first', 'second', 'third']
-	#TEMPORY USES ONLY SUBMOD1'S!
-	return SubMod1() #TempMod(level, name[level])
-
 class Bomb:
-	def __init__(self, secs):
+	def __init__(self, frame, secs):
+		self.frame = frame
 		self.moduleList = list()
 		self.timer = BombTimer(secs)
 		self.input = 0
@@ -59,10 +49,22 @@ class Bomb:
 		self.populate()
 		#Not starting timer initially gets in the way of other tests
 		#self.start()
-	
+
+	#module generator dependent on level
+	def modGen(self,level):
+		name = ['first', 'second', 'third']
+		if(level == 0):
+			return SubMod0(self.frame)
+		elif level ==1:
+			return SubMod5(self.frame)
+		elif level ==2:
+			return SubMod2(self.frame)
+		elif level ==3:
+			return SubMod3(self.frame)
+
 	def populate(self):
 		for x in range(numModules):
-			mod = modGen(x)
+			mod = self.modGen(x)
 			self.moduleList.append(mod)
 			with lock:
 				print('Made ' + self.moduleList[x].name + ' at ' + str(x))
@@ -78,7 +80,7 @@ class Bomb:
 		th1 = threading.Thread(target = self.timer.countdown)
 		
 		#need to be able to cancel a thread and reinit the module when we switch to other modules
-		th2 = threading.Thread(target = self.moduleList[self.activeModule].submod1main())
+		th2 = threading.Thread(target = self.moduleList[self.activeModule].main())
 		th1.start()
 		th2.start()
 
@@ -86,10 +88,18 @@ class Bomb:
 		self.input = bombinput
 
 	def changeActiveModule(self, direction):
-		#so far only 1 module, later add logic for more modules based on directions
+		#for now changes active mod to direction index in list
 		#modules should reset themselves when deactivated
 		#create and run module on thread
-		self.activeModule = 0
+		self.activeModule = direction
+		i = 0
+		# while (i < len(self.moduleList)):
+		# 	# if (i != direction):
+		# 	# 	self.moduleList[i].hide()
+		# 	i += 1
+		
+		self.getActiveModule().show()
+		
 
 	def getActiveModIndex(self):
 		return self.activeModule
@@ -105,7 +115,7 @@ class Bomb:
 			if verbose:
 				print(str(y))
 			#Small fix for checking submodmain more often may be threading problem
-			self.moduleList[y].submod1main()
+			self.moduleList[y].main()
 			z = self.moduleList[y].getState()
 			if z == STRIKE:
 				strikes += 1
